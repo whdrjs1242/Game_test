@@ -76,7 +76,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .sq { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; position: relative; }
 .sq .ico { width: 18px; height: 18px; color: var(--text); }
 .face { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; }
-.face img { width: 140%; height: 140%; object-fit: cover; object-position: 50% 8%; }
+.face img { width: 260%; height: 260%; object-fit: cover; object-position: 50% 30%; max-width: none; }
 .face.me { background: radial-gradient(circle at 40% 35%, #FFE9A8, #C98A2C); box-shadow: 0 0 0 2px #3a2308, 0 0 10px rgba(232,181,74,.6); }
 .face.sh { background: radial-gradient(circle at 40% 35%, #d7c2ff, #6a3fd0); box-shadow: 0 0 0 2px #1c0f3f, 0 0 10px rgba(166,107,255,.6); }
 .face.sh img { filter: grayscale(1) brightness(.6) sepia(1) hue-rotate(220deg) saturate(3); }
@@ -154,7 +154,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .prof { top: 32px; left: 10px; display: flex; gap: 8px; align-items: center; }
 .avatar { width: 42px; height: 42px; border-radius: 50%; position: relative; overflow: visible; background: radial-gradient(circle at 50% 30%, #3b4aa3, #121845); box-shadow: 0 0 0 2px #D9A23A, 0 0 0 4px #3a2308; }
 .avatar .clip { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; }
-.avatar .clip img { width: 170%; margin-left: -35%; margin-top: -6%; }
+.avatar .clip img { width: 250%; max-width: none; margin-left: -75%; margin-top: -30%; }
 .avatar .lvtag { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-size: 10px; line-height: 13px; padding: 0 5px; border-radius: 5px; background: #0a0e22; box-shadow: 0 0 0 1px #D9A23A; color: var(--brass-hi); z-index: 1; }
 .prof .n { display: grid; line-height: 1.25; } .prof .n b { font-family: var(--f-title); font-size: 12px; } .prof .n > span { font-size: 12px; color: var(--brass-hi); display: flex; align-items: center; gap: 3px; } .prof .n .ico { width: 11px; height: 11px; }
 .topicons { top: 36px; right: 10px; display: flex; gap: 6px; } .topicons .sq { width: 32px; height: 32px; border-radius: 10px; }
@@ -188,7 +188,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .tabs { top: 76px; left: 34px; right: 34px; display: grid; grid-template-columns: repeat(3, 1fr); padding: 3px; gap: 3px; }
 .tabs span { text-align: center; font-size: 11.5px; font-weight: 700; padding: 5px 0; border-radius: 9px; color: var(--text-2); }
 .tabs span.on { background: linear-gradient(180deg, #FFF0BF, #D99A32); color: var(--ink); font-family: var(--f-title); }
-.feature { top: 128px; left: 30px; width: 240px; height: 200px; display: grid; place-items: center; }
+.feature { top: 116px; left: 55px; width: 190px; height: 190px; display: grid; place-items: center; }
 .feature img { width: 100%; filter: drop-shadow(0 0 22px rgba(110,200,255,.55)) drop-shadow(0 10px 10px rgba(0,0,0,.5)); }
 .pickup { top: 318px; left: 12px; right: 12px; padding: 7px 11px; display: grid; grid-template-columns: 1fr auto; align-items: center; }
 .pickup .k { font-size: 8.5px; font-weight: 800; letter-spacing: .14em; color: var(--g-l); } .pickup b { font-family: var(--f-title); font-size: 13px; display: block; } .pickup .d { font-size: 9.5px; color: var(--text-2); }
@@ -226,8 +226,8 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .scrtitle { top: 34px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: center; }
 .scrtitle b { font-family: var(--f-title); font-size: 17px; } .scrtitle .pw { font-size: 11px; color: var(--brass-hi); display: flex; gap: 4px; align-items: center; }
 .hero { top: 88px; left: 50px; width: 200px; height: 300px; }
-.hero img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 270px; filter: drop-shadow(0 12px 14px rgba(0,0,0,.6)); }
-.hero .pet { height: 70px; left: 88%; bottom: 10px; }
+.hero img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 215px; filter: drop-shadow(0 12px 14px rgba(0,0,0,.6)); }
+.hero .pet { height: 64px; left: 12%; bottom: 0; }
 .slots { top: 96px; display: grid; gap: 9px; } .slots.l { left: 10px; } .slots.r { right: 10px; }
 .slot { width: 52px; display: grid; justify-items: center; gap: 2px; font-size: 8.5px; color: var(--text-2); }
 .slot .gf { width: 52px; height: 52px; }
@@ -264,8 +264,8 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .era small { font-family: var(--f-logo); letter-spacing: .4em; font-size: 10px; color: var(--brass); padding-left: .4em; }
 .era b { font-family: var(--f-title); font-size: 18px; text-shadow: 0 2px 8px #000; }
 .era span { font-size: 10px; color: var(--text-2); }
-.nora { left: -18px; bottom: 150px; height: 380px; filter: drop-shadow(0 10px 18px rgba(0,0,0,.6)); z-index: 2; }
-.shadowk { right: -30px; bottom: 170px; height: 230px; opacity: .55; filter: grayscale(1) brightness(.35) sepia(1) hue-rotate(220deg) saturate(3) drop-shadow(0 0 16px rgba(166,107,255,.7)); z-index: 2; transform: scaleX(-1); }
+.nora { left: -10px; bottom: 150px; height: 330px; filter: drop-shadow(0 10px 18px rgba(0,0,0,.6)); z-index: 2; }
+.shadowk { right: -40px; bottom: 180px; height: 170px; opacity: .55; filter: grayscale(1) brightness(.35) sepia(1) hue-rotate(220deg) saturate(3) drop-shadow(0 0 16px rgba(166,107,255,.7)); z-index: 2; transform: scaleX(-1); }
 .dialog { bottom: 26px; left: 10px; right: 10px; padding: 18px 14px 12px; min-height: 130px; }
 .dialog .who { position: absolute; top: -12px; left: 14px; padding: 3px 14px; font-size: 12px; height: auto; border-radius: 8px; }
 .dialog p { margin: 0; font-size: 13px; line-height: 1.6; }
@@ -304,7 +304,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .sc-logo small { font-size: 9px; letter-spacing: .24em; color: var(--text-2); }
 .sc-stage { text-align: right; font-size: 10px; color: var(--text-2); } .sc-stage .num { font-size: 26px; color: var(--text); display: block; line-height: 1; }
 .sc-clock { position: absolute; top: 80px; left: 22px; width: 210px; height: 210px; }
-.sc-knight { position: absolute; right: 8px; top: 110px; height: 220px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.7)); }
+.sc-knight { position: absolute; right: -6px; top: 150px; height: 160px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.7)); }
 .sc-combo { position: absolute; top: 322px; left: 24px; right: 24px; display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
 .tagx { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: rgba(6,9,26,.8); box-shadow: inset 0 0 0 1px currentColor; }
 .sc-code { position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%); padding: 6px 16px; border-radius: 8px; background: rgba(6,9,26,.88); box-shadow: inset 0 0 0 1px rgba(255,221,160,.4); font-family: ui-monospace, Menlo, monospace; font-size: 13px; letter-spacing: .1em; color: var(--brass-hi); white-space: nowrap; }
@@ -333,9 +333,9 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
   <header class="top">
     <svg class="mark" data-logo viewBox="0 0 100 100" aria-label="Chrono Knight 로고"></svg>
     <div class="ht">
-      <div class="eyebrow">화면 디자인 시안 · v3</div>
+      <div class="eyebrow">화면 디자인 시안 · v4 · 캐릭터 재디자인</div>
       <h1>CHRONO KNIGHT</h1>
-      <p class="lede">캐릭터·몬스터·펫·오브·배경을 AI 이미지 생성(Higgsfield)으로 제작하고, 로컬 누끼 처리 후 UI에 합성한 버전입니다. 황동 시계 장치와 밤하늘 원소 네온을 결합한 "크로노 판타지" 스타일로 통일했습니다.</p>
+      <p class="lede">캐릭터를 만화 마스코트 스타일(2~2.5등신, 굵은 실루엣, 3색 규칙, 표정 중심)로 전면 재디자인한 버전입니다. 배경·스토리 삽화는 페인터리 톤을 유지하고, UI는 황동 시계 장치 + 원소 네온 스타일을 그대로 씁니다.</p>
     </div>
   </header>
 
@@ -390,11 +390,11 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 
       <figure class="shot">
         <div class="phone" style="background-image:url(art/bg_lobby.webp)">
-          <img class="abs spr" src="art/knight.webp" alt="" style="left:150px;top:446px;height:180px;z-index:2">
-          <img class="abs spr" src="art/pet_owl.webp" alt="" style="left:216px;top:436px;height:60px;z-index:2">
+          <img class="abs spr" src="art/knight.webp" alt="" style="left:146px;top:446px;height:170px;z-index:2">
+          <img class="abs spr" src="art/pet_owl.webp" alt="" style="left:232px;top:440px;height:62px;z-index:2">
           <div class="abs prof">
             <div class="avatar"><div class="clip"><img src="art/knight.webp" alt=""></div><span class="lvtag num">42</span></div>
-            <div class="n"><b>시계탑의 기사</b><span><svg class="ico" data-i="swords" viewBox="0 0 24 24"></svg><span class="num">18,420</span></span></div>
+            <div class="n"><b>세콘</b><span><svg class="ico" data-i="swords" viewBox="0 0 24 24"></svg><span class="num">18,420</span></span></div>
           </div>
           <div class="abs topicons">
             <div class="sq glass"><svg class="ico" data-i="mail" viewBox="0 0 24 24"></svg><i class="dot-badge"></i></div>
@@ -439,7 +439,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
           </div>
           <div class="abs tabs glass"><span>오브</span><span>룬</span><span class="on">펫</span></div>
           <div class="abs feature"><img src="art/pet_whale.webp" alt="레전드 펫 크로노베일"></div>
-          <div class="abs pickup glass ornate"><div><span class="k">PICK UP · 레전드</span><b>크로노베일, 시간을 먹는 고래</b><span class="d">액티브: 전장 2초 정지 · 정지 중 피해 ×2</span></div><span class="st">★5</span></div>
+          <div class="abs pickup glass ornate"><div><span class="k">PICK UP · 레전드</span><b>크로노베일 · 하늘고래</b><span class="d">액티브: 전장 2초 정지 · 정지 중 피해 ×2</span></div><span class="st">★5</span></div>
           <div class="abs pity glass">
             <div class="line"><span>레전드 확정까지</span><span><b class="num" style="color:var(--g-l)">31</b> 회</span></div>
             <div class="bar"><b style="width:61%;background:linear-gradient(90deg,#8a4fe0,#FFB23F)"></b></div>
@@ -488,7 +488,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
       <figure class="shot">
         <div class="phone" style="background:radial-gradient(circle at 50% 35%, #26307a 0%, #0c1133 55%, #05071a 100%)">
           <canvas class="fx" id="fxHero" width="600" height="1300" aria-hidden="true" style="z-index:0"></canvas>
-          <div class="abs scrtitle"><b>기사</b><span class="pw"><svg class="ico" data-i="swords" viewBox="0 0 24 24" style="width:12px;height:12px"></svg><span class="num" style="font-size:15px">18,420</span> · 화상 / 정오 / 그림자</span></div>
+          <div class="abs scrtitle"><b>세콘 · 초침 기사</b><span class="pw"><svg class="ico" data-i="swords" viewBox="0 0 24 24" style="width:12px;height:12px"></svg><span class="num" style="font-size:15px">18,420</span> · 화상 / 정오 / 그림자</span></div>
           <div class="abs hero"><img src="art/knight.webp" alt="시계탑의 기사"><img class="pet" src="art/pet_owl.webp" alt="크로노 부엉이"></div>
           <div class="abs slots l">
             <div class="slot"><div class="gf l"><img src="art/orb_sun.webp" alt=""></div>오브</div>
@@ -562,7 +562,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 
   <section>
     <h2>캐릭터 · 몬스터 · 펫 · 오브</h2>
-    <p class="sec-note">모두 Higgsfield(z_image)로 생성하고 rembg로 배경을 제거한 게임용 스프라이트입니다. 실제 게임에서는 이 원화를 기준으로 스프라이트 시트(대기·이동·공격 프레임)를 추가 생성합니다.</p>
+    <p class="sec-note">만화 마스코트 스타일 캐스트. 주인공은 ElevenLabs(gpt-image-2), 나머지는 Higgsfield(z_image)로 생성하고 rembg로 배경을 제거했습니다. 원칙: 2~2.5등신 · 캐릭터당 3색 · 고유 돌출부 1개 · 모두 눈이 보이는 얼굴.</p>
     <div class="gallery" data-gallery></div>
   </section>
 
@@ -980,16 +980,17 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 
   /* ---------- 갤러리 ---------- */
   var GAL = [
-    ["knight", "l", "시계탑의 기사", "주인공. 가슴의 룬 시계 문장, 금빛 T 슬릿, 깃털과 남색 망토.", true],
-    ["boss_clockbreaker", "h", "시계 파괴자", "시대 1 보스. 부서진 시계 가슴, 수정 망치와 바늘 칼날.", true],
-    ["mon_spike", "n", "스파이크 글리치", "▲ 돌진형 · 루비 수정"], ["mon_block", "n", "블록 글리치", "■ 탱커형 · 자수정 골렘"],
-    ["mon_bubble", "n", "버블 글리치", "● 분열형 · 청록 젤리"], ["mon_shard", "n", "샤드 글리치", "◆ 원거리형 · 분홍 포탑"],
-    ["mon_core", "n", "코어 글리치", "⬡ 지원형 · 보호막 토템"], ["mon_nova", "n", "노바 글리치", "✦ 자폭형 · 황금 별"],
-    ["pet_owl", "u", "크로노 부엉이", "유니크 펫 · 12시 칸 효과 +25%"], ["pet_moonfox", "u", "달 여우 루나", "유니크 펫 · 월광 분신 소환"],
-    ["pet_gearwyrm", "u", "기어윔", "유니크 펫 · 톱니 브레스"], ["pet_whale", "l", "크로노베일", "레전드 펫 · 전장 2초 정지"],
+    ["knight", "l", "세콘 · 초침 기사", "주인공. 초침 볏 · 태엽 열쇠 · 분침 대검 · 주황 스카프. 로열 블루/골드/오렌지.", true],
+    ["boss_clockbreaker", "h", "브레이커 · 시계 파괴자", "시대 1 보스. 금 간 괘종시계 얼굴, 망치 팔, 튀어나온 태엽.", false],
+    ["mon_spike", "n", "삐죽이", "▲ 돌진형 · 외눈 · 화난 눈썹"], ["mon_block", "n", "네모돌", "■ 탱커형 · 큰 턱 · 팔짱"],
+    ["mon_bubble", "n", "퐁퐁", "● 분열형 · 멍한 웃음"], ["mon_shard", "n", "쨍이", "◆ 원거리형 · 렌즈 외눈"],
+    ["mon_core", "n", "방패콩", "⬡ 지원형 · 보호막 · 겁쟁이"], ["mon_nova", "n", "펑스타", "✦ 자폭형 · 도화선"],
+    ["pet_owl", "u", "톡 · 크로노 부엉이", "유니크 펫 · 12시 칸 효과 +25%"], ["pet_moonfox", "u", "루나 · 달여우", "유니크 펫 · 월광 분신 소환"],
+    ["pet_gearwyrm", "u", "기어윔", "유니크 펫 · 톱니 브레스"], ["pet_whale", "l", "크로노베일 · 하늘고래", "레전드 펫 · 전장 2초 정지"],
     ["orb_sun", "l", "정오의 태양 헬리오스", "레전드 오브 · 태양 계열"], ["orb_moon", "r", "반달 호위", "레어 오브 · 달 계열"],
     ["orb_storm", "r", "천둥 왕관", "레어 오브 · 폭풍 계열"], ["orb_abyss", "u", "사건의 지평선", "유니크 오브 · 심연 계열"],
-    ["orb_gear", "m", "번개 병", "매직 오브 · 폭풍 계열"], ["npc_nora", "r", "시계공 노라", "스토리 안내자 · 개그 담당"]
+    ["orb_gear", "m", "초승달 위성", "매직 오브 · 달 계열"], ["npc_nora", "r", "노라 · 시계공", "스토리 안내자 · 개그 담당"],
+    ["story_nora_illust", "n", "스토리 삽화 톤 (참고)", "컷신·로딩 일러스트는 이 페인터리 톤을 유지", true]
   ];
   var g = document.querySelector("[data-gallery]");
   if (g) g.innerHTML = GAL.map(function (x) {
