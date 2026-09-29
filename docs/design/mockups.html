@@ -1,0 +1,657 @@
+<title>Chrono Knight 화면 시안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap">
+<style>
+/* Layout: 어두운 시계탑 벽면 위에 실제 크기 폰 화면 5장을 나란히 놓고, 아래에 공유 카드와 디자인 토큰을 둔다.
+   게임 UI 자체가 다크 전용이므로 이 시안 페이지도 다크 단일 테마로 고정한다. */
+:root {
+  color-scheme: dark;
+  --bg-deep: #0B1026;
+  --bg-surface: #151C3B;
+  --bg-elevated: #1F2852;
+  --line: #2E3A6E;
+  --text: #F2F4FF;
+  --text-2: #A9B1D6;
+  --gold: #F5C451;
+  --gold-press: #D9A62E;
+  --danger: #FF4D6D;
+  --success: #4ADE80;
+  --fire: #FF6B35; --frost: #6EC8FF; --volt: #FFE14D; --wind: #5EF2B5; --light: #FFF4C2; --void: #A66BFF;
+  --r-common: #9AA3B5; --r-rare: #4DA3FF; --r-epic: #B65CFF; --r-legend: #FFB23F; --r-myth: #FF4D8D;
+  --page: #070A1A;
+  --font-display: "Black Han Sans", "Noto Sans KR", system-ui, sans-serif;
+  --font-body: "Noto Sans KR", "Pretendard", system-ui, -apple-system, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--page); color: var(--text); }
+body { font-family: var(--font-body); font-size: 15px; line-height: 1.55; padding-inline: 16px; padding-block: 0 64px; }
+.wrap { max-width: 1680px; margin: 0 auto; }
+header.top { padding-block: 40px 28px; display: grid; gap: 10px; max-width: 70ch; }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 700; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 6vw, 56px); line-height: 1.05; margin: 0; text-wrap: balance; }
+h1 span { color: var(--gold); }
+.lede { color: var(--text-2); margin: 0; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: 26px; margin: 0; text-wrap: balance; }
+section { display: grid; gap: 18px; padding-block: 28px; border-top: 1px solid var(--line); }
+.sec-note { color: var(--text-2); margin: 0; max-width: 70ch; }
+
+/* 폰 프레임 */
+.phones { display: flex; flex-wrap: wrap; gap: 28px; }
+figure.shot { margin: 0; display: grid; gap: 10px; width: 300px; max-width: 100%; }
+figure.shot figcaption { display: grid; gap: 2px; }
+figure.shot figcaption b { font-size: 15px; }
+figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
+.phone { position: relative; width: 300px; height: 650px; max-width: 100%; border-radius: 34px; background: var(--bg-deep);
+  border: 6px solid #1a2046; box-shadow: 0 0 0 1px var(--line), 0 30px 60px rgba(0,0,0,.5); overflow: hidden; font-size: 12px; }
+.phone::before { content: ""; position: absolute; top: 8px; left: 50%; width: 70px; height: 18px; margin-left: -35px; border-radius: 10px; background: #000; z-index: 20; }
+.abs { position: absolute; }
+.num { font-family: var(--font-display); font-variant-numeric: tabular-nums; letter-spacing: .01em; }
+.chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; background: rgba(21,28,59,.85); border: 1px solid var(--line); font-size: 11px; }
+.btn { display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 12px; font-weight: 700; border: 0; font-family: var(--font-body); }
+.btn.gold { background: linear-gradient(180deg, var(--gold), var(--gold-press)); color: #231a03; box-shadow: 0 4px 0 #8a6614; }
+.btn.ghost { background: var(--bg-elevated); color: var(--text); border: 1px solid var(--line); }
+
+/* 1. 전투 */
+.battle canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hud-top { top: 34px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: center; }
+.pause { width: 30px; height: 30px; border-radius: 10px; background: rgba(21,28,59,.85); border: 1px solid var(--line); display: grid; place-items: center; }
+.pause i { display: block; width: 10px; height: 12px; border-inline: 3px solid var(--text); }
+.wave { text-align: center; line-height: 1.1; }
+.wave .num { font-size: 20px; }
+.shadowbar { top: 74px; left: 12px; right: 12px; display: grid; gap: 4px; }
+.shadowbar .row { display: flex; justify-content: space-between; font-size: 10px; color: var(--text-2); }
+.duel { height: 8px; border-radius: 99px; background: rgba(166,107,255,.25); overflow: hidden; }
+.duel b { display: block; height: 100%; width: 53%; background: linear-gradient(90deg, var(--gold), #ffe29a); }
+.react { top: 112px; left: 0; right: 0; text-align: center; font-family: var(--font-display); font-size: 26px; color: var(--fire);
+  text-shadow: 0 0 12px rgba(255,107,53,.9), 0 2px 0 #3b1200; transform: rotate(-4deg); }
+.react small { display: block; font-family: var(--font-body); font-size: 10px; color: var(--text); text-shadow: none; font-weight: 700; letter-spacing: .08em; }
+.expbar { bottom: 22px; left: 12px; right: 118px; display: grid; gap: 3px; }
+.expbar .bar { height: 7px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+.expbar .bar b { display: block; height: 100%; width: 72%; background: linear-gradient(90deg, #4ADE80, #b8ffcf); }
+.expbar .lv { font-size: 11px; color: var(--text-2); }
+.miniclock { right: 10px; bottom: 12px; width: 100px; height: 100px; opacity: .95; }
+
+/* 2. 룬 선택 */
+.dim { position: absolute; inset: 0; background: radial-gradient(circle at 50% 30%, #1d2658 0%, #0B1026 70%); }
+.lvup { top: 36px; left: 0; right: 0; text-align: center; }
+.lvup .num { font-size: 28px; color: var(--gold); text-shadow: 0 0 14px rgba(245,196,81,.6); }
+.lvup p { margin: 0; color: var(--text-2); font-size: 11px; }
+.bigclock { top: 92px; left: 30px; width: 240px; height: 240px; }
+.preview-tag { top: 96px; right: 10px; }
+.cards { bottom: 70px; left: 10px; right: 10px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.card { background: var(--bg-surface); border-radius: 14px; padding: 10px 6px 8px; display: grid; justify-items: center; gap: 4px; text-align: center; border: 2px solid var(--line); min-width: 0; }
+.card svg { width: 38px; height: 38px; }
+.card b { font-size: 12px; }
+.card span { font-size: 9.5px; color: var(--text-2); line-height: 1.35; }
+.card .badge { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 99px; background: var(--wind); color: #032a1c; }
+.card.sel { border-color: var(--wind); box-shadow: 0 0 18px rgba(94,242,181,.35); transform: translateY(-8px); }
+.card .lvl { font-size: 9px; color: var(--gold); font-weight: 700; }
+.pick-actions { bottom: 18px; left: 10px; right: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pick-actions .btn { height: 40px; font-size: 12px; }
+
+/* 3. 로비 */
+.lobby-bg { position: absolute; inset: 0; background:
+  radial-gradient(ellipse at 50% 38%, rgba(245,196,81,.16), transparent 55%),
+  linear-gradient(180deg, #121a44 0%, #0B1026 60%); }
+.res { top: 34px; left: 10px; right: 10px; display: flex; gap: 5px; justify-content: space-between; }
+.res .chip { font-size: 10.5px; padding: 3px 7px; }
+.res .chip i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+.knight-stage { top: 72px; left: 0; right: 0; height: 200px; }
+.power { top: 250px; left: 0; right: 0; text-align: center; }
+.power span { font-size: 10px; color: var(--text-2); display: block; }
+.power .num { font-size: 22px; color: var(--gold); }
+.chapter { top: 300px; left: 14px; right: 14px; background: rgba(21,28,59,.92); border: 1px solid var(--line); border-radius: 16px; padding: 10px 12px; display: grid; gap: 6px; }
+.chapter .t { display: flex; justify-content: space-between; align-items: baseline; }
+.chapter .t b { font-size: 13px; }
+.chapter .t span { font-size: 10px; color: var(--text-2); }
+.dots { display: flex; gap: 4px; }
+.dots i { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+.dots i.on { background: var(--gold); }
+.dots i.now { background: var(--text); box-shadow: 0 0 6px var(--text); }
+.start { top: 378px; left: 14px; right: 14px; height: 52px; font-size: 18px; font-family: var(--font-display); font-weight: 400; letter-spacing: .04em; }
+.modes { top: 444px; left: 14px; right: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.mode { background: var(--bg-surface); border: 1px solid var(--line); border-radius: 12px; padding: 7px 6px; display: grid; gap: 2px; }
+.mode b { font-size: 11px; }
+.mode span { font-size: 10px; color: var(--text-2); }
+.camp { top: 510px; left: 14px; right: 14px; background: linear-gradient(90deg, rgba(74,222,128,.14), rgba(21,28,59,.9)); border: 1px solid rgba(74,222,128,.4); border-radius: 12px; padding: 7px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+.camp .btn { height: 26px; padding: 0 12px; font-size: 11px; }
+.nav { bottom: 0; left: 0; right: 0; height: 64px; background: #0d1331; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; padding-bottom: 10px; }
+.nav div { display: grid; justify-items: center; gap: 3px; font-size: 10px; color: var(--text-2); }
+.nav div i { width: 20px; height: 20px; border-radius: 6px; border: 2px solid var(--text-2); display: block; }
+.nav div.on { color: var(--gold); }
+.nav div.on i { width: 46px; height: 46px; border-radius: 50%; border: 0; margin-top: -26px; background: radial-gradient(circle at 50% 40%, #ffe29a, var(--gold) 60%, var(--gold-press)); box-shadow: 0 0 18px rgba(245,196,81,.55); }
+
+/* 4. 소환 */
+.gacha-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 42%, rgba(255,178,63,.35), transparent 45%), linear-gradient(180deg, #151b45, #0B1026); }
+.gacha-top { top: 34px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; }
+.gtitle { top: 70px; left: 0; right: 0; text-align: center; }
+.gtitle .num { font-size: 22px; }
+.gtitle span { display: block; font-size: 10.5px; color: var(--text-2); }
+.tower { top: 118px; left: 40px; width: 220px; height: 250px; }
+.pity { top: 382px; left: 16px; right: 16px; display: grid; gap: 8px; }
+.pity .line { display: flex; justify-content: space-between; font-size: 11px; }
+.pity .line b { color: var(--r-legend); }
+.pity .bar { height: 8px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+.pity .bar b { display: block; height: 100%; }
+.rates { top: 450px; left: 16px; right: 16px; display: flex; gap: 4px; flex-wrap: wrap; }
+.rates .chip { font-size: 9.5px; padding: 2px 6px; }
+.rates .chip i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.pulls { bottom: 58px; left: 14px; right: 14px; display: grid; grid-template-columns: 1fr 1.25fr; gap: 8px; }
+.pulls .btn { height: 58px; flex-direction: column; gap: 1px; font-size: 13px; }
+.pulls .btn small { font-weight: 500; font-size: 10px; opacity: .85; }
+.free { bottom: 18px; left: 14px; right: 14px; text-align: center; font-size: 11px; color: var(--text-2); }
+.free b { color: var(--success); }
+
+/* 5. 결과 */
+.result-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 18%, rgba(245,196,81,.25), transparent 45%), var(--bg-deep); }
+.clear { top: 44px; left: 0; right: 0; text-align: center; }
+.clear .num { font-size: 50px; color: var(--gold); text-shadow: 0 0 20px rgba(245,196,81,.55), 0 3px 0 #6b4d0c; line-height: 1; }
+.clear p { margin: 6px 0 0; color: var(--text-2); font-size: 11px; }
+.rstats { top: 128px; left: 14px; right: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rstats div { background: var(--bg-surface); border: 1px solid var(--line); border-radius: 12px; padding: 7px; text-align: center; display: grid; gap: 1px; }
+.rstats span { font-size: 9.5px; color: var(--text-2); }
+.rstats .num { font-size: 16px; }
+.overtake { top: 190px; left: 14px; right: 14px; background: rgba(166,107,255,.14); border: 1px solid rgba(166,107,255,.5); border-radius: 12px; padding: 8px 10px; display: grid; gap: 5px; font-size: 11px; }
+.stacks { display: flex; gap: 3px; }
+.stacks i { flex: 1; height: 6px; border-radius: 2px; background: var(--void); }
+.stacks i.off { background: rgba(166,107,255,.2); }
+.rewards { top: 252px; left: 14px; right: 14px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.item { aspect-ratio: 1; border-radius: 12px; background: var(--bg-surface); border: 2px solid var(--line); display: grid; place-items: center; position: relative; max-width: 100%; }
+.item .num { font-size: 12px; position: absolute; bottom: 3px; right: 6px; }
+.item svg { width: 60%; height: 60%; }
+.rclock { top: 330px; left: 70px; width: 160px; height: 160px; }
+.ractions { bottom: 18px; left: 14px; right: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ractions .btn { height: 40px; font-size: 12px; }
+.ractions .btn.gold { grid-column: 1 / -1; height: 48px; font-size: 15px; }
+
+/* 공유 카드 */
+.share-row { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-start; }
+.sharecard { width: 360px; max-width: 100%; aspect-ratio: 4 / 5; border-radius: 10px; overflow: hidden; position: relative;
+  background: radial-gradient(circle at 50% 42%, #243078 0%, #0B1026 62%); border: 1px solid var(--line); }
+.sharecard .sc-head { position: absolute; top: 18px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: flex-start; }
+.sharecard .logo { font-family: var(--font-display); font-size: 20px; line-height: 1; }
+.sharecard .logo small { display: block; font-family: var(--font-body); font-size: 10px; color: var(--gold); letter-spacing: .12em; margin-top: 4px; }
+.sharecard .stage { text-align: right; font-size: 11px; color: var(--text-2); }
+.sharecard .stage .num { font-size: 20px; color: var(--text); display: block; }
+.sharecard .sc-clock { position: absolute; top: 74px; left: 50%; width: 250px; height: 250px; margin-left: -125px; }
+.sharecard .combo { position: absolute; top: 330px; left: 20px; right: 20px; display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
+.sharecard .combo .chip { font-size: 10.5px; }
+.sharecard .code { position: absolute; bottom: 44px; left: 20px; right: 20px; text-align: center; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 13px; letter-spacing: .08em; color: var(--gold); }
+.sharecard .cta { position: absolute; bottom: 16px; left: 20px; right: 20px; text-align: center; font-size: 10.5px; color: var(--text-2); }
+.reel { width: 220px; max-width: 100%; aspect-ratio: 9 / 16; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid var(--line); background: var(--bg-deep); }
+.reel canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+.reel .cap { position: absolute; top: 16px; left: 12px; right: 12px; font-family: var(--font-display); font-size: 17px; line-height: 1.2; text-shadow: 0 2px 6px #000; }
+.reel .wm { position: absolute; bottom: 12px; left: 12px; right: 12px; font-size: 10px; color: var(--text); background: rgba(11,16,38,.75); border-radius: 8px; padding: 6px 8px; display: grid; gap: 1px; }
+.reel .wm b { font-family: var(--font-display); font-weight: 400; font-size: 13px; color: var(--gold); }
+.share-notes { flex: 1 1 280px; min-width: 0; display: grid; gap: 10px; align-content: start; }
+.share-notes dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px 14px; font-size: 14px; }
+.share-notes dt { color: var(--text-2); }
+.share-notes dd { margin: 0; }
+
+/* 토큰 */
+.tokens { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+.tokens h3 { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-2); margin: 0 0 10px; font-weight: 700; }
+.sw { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding-block: 5px; border-bottom: 1px solid rgba(46,58,110,.5); font-size: 13px; }
+.sw i { width: 34px; height: 22px; border-radius: 6px; border: 1px solid rgba(255,255,255,.12); display: block; }
+.sw code { color: var(--text-2); font-size: 12px; }
+.el { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; padding-block: 4px; font-size: 13px; }
+.el svg { width: 30px; height: 30px; }
+.typo { display: grid; gap: 10px; }
+.typo div { display: grid; gap: 0; }
+.typo code { color: var(--text-2); font-size: 12px; }
+.foot { color: var(--text-2); font-size: 13px; padding-top: 12px; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+@media (max-width: 420px) {
+  figure.shot, .phone { width: 100%; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">화면 디자인 시안 · v1</div>
+    <h1>CHRONO <span>KNIGHT</span></h1>
+    <p class="lede">네온 크로노 판타지 스타일의 핵심 5개 화면과 인스타그램 공유물 시안입니다. 모든 그래픽은 실제 게임과 같이 코드로 그린 도형입니다. 색과 글꼴은 docs/03-design-ux.md 의 디자인 토큰을 따릅니다.</p>
+  </header>
+
+  <section>
+    <h2>핵심 화면</h2>
+    <div class="phones">
+
+      <!-- 1. 전투 -->
+      <figure class="shot">
+        <div class="phone battle">
+          <canvas id="battleCanvas" width="600" height="1300" aria-label="전투 필드: 기사 주변으로 기하학 적들이 몰려오고 화염폭풍이 터지는 장면"></canvas>
+          <div class="abs hud-top">
+            <div class="pause" aria-label="일시정지"><i></i></div>
+            <div class="wave"><div class="num">1:24</div><div style="font-size:10px;color:var(--text-2)">웨이브 3 / 10</div></div>
+            <div class="chip">⚔ <span class="num">142</span></div>
+          </div>
+          <div class="abs shadowbar">
+            <div class="row"><span>나 <b class="num" style="color:var(--gold)">142</b></span><span>그림자 <b class="num" style="color:var(--void)">126</b></span></div>
+            <div class="duel"><b></b></div>
+          </div>
+          <div class="abs react">화염폭풍!<small>화 → 풍 원소 반응</small></div>
+          <div class="abs expbar"><div class="lv">Lv.<span class="num">7</span></div><div class="bar"><b></b></div></div>
+          <div class="abs miniclock" data-clock="battle"></div>
+        </div>
+        <figcaption><b>① 전투 HUD</b><span>드래그만으로 이동. 우하단 룬 시계의 바늘이 지나가는 칸의 룬이 발동합니다. 상단은 그림자 라이벌과의 처치 수 비교.</span></figcaption>
+      </figure>
+
+      <!-- 2. 룬 선택 -->
+      <figure class="shot">
+        <div class="phone">
+          <div class="dim"></div>
+          <div class="abs lvup"><div class="num">LEVEL UP</div><p>룬을 골라 시계에 놓으세요</p></div>
+          <div class="abs bigclock" data-clock="pick"></div>
+          <div class="abs cards">
+            <div class="card sel"><span class="badge">반응 가능</span><svg viewBox="0 0 40 40" data-icon="wind"></svg><b>바람 칼날</b><span>부채꼴로 3개의 칼날 발사</span><span class="lvl">NEW</span></div>
+            <div class="card"><svg viewBox="0 0 40 40" data-icon="frost"></svg><b>얼음창</b><span>적을 관통하는 창, 빙결 1초</span><span class="lvl">Lv.2 → 3</span></div>
+            <div class="card"><svg viewBox="0 0 40 40" data-icon="light"></svg><b>성광</b><span>주변 폭발, 12시 칸에서 ×2</span><span class="lvl">NEW</span></div>
+          </div>
+          <div class="abs pick-actions">
+            <div class="btn ghost">자동 배치</div>
+            <div class="btn ghost">▶ 리롤 (광고)</div>
+          </div>
+        </div>
+        <figcaption><b>② 레벨업 · 룬 배치</b><span>카드를 시계로 끌어다 놓습니다. 화염구 다음 칸(4시)에 바람 칼날을 놓으면 "화염폭풍" 반응이 미리 표시됩니다.</span></figcaption>
+      </figure>
+
+      <!-- 3. 로비 -->
+      <figure class="shot">
+        <div class="phone">
+          <div class="lobby-bg"></div>
+          <div class="abs res">
+            <span class="chip"><i style="background:var(--gold)"></i><span class="num">12.4만</span></span>
+            <span class="chip"><i style="background:var(--frost);transform:rotate(45deg)"></i><span class="num">1,250</span></span>
+            <span class="chip"><i style="background:var(--void);border-radius:50%"></i><span class="num">86</span></span>
+            <span class="chip">⚙</span>
+          </div>
+          <canvas class="abs knight-stage" id="knightCanvas" width="600" height="400" aria-label="시계탑 앞에 선 기사"></canvas>
+          <div class="abs power"><span>전투력</span><div class="num">18,420</div></div>
+          <div class="abs chapter">
+            <div class="t"><b>챕터 3 · 부서진 시계 광장</b><span class="num" style="color:var(--gold)">3-7</span></div>
+            <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="now"></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="abs btn gold start">전투 시작</div>
+          <div class="abs modes">
+            <div class="mode"><b>일일 던전</b><span>남은 횟수 2/2</span></div>
+            <div class="mode"><b>무한의 탑</b><span>최고 42층</span></div>
+            <div class="mode"><b>거울의 시련</b><span>3/5 단계</span></div>
+          </div>
+          <div class="abs camp"><span>야영지 <b class="num">6:12</b> 누적 · 골드 <b class="num">3.1만</b></span><span class="btn gold">받기</span></div>
+          <div class="abs nav">
+            <div><i></i>상점</div><div><i></i>기사</div><div class="on"><i></i>전투</div><div><i></i>룬</div><div><i></i>이벤트</div>
+          </div>
+        </div>
+        <figcaption><b>③ 로비 (전투 탭)</b><span>엄지가 닿는 하단에 시작 버튼과 탭을 모았습니다. 야영지 보상이 쌓이면 녹색 띠로 알립니다.</span></figcaption>
+      </figure>
+
+      <!-- 4. 소환 -->
+      <figure class="shot">
+        <div class="phone">
+          <div class="gacha-bg"></div>
+          <div class="abs gacha-top"><span class="chip">ⓘ 확률 정보</span><span class="chip"><span class="num">1,250</span>&nbsp;크리스탈</span></div>
+          <div class="abs gtitle"><div class="num">별의 시계탑 소환</div><span>픽업: 전설 무기 「정오의 대검」</span></div>
+          <canvas class="abs tower" id="towerCanvas" width="440" height="500" aria-label="시계탑 문과 12시를 가리키는 금빛 바늘"></canvas>
+          <div class="abs pity">
+            <div class="line"><span>전설 확정까지</span><b class="num">23회</b></div>
+            <div class="bar"><b style="width:54%;background:linear-gradient(90deg,var(--r-epic),var(--r-legend))"></b></div>
+            <div class="line"><span>마일리지 (100점 = 전설 선택)</span><span class="num">64 / 100</span></div>
+            <div class="bar"><b style="width:64%;background:var(--gold)"></b></div>
+          </div>
+          <div class="abs rates">
+            <span class="chip"><i style="background:var(--r-common)"></i>일반 55%</span>
+            <span class="chip"><i style="background:var(--r-rare)"></i>희귀 30%</span>
+            <span class="chip"><i style="background:var(--r-epic)"></i>영웅 12.5%</span>
+            <span class="chip"><i style="background:var(--r-legend)"></i>전설 2.5%</span>
+          </div>
+          <div class="abs pulls">
+            <div class="btn ghost">1회 소환<small>크리스탈 300</small></div>
+            <div class="btn gold">10회 소환<small>크리스탈 2,700</small><small>영웅 이상 1개 확정</small></div>
+          </div>
+          <div class="abs free">오늘의 무료 소환 <b>▶ 광고 보고 1회</b></div>
+        </div>
+        <figcaption><b>④ 장비 소환</b><span>확률·천장·마일리지를 항상 보이게 둡니다. 바늘이 멈추는 시각이 등급을 암시합니다(12시 = 전설).</span></figcaption>
+      </figure>
+
+      <!-- 5. 결과 -->
+      <figure class="shot">
+        <div class="phone">
+          <div class="result-bg"></div>
+          <div class="abs clear"><div class="num">CLEAR</div><p>3-7 부서진 시계 광장 · 신기록</p></div>
+          <div class="abs rstats">
+            <div><span>시간</span><b class="num">4:52</b></div>
+            <div><span>처치</span><b class="num">1,284</b></div>
+            <div><span>원소 반응</span><b class="num">97</b></div>
+          </div>
+          <div class="abs overtake">
+            <div style="display:flex;justify-content:space-between"><span>그림자 추월</span><b class="num" style="color:var(--void)">8 / 10</b></div>
+            <div class="stacks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></div>
+            <span style="color:var(--text-2);font-size:10px">골드 +24% 보너스 적용</span>
+          </div>
+          <div class="abs rewards">
+            <div class="item" style="border-color:var(--gold)"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="11" fill="#F5C451"/><circle cx="20" cy="20" r="6" fill="none" stroke="#8a6614" stroke-width="2"/></svg><b class="num">4,210</b></div>
+            <div class="item" style="border-color:var(--r-epic)"><svg viewBox="0 0 40 40"><path d="M20 5 L24 24 L20 33 L16 24 Z" fill="#B65CFF"/><rect x="12" y="24" width="16" height="3" rx="1" fill="#e6ccff"/></svg><b class="num">1</b></div>
+            <div class="item" style="border-color:var(--r-rare)"><svg viewBox="0 0 40 40"><path d="M9 16 Q20 4 31 16 L29 30 L11 30 Z" fill="#4DA3FF"/><rect x="17" y="17" width="6" height="11" fill="#0B1026"/></svg><b class="num">1</b></div>
+            <div class="item" style="border-color:var(--void)"><svg viewBox="0 0 40 40"><path d="M20 6 L30 20 L20 34 L10 20 Z" fill="#A66BFF"/></svg><b class="num">12</b></div>
+          </div>
+          <div class="abs rclock" data-clock="result"></div>
+          <div class="abs ractions">
+            <div class="btn ghost">빌드 카드 공유</div>
+            <div class="btn ghost">▶ 릴스 만들기</div>
+            <div class="btn gold">다음 스테이지 3-8</div>
+          </div>
+        </div>
+        <figcaption><b>⑤ 결과 · 공유</b><span>이번 판의 룬 시계를 보여 주고, 빌드 카드와 하이라이트 릴스를 바로 만들 수 있게 합니다.</span></figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>인스타그램 공유물</h2>
+    <p class="sec-note">게임이 자동으로 만들어 주는 홍보물입니다. 1인 운영에서도 영상 편집 없이 매주 업로드할 수 있도록, 유저와 운영자가 같은 기능을 씁니다.</p>
+    <div class="share-row">
+      <figure class="shot" style="width:360px">
+        <div class="sharecard">
+          <div class="sc-head">
+            <div class="logo">CHRONO KNIGHT<small>MY BUILD</small></div>
+            <div class="stage"><span class="num">42층</span>무한의 탑</div>
+          </div>
+          <div class="sc-clock" data-clock="share"></div>
+          <div class="combo">
+            <span class="chip" style="border-color:var(--fire)">화염폭풍 ×2</span>
+            <span class="chip" style="border-color:var(--frost)">초전도</span>
+            <span class="chip" style="border-color:var(--void)">일식</span>
+            <span class="chip">정오: 블랙홀 Lv.5</span>
+          </div>
+          <div class="code">CK1-F5W3V2I4L1D5</div>
+          <div class="cta">빌드 코드를 게임에 입력하면 이 배치를 불러옵니다 · Google Play에서 "크로노 나이트" 검색</div>
+        </div>
+        <figcaption><b>빌드 카드 · 1080×1350 (피드 4:5)</b><span>룬 시계, 대표 반응, 빌드 코드. 댓글로 코드를 주고받는 참여를 유도합니다.</span></figcaption>
+      </figure>
+      <figure class="shot" style="width:220px">
+        <div class="reel">
+          <canvas id="reelCanvas" width="440" height="782" aria-label="릴스 영상 한 장면: 원소 반응 연쇄"></canvas>
+          <div class="cap">이 배치로 보스 3초 컷 가능?</div>
+          <div class="wm"><b>CHRONO KNIGHT</b>Google Play에서 검색</div>
+        </div>
+        <figcaption><b>하이라이트 릴스 · 1080×1920</b><span>판 종료 후 마지막 반응 연쇄 8~15초를 자동으로 다시 렌더링합니다.</span></figcaption>
+      </figure>
+      <div class="share-notes">
+        <dl>
+          <dt>첫 1초</dt><dd>원소 반응이 터지는 장면부터 시작</dd>
+          <dt>상단 문구</dt><dd>질문형 한 줄로 댓글 유도</dd>
+          <dt>하단 워터마크</dt><dd>게임명 + 스토어 검색 안내 (링크 불필요)</dd>
+          <dt>재사용</dt><dd>같은 영상을 유튜브 쇼츠·틱톡에 그대로 업로드</dd>
+          <dt>부스트 기준</dt><dd>자연 반응 상위 영상만 월 6만 원 이내</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>디자인 토큰</h2>
+    <div class="tokens">
+      <div>
+        <h3>기본 색</h3>
+        <div class="sw"><i style="background:var(--bg-deep)"></i>bg.deep<code>#0B1026</code></div>
+        <div class="sw"><i style="background:var(--bg-surface)"></i>bg.surface<code>#151C3B</code></div>
+        <div class="sw"><i style="background:var(--bg-elevated)"></i>bg.elevated<code>#1F2852</code></div>
+        <div class="sw"><i style="background:var(--line)"></i>line.subtle<code>#2E3A6E</code></div>
+        <div class="sw"><i style="background:var(--gold)"></i>accent.gold<code>#F5C451</code></div>
+        <div class="sw"><i style="background:var(--danger)"></i>danger<code>#FF4D6D</code></div>
+        <div class="sw"><i style="background:var(--success)"></i>success<code>#4ADE80</code></div>
+      </div>
+      <div>
+        <h3>원소 (색 + 모양)</h3>
+        <div class="el"><svg viewBox="0 0 40 40" data-icon="fire"></svg>화 · Fire<code>#FF6B35</code></div>
+        <div class="el"><svg viewBox="0 0 40 40" data-icon="frost"></svg>빙 · Frost<code>#6EC8FF</code></div>
+        <div class="el"><svg viewBox="0 0 40 40" data-icon="volt"></svg>뇌 · Volt<code>#FFE14D</code></div>
+        <div class="el"><svg viewBox="0 0 40 40" data-icon="wind"></svg>풍 · Wind<code>#5EF2B5</code></div>
+        <div class="el"><svg viewBox="0 0 40 40" data-icon="light"></svg>광 · Light<code>#FFF4C2</code></div>
+        <div class="el"><svg viewBox="0 0 40 40" data-icon="void"></svg>암 · Void<code>#A66BFF</code></div>
+      </div>
+      <div>
+        <h3>등급</h3>
+        <div class="sw"><i style="background:var(--r-common)"></i>일반<code>#9AA3B5</code></div>
+        <div class="sw"><i style="background:var(--r-rare)"></i>희귀<code>#4DA3FF</code></div>
+        <div class="sw"><i style="background:var(--r-epic)"></i>영웅<code>#B65CFF</code></div>
+        <div class="sw"><i style="background:var(--r-legend)"></i>전설<code>#FFB23F</code></div>
+        <div class="sw"><i style="background:linear-gradient(90deg,#FF4D8D,#FFB23F,#5EF2B5,#6EC8FF,#A66BFF)"></i>신화<code>#FF4D8D + 무지개 테두리</code></div>
+        <h3 style="margin-top:22px">글꼴</h3>
+        <div class="typo">
+          <div><span style="font-family:var(--font-display);font-size:28px;line-height:1.1">CLEAR 1,284</span><code>display · Black Han Sans</code></div>
+          <div><span style="font-weight:700;font-size:18px">부서진 시계 광장</span><code>title · Pretendard Bold (시안은 Noto Sans KR로 대체)</code></div>
+          <div><span>바늘이 지나갈 때 룬이 발동합니다.</span><code>body · Pretendard Regular</code></div>
+        </div>
+      </div>
+    </div>
+    <p class="foot">시안의 모든 도형·이펙트는 실제 구현과 같이 코드로 생성했습니다. 최종 게임은 Pretendard를 앱에 내장합니다.</p>
+  </section>
+</div>
+
+<script>
+(function () {
+  var C = { fire: "#FF6B35", frost: "#6EC8FF", volt: "#FFE14D", wind: "#5EF2B5", light: "#FFF4C2", void: "#A66BFF" };
+
+  // 원소 아이콘: 중심 (cx, cy), 반지름 r 안에 그리는 SVG 조각
+  function icon(el, cx, cy, r) {
+    var c = C[el], s = r / 10, p = function (x, y) { return (cx + x * s).toFixed(1) + " " + (cy + y * s).toFixed(1); };
+    switch (el) {
+      case "fire": return '<path d="M' + p(0, -9) + ' Q' + p(7, -1) + ' ' + p(5, 5) + ' Q' + p(3, 9) + ' ' + p(0, 9) + ' Q' + p(-3, 9) + ' ' + p(-5, 5) + ' Q' + p(-7, -1) + ' ' + p(0, -9) + 'Z" fill="' + c + '"/><path d="M' + p(0, 0) + ' Q' + p(3, 4) + ' ' + p(0, 7) + ' Q' + p(-3, 4) + ' ' + p(0, 0) + 'Z" fill="#FFE14D"/>';
+      case "frost": var o = ""; for (var i = 0; i < 3; i++) { var a = i * Math.PI / 3; o += '<line x1="' + (cx + Math.cos(a) * 9 * s) + '" y1="' + (cy + Math.sin(a) * 9 * s) + '" x2="' + (cx - Math.cos(a) * 9 * s) + '" y2="' + (cy - Math.sin(a) * 9 * s) + '" stroke="' + c + '" stroke-width="' + (2.2 * s) + '" stroke-linecap="round"/>'; } return o + '<circle cx="' + cx + '" cy="' + cy + '" r="' + (2.5 * s) + '" fill="' + c + '"/>';
+      case "volt": return '<path d="M' + p(2, -9) + ' L' + p(-5, 1) + ' L' + p(0, 1) + ' L' + p(-2, 9) + ' L' + p(5, -2) + ' L' + p(0, -2) + 'Z" fill="' + c + '"/>';
+      case "wind": return '<path d="M' + p(-8, -3) + ' H' + p(3, -3).split(" ")[0] + ' A' + (3 * s) + ' ' + (3 * s) + ' 0 1 0 ' + p(0, -7) + ' M' + p(-8, 2) + ' H' + p(5, 2).split(" ")[0] + ' A' + (3 * s) + ' ' + (3 * s) + ' 0 1 1 ' + p(2, 7) + '" fill="none" stroke="' + c + '" stroke-width="' + (2.2 * s) + '" stroke-linecap="round"/>';
+      case "light": var l = '<circle cx="' + cx + '" cy="' + cy + '" r="' + (4.5 * s) + '" fill="' + c + '"/>'; for (var k = 0; k < 8; k++) { var b = k * Math.PI / 4; l += '<line x1="' + (cx + Math.cos(b) * 6.5 * s) + '" y1="' + (cy + Math.sin(b) * 6.5 * s) + '" x2="' + (cx + Math.cos(b) * 9.5 * s) + '" y2="' + (cy + Math.sin(b) * 9.5 * s) + '" stroke="' + c + '" stroke-width="' + (1.8 * s) + '" stroke-linecap="round"/>'; } return l;
+      case "void": return '<path d="M' + p(3, -8.5) + ' A' + (9 * s) + ' ' + (9 * s) + ' 0 1 0 ' + p(3, 8.5) + ' A' + (11 * s) + ' ' + (11 * s) + ' 0 0 1 ' + p(3, -8.5) + 'Z" fill="' + c + '"/>';
+    }
+    return "";
+  }
+
+  document.querySelectorAll("svg[data-icon]").forEach(function (s) { s.innerHTML = icon(s.getAttribute("data-icon"), 20, 20, 16); });
+
+  // 룬 시계: slots[0] = 1시 ... slots[11] = 12시. 각 칸 {el, lv}
+  var builds = {
+    battle: { slots: [null, null, { el: "fire", lv: 3 }, { el: "wind", lv: 2 }, null, null, { el: "frost", lv: 2 }, { el: "volt", lv: 1 }, null, null, null, { el: "light", lv: 1 }], hand: 3.6, react: [3], lvls: false },
+    pick: { slots: [null, null, { el: "fire", lv: 3 }, null, null, null, { el: "frost", lv: 2 }, { el: "volt", lv: 1 }, null, null, null, { el: "light", lv: 1 }], hand: 0.4, target: 3, lvls: true },
+    result: { slots: [{ el: "void", lv: 1 }, null, { el: "fire", lv: 4 }, { el: "wind", lv: 3 }, null, null, { el: "frost", lv: 3 }, { el: "volt", lv: 2 }, { el: "wind", lv: 1 }, null, { el: "light", lv: 2 }, { el: "void", lv: 3 }], hand: 11.2, lvls: true },
+    share: { slots: [{ el: "void", lv: 2 }, { el: "fire", lv: 5 }, { el: "wind", lv: 3 }, { el: "fire", lv: 2 }, { el: "wind", lv: 2 }, null, { el: "frost", lv: 4 }, { el: "volt", lv: 2 }, { el: "wind", lv: 1 }, { el: "light", lv: 1 }, { el: "light", lv: 3 }, { el: "void", lv: 5 }], hand: 1.6, react: [2, 4, 7, 11], lvls: true }
+  };
+  var reactsFor = { pick: [] };
+
+  function clockSVG(b) {
+    var W = 200, cx = 100, cy = 100, R = 88, rSlot = 66, out = "";
+    out += '<defs><radialGradient id="g' + Math.random().toString(36).slice(2, 7) + '" cx="50%" cy="50%" r="50%"></radialGradient></defs>';
+    out += '<circle cx="100" cy="100" r="' + R + '" fill="#101637" fill-opacity=".92" stroke="#F5C451" stroke-width="3"/>';
+    out += '<circle cx="100" cy="100" r="' + (R - 7) + '" fill="none" stroke="#2E3A6E" stroke-width="1"/>';
+    for (var t = 0; t < 60; t++) {
+      var a = t / 60 * Math.PI * 2 - Math.PI / 2, big = t % 5 === 0;
+      var r1 = R - 3, r2 = R - (big ? 9 : 5);
+      out += '<line x1="' + (cx + Math.cos(a) * r1) + '" y1="' + (cy + Math.sin(a) * r1) + '" x2="' + (cx + Math.cos(a) * r2) + '" y2="' + (cy + Math.sin(a) * r2) + '" stroke="' + (big ? "#F5C451" : "#2E3A6E") + '" stroke-width="' + (big ? 2 : 1) + '"/>';
+    }
+    for (var i = 0; i < 12; i++) {
+      var ang = (i + 1) / 12 * Math.PI * 2 - Math.PI / 2;
+      var x = cx + Math.cos(ang) * rSlot, y = cy + Math.sin(ang) * rSlot, s = b.slots[i];
+      var noon = i === 11, tgt = b.target === i;
+      var reacting = b.react && b.react.indexOf(i) >= 0;
+      out += '<circle cx="' + x + '" cy="' + y + '" r="14.5" fill="' + (noon ? "#2a2410" : "#151C3B") + '" stroke="' + (tgt ? "#5EF2B5" : noon ? "#F5C451" : s ? C[s.el] : "#2E3A6E") + '" stroke-width="' + (tgt ? 2.5 : noon || s ? 1.8 : 1) + '"' + (tgt ? ' stroke-dasharray="4 3"' : "") + '/>';
+      if (reacting) out += '<circle cx="' + x + '" cy="' + y + '" r="18" fill="none" stroke="' + C[s.el] + '" stroke-opacity=".55" stroke-width="3"/>';
+      if (s) {
+        out += icon(s.el, x, y, 9.5);
+        if (b.lvls) out += '<text x="' + (x + 10) + '" y="' + (y + 14) + '" font-family="Black Han Sans, sans-serif" font-size="8.5" fill="#F2F4FF" text-anchor="middle">' + s.lv + '</text>';
+      } else if (tgt) {
+        out += '<g opacity=".7">' + icon("wind", x, y, 9.5) + '</g>';
+      }
+      // 인접 반응 화살표
+      var prev = b.slots[(i + 11) % 12];
+      var pairs = { "fire>wind": 1, "wind>fire": 1, "frost>volt": 1, "volt>frost": 1, "fire>frost": 1, "frost>fire": 1, "light>void": 1, "void>light": 1, "wind>volt": 1 };
+      var curEl = s ? s.el : (tgt ? "wind" : null);
+      if (prev && curEl && (pairs[prev.el + ">" + curEl] || prev.el === "void")) {
+        var am = (i + 0.5) / 12 * Math.PI * 2 - Math.PI / 2;
+        var ax = cx + Math.cos(am) * (rSlot + 1), ay = cy + Math.sin(am) * (rSlot + 1);
+        out += '<circle cx="' + ax + '" cy="' + ay + '" r="3" fill="' + (tgt ? "#5EF2B5" : "#F5C451") + '"/>';
+      }
+    }
+    var ha = b.hand / 12 * Math.PI * 2 - Math.PI / 2;
+    out += '<line x1="100" y1="100" x2="' + (cx + Math.cos(ha) * 50) + '" y2="' + (cy + Math.sin(ha) * 50) + '" stroke="#F5C451" stroke-width="3.5" stroke-linecap="round"/>';
+    out += '<circle cx="100" cy="100" r="8" fill="#F5C451"/><circle cx="100" cy="100" r="3" fill="#0B1026"/>';
+    out += '<text x="100" y="' + (100 - rSlot - 20) + '" font-family="Black Han Sans, sans-serif" font-size="9" fill="#F5C451" text-anchor="middle">XII</text>';
+    return '<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="룬 시계">' + out + "</svg>";
+  }
+  document.querySelectorAll("[data-clock]").forEach(function (el) { el.innerHTML = clockSVG(builds[el.getAttribute("data-clock")]); });
+
+  // 룬 선택 화면의 반응 미리보기 태그
+  var pickPhone = document.querySelector('[data-clock="pick"]');
+  if (pickPhone) {
+    var tag = document.createElement("div");
+    tag.className = "abs chip";
+    tag.style.cssText = "top:338px;left:50%;transform:translateX(-50%);border-color:#5EF2B5;color:#5EF2B5;font-weight:700;white-space:nowrap";
+    tag.textContent = "4시에 놓으면: 화염폭풍 발생! (범위 +50%)";
+    pickPhone.parentNode.appendChild(tag);
+  }
+
+  // 시드 난수 (게임과 같이 결정적으로)
+  function rng(seed) { return function () { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
+
+  function glow(ctx, color, blur) { ctx.shadowColor = color; ctx.shadowBlur = blur; }
+  function poly(ctx, x, y, r, n, rot) { ctx.beginPath(); for (var i = 0; i < n; i++) { var a = rot + i / n * Math.PI * 2; ctx[i ? "lineTo" : "moveTo"](x + Math.cos(a) * r, y + Math.sin(a) * r); } ctx.closePath(); }
+  function star(ctx, x, y, r, rot) { ctx.beginPath(); for (var i = 0; i < 10; i++) { var rr = i % 2 ? r * .45 : r, a = rot + i / 10 * Math.PI * 2; ctx[i ? "lineTo" : "moveTo"](x + Math.cos(a) * rr, y + Math.sin(a) * rr); } ctx.closePath(); }
+
+  function enemy(ctx, kind, x, y, s, rot) {
+    var cols = { spike: "#FF4D6D", block: "#8E7CFF", bubble: "#4DD6FF", shard: "#FF8FE0", core: "#5EF2B5", nova: "#FFE14D" };
+    ctx.save(); glow(ctx, cols[kind], 14); ctx.strokeStyle = cols[kind]; ctx.lineWidth = 3; ctx.fillStyle = cols[kind] + "33";
+    if (kind === "spike") poly(ctx, x, y, s, 3, rot);
+    else if (kind === "block") poly(ctx, x, y, s * 1.1, 4, Math.PI / 4 + rot * .2);
+    else if (kind === "bubble") { ctx.beginPath(); ctx.arc(x, y, s * .85, 0, Math.PI * 2); }
+    else if (kind === "shard") poly(ctx, x, y, s, 4, rot);
+    else if (kind === "core") poly(ctx, x, y, s, 6, rot);
+    else star(ctx, x, y, s, rot);
+    ctx.fill(); ctx.stroke(); ctx.restore();
+  }
+
+  function knight(ctx, x, y, sc, trail) {
+    ctx.save(); ctx.translate(x, y); ctx.scale(sc, sc);
+    if (trail) { ctx.fillStyle = "rgba(245,196,81,.12)"; ctx.beginPath(); ctx.arc(0, 0, 44, 0, Math.PI * 2); ctx.fill(); }
+    // 망토
+    glow(ctx, "#F5C451", 18);
+    ctx.fillStyle = "#3a2a8a"; ctx.beginPath(); ctx.moveTo(-18, -6); ctx.lineTo(18, -6); ctx.lineTo(24, 34); ctx.lineTo(-24, 34); ctx.closePath(); ctx.fill();
+    // 몸통
+    ctx.fillStyle = "#cfd6f5"; ctx.beginPath(); ctx.moveTo(-14, -8); ctx.lineTo(14, -8); ctx.lineTo(11, 22); ctx.lineTo(-11, 22); ctx.closePath(); ctx.fill();
+    // 가슴의 룬 시계
+    ctx.shadowBlur = 10; ctx.fillStyle = "#F5C451"; ctx.beginPath(); ctx.arc(0, 5, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#0B1026"; ctx.fillRect(-.8, 0, 1.6, 5);
+    // 투구
+    ctx.shadowBlur = 16; ctx.fillStyle = "#e7ecff"; ctx.beginPath(); ctx.arc(0, -20, 13, Math.PI, 0); ctx.lineTo(13, -10); ctx.lineTo(-13, -10); ctx.closePath(); ctx.fill();
+    ctx.shadowBlur = 0; ctx.fillStyle = "#0B1026"; ctx.fillRect(-9, -21, 18, 3.5); ctx.fillRect(-1.8, -21, 3.6, 10);
+    // 깃털
+    ctx.fillStyle = "#F5C451"; ctx.beginPath(); ctx.moveTo(0, -33); ctx.quadraticCurveTo(14, -44, 22, -30); ctx.quadraticCurveTo(10, -36, 0, -30); ctx.fill();
+    // 검
+    glow(ctx, "#FFF4C2", 14); ctx.fillStyle = "#FFF4C2"; ctx.save(); ctx.rotate(-.7); ctx.fillRect(14, -4, 40, 5); ctx.fillStyle = "#F5C451"; ctx.fillRect(12, -8, 4, 13); ctx.restore();
+    ctx.restore();
+  }
+
+  function field(ctx, W, H, seed, cxk, cyk) {
+    var r = rng(seed);
+    ctx.fillStyle = "#0B1026"; ctx.fillRect(0, 0, W, H);
+    // 아레나 바닥: 시계 문자판 격자
+    ctx.save(); ctx.strokeStyle = "rgba(46,58,110,.55)"; ctx.lineWidth = 2;
+    for (var ring = 1; ring < 6; ring++) { ctx.beginPath(); ctx.arc(cxk, cyk + 40, ring * 150, 0, Math.PI * 2); ctx.stroke(); }
+    for (var sp = 0; sp < 12; sp++) { var a = sp / 12 * Math.PI * 2; ctx.beginPath(); ctx.moveTo(cxk, cyk + 40); ctx.lineTo(cxk + Math.cos(a) * 1200, cyk + 40 + Math.sin(a) * 1200); ctx.stroke(); }
+    ctx.restore();
+    // 떠다니는 별 먼지
+    for (var d = 0; d < 80; d++) { ctx.fillStyle = "rgba(242,244,255," + (r() * .35) + ")"; ctx.fillRect(r() * W, r() * H, 2, 2); }
+    return r;
+  }
+
+  // ① 전투
+  (function () {
+    var cv = document.getElementById("battleCanvas"); if (!cv) return; var ctx = cv.getContext("2d"), W = cv.width, H = cv.height;
+    var kx = 300, ky = 680, r = field(ctx, W, H, 7, kx, ky);
+    // 그림자 라이벌
+    ctx.save(); ctx.globalAlpha = .35; ctx.filter = "hue-rotate(200deg)"; knight(ctx, 170, 820, 1.3, false); ctx.restore();
+    ctx.save(); ctx.fillStyle = "rgba(166,107,255,.9)"; ctx.font = "bold 22px 'Noto Sans KR', sans-serif"; ctx.textAlign = "center"; ctx.fillText("그림자", 170, 890); ctx.restore();
+    // 적
+    var kinds = ["spike", "spike", "spike", "block", "bubble", "shard", "nova"];
+    for (var i = 0; i < 60; i++) {
+      var a = r() * Math.PI * 2, dist = 190 + r() * 420, x = kx + Math.cos(a) * dist, y = ky + Math.sin(a) * dist * 1.25;
+      if (y < 170 || y > 1180) continue; enemy(ctx, kinds[(r() * kinds.length) | 0], x, y, 16 + r() * 10, r() * 6);
+    }
+    // 화염폭풍 (화→풍 반응)
+    var fx = 390, fy = 520;
+    var g = ctx.createRadialGradient(fx, fy, 10, fx, fy, 190); g.addColorStop(0, "rgba(255,225,77,.95)"); g.addColorStop(.35, "rgba(255,107,53,.75)"); g.addColorStop(1, "rgba(255,107,53,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(fx, fy, 190, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); ctx.strokeStyle = "rgba(94,242,181,.9)"; ctx.lineWidth = 5; glow(ctx, "#5EF2B5", 16);
+    for (var s = 0; s < 4; s++) { ctx.beginPath(); ctx.arc(fx, fy, 60 + s * 34, s, s + 2.2); ctx.stroke(); }
+    ctx.restore();
+    for (var p = 0; p < 40; p++) { var pa = r() * Math.PI * 2, pd = 40 + r() * 170; ctx.fillStyle = r() > .5 ? "#FFE14D" : "#FF6B35"; ctx.fillRect(fx + Math.cos(pa) * pd, fy + Math.sin(pa) * pd, 5, 5); }
+    // 얼음창
+    ctx.save(); glow(ctx, "#6EC8FF", 18); ctx.strokeStyle = "#6EC8FF"; ctx.lineWidth = 8; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(kx - 30, ky + 20); ctx.lineTo(90, ky + 170); ctx.stroke(); ctx.restore();
+    // 기본 공격 베기
+    ctx.save(); glow(ctx, "#FFF4C2", 20); ctx.strokeStyle = "rgba(255,244,194,.85)"; ctx.lineWidth = 10; ctx.beginPath(); ctx.arc(kx, ky, 90, -1.9, -.6); ctx.stroke(); ctx.restore();
+    // 경험치 결정
+    for (var e = 0; e < 26; e++) { var ex = kx + (r() - .5) * 420, ey = ky + (r() - .5) * 460; ctx.save(); glow(ctx, "#4ADE80", 10); ctx.fillStyle = "#4ADE80"; poly(ctx, ex, ey, 7, 4, 0); ctx.fill(); ctx.restore(); }
+    knight(ctx, kx, ky, 1.6, true);
+    // HP 바
+    ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fillRect(kx - 46, ky + 72, 92, 10); ctx.fillStyle = "#4ADE80"; ctx.fillRect(kx - 45, ky + 73, 66, 8);
+    // 데미지 숫자
+    ctx.save(); ctx.font = "44px 'Black Han Sans', sans-serif"; ctx.textAlign = "center"; ctx.lineWidth = 6; ctx.strokeStyle = "#3b1200";
+    [["2,480", 470, 560, "#FFB23F"], ["612", 120, 560, "#F2F4FF"], ["1,905", 420, 900, "#FFB23F"]].forEach(function (d) { ctx.fillStyle = d[3]; ctx.strokeText(d[0], d[1], d[2]); ctx.fillText(d[0], d[1], d[2]); });
+    ctx.restore();
+  })();
+
+  // ③ 로비 기사
+  (function () {
+    var cv = document.getElementById("knightCanvas"); if (!cv) return; var ctx = cv.getContext("2d");
+    // 시계탑 실루엣
+    ctx.fillStyle = "rgba(245,196,81,.08)"; ctx.fillRect(210, 20, 180, 380);
+    ctx.strokeStyle = "rgba(245,196,81,.5)"; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(300, 110, 70, 0, Math.PI * 2); ctx.stroke();
+    for (var t = 0; t < 12; t++) { var a = t / 12 * Math.PI * 2; ctx.fillStyle = "rgba(245,196,81,.6)"; ctx.fillRect(300 + Math.cos(a) * 58 - 3, 110 + Math.sin(a) * 58 - 3, 6, 6); }
+    ctx.beginPath(); ctx.moveTo(300, 110); ctx.lineTo(300, 60); ctx.moveTo(300, 110); ctx.lineTo(335, 125); ctx.stroke();
+    // 발판
+    var g = ctx.createRadialGradient(300, 350, 10, 300, 350, 170); g.addColorStop(0, "rgba(245,196,81,.45)"); g.addColorStop(1, "rgba(245,196,81,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(300, 350, 170, 36, 0, 0, Math.PI * 2); ctx.fill();
+    knight(ctx, 300, 270, 2.2, false);
+  })();
+
+  // ④ 시계탑 문
+  (function () {
+    var cv = document.getElementById("towerCanvas"); if (!cv) return; var ctx = cv.getContext("2d");
+    ctx.save(); glow(ctx, "#FFB23F", 40);
+    ctx.fillStyle = "#1a1f4f"; ctx.strokeStyle = "#F5C451"; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.moveTo(60, 490); ctx.lineTo(60, 200); ctx.arc(220, 200, 160, Math.PI, 0); ctx.lineTo(380, 490); ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+    // 문틈 빛
+    var g = ctx.createLinearGradient(220, 250, 220, 490); g.addColorStop(0, "rgba(255,244,194,1)"); g.addColorStop(1, "rgba(255,178,63,.2)");
+    ctx.fillStyle = g; ctx.fillRect(210, 250, 20, 240);
+    // 문짝 장식
+    ctx.strokeStyle = "rgba(245,196,81,.45)"; ctx.lineWidth = 3;
+    for (var i = 0; i < 4; i++) { ctx.strokeRect(95, 280 + i * 50, 95, 36); ctx.strokeRect(250, 280 + i * 50, 95, 36); }
+    // 시계 문자판
+    ctx.save(); glow(ctx, "#FFB23F", 30); ctx.fillStyle = "#0B1026"; ctx.beginPath(); ctx.arc(220, 170, 92, 0, Math.PI * 2); ctx.fill(); ctx.strokeStyle = "#F5C451"; ctx.lineWidth = 5; ctx.stroke(); ctx.restore();
+    var marks = [[3, "#4DA3FF"], [6, "#B65CFF"], [12, "#FFB23F"]];
+    for (var h = 1; h <= 12; h++) { var a = h / 12 * Math.PI * 2 - Math.PI / 2; ctx.fillStyle = "rgba(242,244,255,.6)"; ctx.beginPath(); ctx.arc(220 + Math.cos(a) * 74, 170 + Math.sin(a) * 74, 4, 0, Math.PI * 2); ctx.fill(); }
+    marks.forEach(function (m) { var a = m[0] / 12 * Math.PI * 2 - Math.PI / 2; ctx.save(); glow(ctx, m[1], 16); ctx.fillStyle = m[1]; ctx.beginPath(); ctx.arc(220 + Math.cos(a) * 74, 170 + Math.sin(a) * 74, 10, 0, Math.PI * 2); ctx.fill(); ctx.restore(); });
+    ctx.save(); glow(ctx, "#FFF4C2", 24); ctx.strokeStyle = "#FFF4C2"; ctx.lineWidth = 8; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(220, 170); ctx.lineTo(220, 100); ctx.stroke(); ctx.restore();
+    ctx.fillStyle = "#F5C451"; ctx.beginPath(); ctx.arc(220, 170, 12, 0, Math.PI * 2); ctx.fill();
+    // 광선
+    ctx.save(); ctx.globalCompositeOperation = "lighter";
+    for (var r = 0; r < 14; r++) { var ra = -Math.PI / 2 + (r - 7) * .16; ctx.strokeStyle = "rgba(255,178,63,.12)"; ctx.lineWidth = 10; ctx.beginPath(); ctx.moveTo(220, 170); ctx.lineTo(220 + Math.cos(ra) * 260, 170 + Math.sin(ra) * 260); ctx.stroke(); }
+    ctx.restore();
+  })();
+
+  // 릴스 장면
+  (function () {
+    var cv = document.getElementById("reelCanvas"); if (!cv) return; var ctx = cv.getContext("2d"), W = cv.width, H = cv.height;
+    var kx = 220, ky = 470, r = field(ctx, W, H, 21, kx, ky);
+    for (var i = 0; i < 40; i++) { var a = r() * Math.PI * 2, d = 120 + r() * 260; enemy(ctx, ["spike", "block", "bubble", "core"][(r() * 4) | 0], kx + Math.cos(a) * d, ky + Math.sin(a) * d * 1.3, 11 + r() * 6, r() * 6); }
+    // 블랙홀 + 일식
+    var bx = 250, by = 330; var g = ctx.createRadialGradient(bx, by, 5, bx, by, 150); g.addColorStop(0, "#000"); g.addColorStop(.3, "rgba(166,107,255,.9)"); g.addColorStop(1, "rgba(166,107,255,0)");
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(bx, by, 150, 0, Math.PI * 2); ctx.fill();
+    ctx.save(); ctx.strokeStyle = "#FFF4C2"; glow(ctx, "#FFF4C2", 30); ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(bx, by, 48, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    for (var s = 0; s < 5; s++) { ctx.save(); ctx.strokeStyle = "rgba(166,107,255,.7)"; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(bx, by, 70 + s * 18, s * 1.2, s * 1.2 + 1.6); ctx.stroke(); ctx.restore(); }
+    knight(ctx, kx, ky + 60, 1.2, true);
+    ctx.save(); ctx.font = "34px 'Black Han Sans', sans-serif"; ctx.textAlign = "center"; ctx.fillStyle = "#A66BFF"; glow(ctx, "#A66BFF", 16); ctx.fillText("일식!", bx, by + 10); ctx.restore();
+  })();
+})();
+</script>

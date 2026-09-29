@@ -173,3 +173,18 @@
 - 스크린샷 4: 장비·소환 + "전설 확정 천장 50회"
 - 스크린샷 5: 야영지 + "쉬는 동안에도 강해진다"
 - 프로모션 영상(30초): 첫 5초에 원소 반응 연쇄 → 숏폼(유튜브 쇼츠/틱톡) 광고 소재와 공용.
+
+---
+
+## 8. 화면 시안
+
+- 인터랙티브 시안: [design/mockups.html](design/mockups.html) (브라우저로 열기)
+- 전체 개요: ![시안 개요](design/overview.png)
+
+| 전투 HUD | 룬 선택·배치 | 로비 | 소환 | 결과 |
+|---|---|---|---|---|
+| ![](design/battle.png) | ![](design/rune-pick.png) | ![](design/lobby.png) | ![](design/gacha.png) | ![](design/result.png) |
+
+| 빌드 카드 (인스타 피드 4:5) | 하이라이트 릴스 (9:16) |
+|---|---|
+| ![](design/share-card.png) | ![](design/reel.png) |

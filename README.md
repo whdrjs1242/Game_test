@@ -30,6 +30,8 @@ Google Play(Android) 출시를 목표로 하는 모바일 게임 기획 문서 �
 | 4 | [기술 설계](docs/04-technical-design.md) | 아키텍처, 엔진, 데이터/세이브, 구글 계정 연동(PGS), 결제, 광고, 테스트, CI |
 | 5 | [보안·정책 준수](docs/05-security-compliance.md) | 세이브 변조 방지, 결제 검증, 메모리 치트 대응, 개인정보, 확률형 아이템 법규, Play 정책 |
 | 6 | [개발 로드맵](docs/06-roadmap.md) | Claude Code 개발 마일스톤, 완료 조건(DoD), 출시·라이브 운영 계획 |
+| 7 | [마케팅 계획](docs/07-marketing.md) | 1인 운영(인스타·소셜), 월 10만 원 + 수익 10~20% 재투자 예산 계획, 바이럴 기능 |
+| 🎨 | [화면 디자인 시안](docs/design/mockups.html) | 전투·룬 배치·로비·소환·결과 공유 카드 시안 (PNG: `docs/design/*.png`) |
 | - | [CLAUDE.md](CLAUDE.md) | Claude Code가 개발 시 따를 프로젝트 규칙 |
 
 ## 비용 판단 결과 (요청 사항 반영)
