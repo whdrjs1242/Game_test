@@ -34,7 +34,7 @@ Google Play(Android) 출시를 목표로 하는 모바일 게임 기획 문서 �
 | 8 | [아이템·스킬 데이터](docs/08-items-skills.md) | 오브 52 · 룬 30 + 유일룬 12 · 펫 20 · 패시브 9 · 액티브 20 · 소환 3배너 · 합성 |
 | 9 | [히든 코덱스 ⚠️스포일러](docs/09-hidden-codex.md) | 히든 아이템 12종, 각성 조건, 비공개 레시피, 숨은 시너지 |
 | 10 | [콘텐츠 확장](docs/10-content-expansion.md) | 요일 던전 미니게임 3종, 끝없는 스토리, 태그 공명·각인(업적 효과), 가벼운 미션 |
-| 🎨 | [화면 디자인 시안 v4](docs/design/mockups.html) | 만화 마스코트 캐릭터 재디자인 · 화면 8종 + 캐릭터·몬스터·펫·오브 갤러리 + 유일룬 (PNG: `docs/design/shot_*.png`) |
+| 🎨 | [화면 디자인 시안 v5](docs/design/mockups.html) | 트렌드 반영 "Chrono Pop" 캐릭터(무광 아트토이 + 스트리트웨어) · 화면 8종 + 캐릭터·몬스터·펫·오브 갤러리 + 유일룬 (PNG: `docs/design/shot_*.png`) |
 | 🗺️ | [FigJam 흐름도](https://www.figma.com/board/XAPBKX8HR1LHIAHHtWLXD8) | 성장·합성·히든·유일룬 흐름 |
 | - | [CLAUDE.md](CLAUDE.md) | Claude Code가 개발 시 따를 프로젝트 규칙 |
 

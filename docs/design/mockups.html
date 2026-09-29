@@ -49,6 +49,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 .abs { position: absolute; z-index: 3; }
 .num { font-family: var(--f-num); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
 .spr { position: absolute; transform: translate(-50%, -100%); filter: drop-shadow(0 6px 6px rgba(0,0,0,.55)); max-width: none; }
+.layer .spr { filter: drop-shadow(0 0 1px #FFF3DC) drop-shadow(0 0 1px #FFF3DC) drop-shadow(0 0 6px rgba(255,236,200,.35)) drop-shadow(0 5px 5px rgba(0,0,0,.6)); }
 .spr.flip { transform: translate(-50%, -100%) scaleX(-1); }
 .ground { position: absolute; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.55), transparent); pointer-events: none; }
 
@@ -333,9 +334,9 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
   <header class="top">
     <svg class="mark" data-logo viewBox="0 0 100 100" aria-label="Chrono Knight 로고"></svg>
     <div class="ht">
-      <div class="eyebrow">화면 디자인 시안 · v4 · 캐릭터 재디자인</div>
+      <div class="eyebrow">화면 디자인 시안 · v5 · 트렌드 반영 "Chrono Pop"</div>
       <h1>CHRONO KNIGHT</h1>
-      <p class="lede">캐릭터를 만화 마스코트 스타일(2~2.5등신, 굵은 실루엣, 3색 규칙, 표정 중심)로 전면 재디자인한 버전입니다. 배경·스토리 삽화는 페인터리 톤을 유지하고, UI는 황동 시계 장치 + 원소 네온 스타일을 그대로 씁니다.</p>
+      <p class="lede">2025~2026 트렌드(촉각적 미니멀리즘 · 디자이너 아트토이 · 스트리트웨어 패션 · 절제된 배색)를 반영해 캐릭터를 다시 디자인했습니다. 광택 플라스틱 대신 무광 비닐·니트·펠트·브러시드 황동 재질, 원색 대신 톤 다운된 2색 + 포인트 1색, 뻔한 웃음 대신 삐딱하고 감정 있는 표정을 씁니다.</p>
     </div>
   </header>
 
@@ -438,8 +439,8 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
             <span class="pill"><svg class="gem" data-res="crystal" viewBox="0 0 24 24"></svg><span class="num">1,250</span><span class="plus">+</span></span>
           </div>
           <div class="abs tabs glass"><span>오브</span><span>룬</span><span class="on">펫</span></div>
-          <div class="abs feature"><img src="art/pet_whale.webp" alt="레전드 펫 크로노베일"></div>
-          <div class="abs pickup glass ornate"><div><span class="k">PICK UP · 레전드</span><b>크로노베일 · 하늘고래</b><span class="d">액티브: 전장 2초 정지 · 정지 중 피해 ×2</span></div><span class="st">★5</span></div>
+          <div class="abs feature"><img src="art/pet_owl.webp" alt="펫 톡"></div>
+          <div class="abs pickup glass ornate"><div><span class="k">PICK UP · 유니크</span><b>톡 · 졸린 시계 부엉이</b><span class="d">액티브: 바늘을 1칸 앞으로 당김 · 12시 효과 +25%</span></div><span class="st">★4</span></div>
           <div class="abs pity glass">
             <div class="line"><span>레전드 확정까지</span><span><b class="num" style="color:var(--g-l)">31</b> 회</span></div>
             <div class="bar"><b style="width:61%;background:linear-gradient(90deg,#8a4fe0,#FFB23F)"></b></div>
@@ -470,7 +471,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
           </div>
           <div class="abs rewards">
             <div class="gf l"><img src="art/orb_sun.webp" alt="태양 오브"><b class="cnt num">1</b></div>
-            <div class="gf u"><img src="art/pet_moonfox.webp" alt="달 여우"><b class="cnt num">1</b></div>
+            <div class="gf u"><img src="art/pet_owl.webp" alt="톡"><b class="cnt num">1</b></div>
             <div class="gf r"><img src="art/orb_storm.webp" alt="폭풍 오브"><b class="cnt num">2</b></div>
             <div class="gf n"><svg data-res="gold" viewBox="0 0 24 24" style="width:60%;height:60%"></svg><b class="cnt num">4.2K</b></div>
           </div>
@@ -562,7 +563,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 
   <section>
     <h2>캐릭터 · 몬스터 · 펫 · 오브</h2>
-    <p class="sec-note">만화 마스코트 스타일 캐스트. 주인공은 ElevenLabs(gpt-image-2), 나머지는 Higgsfield(z_image)로 생성하고 rembg로 배경을 제거했습니다. 원칙: 2~2.5등신 · 캐릭터당 3색 · 고유 돌출부 1개 · 모두 눈이 보이는 얼굴.</p>
+    <p class="sec-note">"Chrono Pop" 캐스트. Higgsfield Seedream 5.0 / z_image로 생성, rembg로 배경 제거. 규칙: 무광 촉감 재질 · 톤 2색 + 포인트 1색 · 삐딱한 표정 · 스트리트웨어 레이어 · 비대칭 1곳. 코어 몬스터와 펫 3종(기어윔·루나·크로노베일), 오브 아이콘은 같은 규칙으로 재제작 대기 중입니다.</p>
     <div class="gallery" data-gallery></div>
   </section>
 
@@ -614,7 +615,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
           <div><div class="gf r"><img src="art/orb_moon.webp" alt=""></div>레어</div>
           <div><div class="gf u"><img src="art/orb_abyss.webp" alt=""></div>유니크</div>
           <div><div class="gf l"><img src="art/orb_sun.webp" alt=""></div>레전드</div>
-          <div><div class="gf h"><img src="art/pet_whale.webp" alt=""></div>히든</div>
+          <div><div class="gf h"><img src="art/boss_clockbreaker.webp" alt=""></div>히든</div>
           <div><div class="gf x"><img src="art/urune_U12.webp" alt="" style="width:100%;height:100%"></div>유일</div>
         </div>
       </div>
@@ -929,7 +930,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
     ["mon_nova", 64, 262, 40, false], ["mon_spike", 252, 262, 46, true],
     ["mon_block", 262, 360, 62, true], ["mon_spike", 54, 330, 48, false],
     ["mon_bubble", 50, 430, 40, false], ["mon_shard", 250, 470, 54, true],
-    ["mon_bubble", 276, 548, 34, true], ["mon_core", 38, 520, 50, false],
+    ["mon_bubble", 276, 548, 34, true], ["mon_nova", 38, 520, 46, false],
     ["mon_spike", 108, 560, 40, true], ["mon_nova", 214, 590, 34, false]
   ];
   function battleLayer(el) {
@@ -941,7 +942,7 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
       html += '<span class="ground" style="left:' + s[1] + 'px;top:' + (s[2] - 3) + 'px;width:' + w + 'px;height:' + (w * 0.28) + 'px"></span>';
       var st = 'left:' + s[1] + 'px;top:' + s[2] + 'px;height:' + s[3] + 'px;';
       if (s[5] === "shadow") st += 'opacity:.5;filter:grayscale(1) brightness(.5) sepia(1) hue-rotate(220deg) saturate(3) drop-shadow(0 0 10px rgba(166,107,255,.8));';
-      if (s[5] === "hero") st += 'filter:drop-shadow(0 0 10px rgba(255,210,110,.55)) drop-shadow(0 6px 6px rgba(0,0,0,.6));';
+      if (s[5] === "hero") st += 'filter:drop-shadow(0 0 1.2px #FFE9A8) drop-shadow(0 0 1.2px #FFE9A8) drop-shadow(0 0 12px rgba(255,210,110,.6)) drop-shadow(0 6px 6px rgba(0,0,0,.6));';
       html += '<img class="spr' + (s[4] ? ' flip' : '') + '" src="art/' + s[0] + '.webp" alt="" style="' + st + '">';
     });
     el.innerHTML = html;
@@ -980,17 +981,16 @@ figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
 
   /* ---------- 갤러리 ---------- */
   var GAL = [
-    ["knight", "l", "세콘 · 초침 기사", "주인공. 초침 볏 · 태엽 열쇠 · 분침 대검 · 주황 스카프. 로열 블루/골드/오렌지.", true],
-    ["boss_clockbreaker", "h", "브레이커 · 시계 파괴자", "시대 1 보스. 금 간 괘종시계 얼굴, 망치 팔, 튀어나온 태엽.", false],
-    ["mon_spike", "n", "삐죽이", "▲ 돌진형 · 외눈 · 화난 눈썹"], ["mon_block", "n", "네모돌", "■ 탱커형 · 큰 턱 · 팔짱"],
-    ["mon_bubble", "n", "퐁퐁", "● 분열형 · 멍한 웃음"], ["mon_shard", "n", "쨍이", "◆ 원거리형 · 렌즈 외눈"],
-    ["mon_core", "n", "방패콩", "⬡ 지원형 · 보호막 · 겁쟁이"], ["mon_nova", "n", "펑스타", "✦ 자폭형 · 도화선"],
-    ["pet_owl", "u", "톡 · 크로노 부엉이", "유니크 펫 · 12시 칸 효과 +25%"], ["pet_moonfox", "u", "루나 · 달여우", "유니크 펫 · 월광 분신 소환"],
-    ["pet_gearwyrm", "u", "기어윔", "유니크 펫 · 톱니 브레스"], ["pet_whale", "l", "크로노베일 · 하늘고래", "레전드 펫 · 전장 2초 정지"],
-    ["orb_sun", "l", "정오의 태양 헬리오스", "레전드 오브 · 태양 계열"], ["orb_moon", "r", "반달 호위", "레어 오브 · 달 계열"],
-    ["orb_storm", "r", "천둥 왕관", "레어 오브 · 폭풍 계열"], ["orb_abyss", "u", "사건의 지평선", "유니크 오브 · 심연 계열"],
-    ["orb_gear", "m", "초승달 위성", "매직 오브 · 달 계열"], ["npc_nora", "r", "노라 · 시계공", "스토리 안내자 · 개그 담당"],
-    ["story_nora_illust", "n", "스토리 삽화 톤 (참고)", "컷신·로딩 일러스트는 이 페인터리 톤을 유지", true]
+    ["knight", "l", "세콘 · 초침 기사", "쿨한 척하지만 정 많은 꼬마 기사. 크림 니트 후디 + 잉크 네이비 갑주, 기울어진 초침 볏, 탠저린 니트 스카프.", true],
+    ["boss_clockbreaker", "h", "브레이커 · 시계 파괴자", "금 간 괘종시계 골렘. 스티커·용수철·자수정 돌기, 마젠타 균열.", false],
+    ["mon_spike", "n", "삐죽이", "짝눈 · 송곳니 · 짝짝이 운동화. 심술쟁이 돌진형"],
+    ["mon_block", "n", "네모돌", "비니 쓴 팔짱 큐브. 무표정 탱커"],
+    ["mon_bubble", "n", "퐁퐁", "반투명 젤리 · 분열 직전. 멍한 분열형"],
+    ["mon_shard", "n", "쨍이", "렌즈 외눈 · 수정 지느러미. 원거리형"],
+    ["mon_nova", "n", "펑스타", "도화선 달린 별. 광기의 자폭형"],
+    ["pet_owl", "u", "톡 · 졸린 시계 부엉이", "펠트 소재 · 니트 비니 · 배가 시계"],
+    ["npc_nora", "r", "노라 · 시계공", "올리브 작업 재킷 · 황동 고글 · 스패너. 수다쟁이 천재"],
+    ["story_nora_illust", "n", "스토리 삽화 톤 (참고)", "컷신·로딩 일러스트는 페인터리 톤 유지", true]
   ];
   var g = document.querySelector("[data-gallery]");
   if (g) g.innerHTML = GAL.map(function (x) {
