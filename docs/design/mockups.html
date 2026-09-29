@@ -3,27 +3,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Hahmlet:wght@600;800&family=Barlow+Condensed:ital,wght@0,600;0,700;1,700&family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <style>
-/* Layout: 시계탑 벽면 같은 어두운 캔버스 위에 실제 크기 폰 화면 5장, 그 아래 공유물과 UI 스타일 가이드.
-   게임 UI가 다크 전용이므로 페이지도 다크 단일 테마로 고정한다.
-   재질 규칙: 황동(Brass) 베젤 = 중요/상호작용, 남색 유리(Glass) 패널 = 정보, 보석(Gem) = 원소·등급. */
+/* Layout: 실제 크기 폰 화면 8장(핵심 흐름) → 아트 갤러리(캐릭터·몬스터·펫·오브·유일룬) → 공유물 → UI 스타일 가이드.
+   게임 UI가 다크 전용이므로 페이지도 다크 단일 테마.
+   재질: 황동 = 누를 수 있는 주요 요소, 남색 유리 = 정보, 보석 = 원소·등급, 황동 장식 모서리 = 중요 패널. */
 :root {
   color-scheme: dark;
-  --night-0: #05071A;
-  --night-1: #0A0E22;
-  --night-2: #121942;
-  --line: #2A3470;
-  --hair: rgba(255, 221, 160, .22);
-  --text: #F3F1EA;
-  --text-2: #A8B0D4;
-  --text-3: #6E78A8;
-  --brass-hi: #FFE9A8;
-  --brass: #E8B54A;
-  --brass-lo: #8C5A1B;
-  --ink: #2A1906;
-  --danger: #FF4D6D;
-  --success: #52E08E;
+  --night-0: #05071A; --night-1: #0A0E22; --line: #2A3470; --hair: rgba(255,221,160,.22);
+  --text: #F3F1EA; --text-2: #A8B0D4; --text-3: #6E78A8;
+  --brass-hi: #FFE9A8; --brass: #E8B54A; --ink: #2A1906;
+  --danger: #FF4D6D; --success: #52E08E;
   --fire: #FF6B35; --frost: #6EC8FF; --volt: #FFE14D; --wind: #5EF2B5; --light: #FFF1B8; --void: #A66BFF;
-  --r-common: #9AA3B5; --r-rare: #4DA3FF; --r-epic: #B65CFF; --r-legend: #FFB23F; --r-myth: #FF4D8D;
+  --g-n: #9AA3B5; --g-m: #52E08E; --g-r: #4DA3FF; --g-u: #B65CFF; --g-l: #FFB23F; --g-uniq: #E8F4FF;
   --f-logo: "Cinzel", "Times New Roman", serif;
   --f-title: "Hahmlet", "Noto Serif KR", "Noto Sans KR", serif;
   --f-num: "Barlow Condensed", "Arial Narrow", system-ui, sans-serif;
@@ -32,307 +22,320 @@
 * { box-sizing: border-box; }
 html, body { background: var(--night-0); color: var(--text); }
 body { font-family: var(--f-body); font-size: 15px; line-height: 1.55; padding-inline: 16px; padding-block: 0 72px;
-  background:
-    radial-gradient(1200px 600px at 20% -10%, rgba(232,181,74,.08), transparent 60%),
-    radial-gradient(900px 500px at 90% 10%, rgba(166,107,255,.07), transparent 60%),
-    var(--night-0); }
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(232,181,74,.08), transparent 60%), radial-gradient(900px 500px at 90% 10%, rgba(166,107,255,.07), transparent 60%), var(--night-0); }
 .wrap { max-width: 1680px; margin: 0 auto; }
-
-header.top { padding-block: 44px 30px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
+header.top { padding-block: 44px 24px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
 header.top .mark { width: 88px; height: 88px; flex: none; }
-header.top .ht { display: grid; gap: 8px; max-width: 72ch; min-width: 0; flex: 1 1 320px; }
+header.top .ht { display: grid; gap: 8px; max-width: 76ch; min-width: 0; flex: 1 1 320px; }
 .eyebrow { font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--brass); font-weight: 700; }
 h1 { font-family: var(--f-logo); font-weight: 800; font-size: clamp(34px, 6vw, 60px); line-height: 1; margin: 0; letter-spacing: .04em;
   background: linear-gradient(180deg, var(--brass-hi), var(--brass) 55%, #b9812c); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .lede { color: var(--text-2); margin: 0; }
-h2 { font-family: var(--f-title); font-weight: 800; font-size: 24px; margin: 0; text-wrap: balance; display: flex; align-items: center; gap: 12px; }
+h2 { font-family: var(--f-title); font-weight: 800; font-size: 24px; margin: 0; display: flex; align-items: center; gap: 12px; }
 h2::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--hair), transparent); }
 section { display: grid; gap: 20px; padding-block: 30px; }
-.sec-note { color: var(--text-2); margin: 0; max-width: 72ch; }
+.sec-note { color: var(--text-2); margin: 0; max-width: 76ch; }
 
 .phones { display: flex; flex-wrap: wrap; gap: 30px; }
 figure.shot { margin: 0; display: grid; gap: 12px; width: 300px; max-width: 100%; align-content: start; }
 figure.shot figcaption { display: grid; gap: 3px; }
 figure.shot figcaption b { font-size: 15px; font-family: var(--f-title); }
 figure.shot figcaption span { font-size: 13px; color: var(--text-2); }
-.phone { position: relative; width: 300px; height: 650px; max-width: 100%; border-radius: 38px; background: var(--night-1); overflow: hidden;
+.phone { position: relative; width: 300px; height: 650px; max-width: 100%; border-radius: 38px; background: var(--night-1) center / cover no-repeat; overflow: hidden;
   box-shadow: 0 0 0 5px #0d1026, 0 0 0 6px #2a2f55, 0 30px 70px rgba(0,0,0,.6); font-size: 12px; isolation: isolate; }
 .phone::after { content: ""; position: absolute; top: 9px; left: 50%; width: 64px; height: 18px; margin-left: -32px; border-radius: 10px; background: #000; z-index: 50; }
-.phone > canvas.bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
-.abs { position: absolute; z-index: 2; }
+.phone > canvas.fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.layer { position: absolute; inset: 0; z-index: 0; }
+.abs { position: absolute; z-index: 3; }
 .num { font-family: var(--f-num); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+.spr { position: absolute; transform: translate(-50%, -100%); filter: drop-shadow(0 6px 6px rgba(0,0,0,.55)); max-width: none; }
+.spr.flip { transform: translate(-50%, -100%) scaleX(-1); }
+.ground { position: absolute; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(0,0,0,.55), transparent); pointer-events: none; }
 
-.glass { background: linear-gradient(180deg, rgba(40,50,110,.72), rgba(14,19,50,.86)); border-radius: 12px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 0 0 1px rgba(255,221,160,.16), 0 6px 16px rgba(0,0,0,.45);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-.brass { position: relative; border-radius: 12px; color: var(--ink); font-family: var(--f-title); font-weight: 800; text-align: center;
+/* 재질 */
+.glass { background: linear-gradient(180deg, rgba(40,50,110,.74), rgba(12,17,46,.88)); border-radius: 12px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), inset 0 0 0 1px rgba(255,221,160,.18), 0 6px 16px rgba(0,0,0,.45); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.brass:not(.abs) { position: relative; }
+.brass { border-radius: 12px; color: var(--ink); font-family: var(--f-title); font-weight: 800; text-align: center;
   background: linear-gradient(180deg, #FFF0BF 0%, #F4C862 38%, #D99A32 70%, #B97722 100%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.75), inset 0 -3px 0 rgba(120,70,10,.55), 0 0 0 1px #6b420f, 0 4px 0 #4a2c08, 0 10px 22px rgba(232,181,74,.28);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.75), inset 0 -3px 0 rgba(120,70,10,.55), 0 0 0 1px #6b420f, 0 4px 0 #4a2c08, 0 10px 22px rgba(232,181,74,.3);
   text-shadow: 0 1px 0 rgba(255,240,200,.6); display: flex; align-items: center; justify-content: center; gap: 6px; }
 .brass::before { content: ""; position: absolute; inset: 3px; border-radius: 9px; border: 1px solid rgba(255,245,215,.55); pointer-events: none; }
 .steel { border-radius: 12px; color: var(--text); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 6px;
   background: linear-gradient(180deg, #2c376f, #19204a); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 0 0 1px rgba(255,221,160,.28), 0 3px 0 #0a0d24; }
+.ornate:not(.abs) { position: relative; }
+.ornate > i.cn { position: absolute; width: 16px; height: 16px; pointer-events: none; z-index: 1; }
+.ornate > i.cn svg { width: 100%; height: 100%; display: block; }
+.ornate > i.tl { top: -3px; left: -3px; } .ornate > i.tr { top: -3px; right: -3px; transform: scaleX(-1); }
+.ornate > i.bl { bottom: -3px; left: -3px; transform: scaleY(-1); } .ornate > i.br { bottom: -3px; right: -3px; transform: scale(-1,-1); }
 .ico { width: 16px; height: 16px; flex: none; }
-
-.pill { display: inline-flex; align-items: center; height: 24px; padding: 0 6px 0 0; border-radius: 999px; background: rgba(6,9,26,.72);
-  box-shadow: inset 0 0 0 1px rgba(255,221,160,.2); font-size: 12px; gap: 5px; }
+.pill { display: inline-flex; align-items: center; height: 24px; padding: 0 6px 0 0; border-radius: 999px; background: rgba(6,9,26,.75); box-shadow: inset 0 0 0 1px rgba(255,221,160,.22); font-size: 12px; gap: 5px; }
 .pill .gem { width: 24px; height: 24px; margin-left: -2px; flex: none; }
 .pill .plus { width: 15px; height: 15px; border-radius: 5px; background: linear-gradient(180deg, #7ee8a8, #2fae62); color: #062312; font-weight: 800; font-size: 12px; line-height: 15px; text-align: center; }
 .dot-badge { position: absolute; top: -2px; right: -2px; width: 9px; height: 9px; border-radius: 50%; background: var(--danger); box-shadow: 0 0 0 2px var(--night-1); }
-
-/* 1. 전투 HUD */
-.hud { top: 32px; left: 10px; right: 10px; height: 56px; display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; gap: 8px; }
 .sq { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; position: relative; }
 .sq .ico { width: 18px; height: 18px; color: var(--text); }
-.timer { justify-self: center; display: grid; justify-items: center; gap: 3px; padding: 5px 16px 6px; }
-.timer .num { font-size: 24px; line-height: 1; }
-.pips { display: flex; gap: 2px; }
-.pips i { width: 9px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); }
-.pips i.done { background: var(--brass); }
-.pips i.now { background: #fff; box-shadow: 0 0 6px #fff; }
-.wl { font-size: 9px; letter-spacing: .16em; color: var(--text-2); font-weight: 700; }
-.kills { display: grid; justify-items: center; align-content: center; line-height: 1; gap: 2px; }
-.kills .num { font-size: 15px; }
-.kills span { font-size: 8px; color: var(--text-2); letter-spacing: .1em; }
-.duel { top: 96px; left: 12px; right: 12px; display: grid; grid-template-columns: 26px 1fr 26px; align-items: center; gap: 6px; }
-.face { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; }
+.face { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; overflow: hidden; }
+.face img { width: 140%; height: 140%; object-fit: cover; object-position: 50% 8%; }
 .face.me { background: radial-gradient(circle at 40% 35%, #FFE9A8, #C98A2C); box-shadow: 0 0 0 2px #3a2308, 0 0 10px rgba(232,181,74,.6); }
 .face.sh { background: radial-gradient(circle at 40% 35%, #d7c2ff, #6a3fd0); box-shadow: 0 0 0 2px #1c0f3f, 0 0 10px rgba(166,107,255,.6); }
-.face .ico { width: 14px; height: 14px; color: #1a1030; }
+.face.sh img { filter: grayscale(1) brightness(.6) sepia(1) hue-rotate(220deg) saturate(3); }
+/* 등급 프레임 */
+.gf { position: relative; border-radius: 12px; overflow: hidden; display: grid; place-items: center; }
+.gf img { width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
+.gf.n { background: radial-gradient(circle at 50% 30%, #3a4260, #151a2e); box-shadow: inset 0 0 0 1.5px var(--g-n); }
+.gf.m { background: radial-gradient(circle at 50% 30%, #1f5a3c, #0b2418); box-shadow: inset 0 0 0 1.5px var(--g-m); }
+.gf.r { background: radial-gradient(circle at 50% 30%, #245a9e, #0e2446); box-shadow: inset 0 0 0 1.5px var(--g-r); }
+.gf.u { background: radial-gradient(circle at 50% 30%, #6b3aa8, #25124a); box-shadow: inset 0 0 0 1.5px var(--g-u), 0 0 12px rgba(182,92,255,.4); }
+.gf.l { background: radial-gradient(circle at 50% 30%, #9a5a14, #3a1e04); box-shadow: inset 0 0 0 1.5px var(--g-l), 0 0 16px rgba(255,178,63,.5); }
+.gf.h { background: radial-gradient(circle at 50% 30%, #2a2140, #07060d); }
+.gf.h::before { content: ""; position: absolute; inset: -40%; background: conic-gradient(#FF4D8D, #FFB23F, #5EF2B5, #6EC8FF, #A66BFF, #FF4D8D); z-index: -1; }
+.gf.h::after { content: ""; position: absolute; inset: 1.5px; border-radius: 11px; background: radial-gradient(circle at 50% 30%, #2a2140, #07060d); z-index: -1; }
+.gf.x { background: radial-gradient(circle at 50% 30%, #3b4a66, #0b1020); box-shadow: inset 0 0 0 1.5px var(--g-uniq), 0 0 18px rgba(232,244,255,.45); }
+.gf .gtag { position: absolute; top: 4px; left: 5px; font-size: 9px; font-weight: 800; letter-spacing: .08em; }
+.gf .cnt { position: absolute; bottom: 1px; right: 5px; font-size: 13px; text-shadow: 0 1px 0 #000, 0 0 4px #000; }
+
+/* ① 전투 */
+.hud { top: 32px; left: 10px; right: 10px; height: 56px; display: grid; grid-template-columns: 38px 1fr 38px; align-items: center; gap: 8px; }
+.timer { justify-self: center; display: grid; justify-items: center; gap: 3px; padding: 5px 16px 6px; }
+.timer .num { font-size: 24px; line-height: 1; }
+.pips { display: flex; gap: 2px; } .pips i { width: 9px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.14); }
+.pips i.done { background: var(--brass); } .pips i.now { background: #fff; box-shadow: 0 0 6px #fff; }
+.wl { font-size: 9px; letter-spacing: .16em; color: var(--text-2); font-weight: 700; }
+.kills { display: grid; justify-items: center; align-content: center; line-height: 1; gap: 2px; } .kills .num { font-size: 15px; } .kills span { font-size: 8px; color: var(--text-2); letter-spacing: .1em; }
+.duel { top: 96px; left: 12px; right: 12px; display: grid; grid-template-columns: 26px 1fr 26px; align-items: center; gap: 6px; }
 .duelbar { position: relative; height: 14px; border-radius: 99px; background: linear-gradient(90deg, rgba(166,107,255,.35), rgba(166,107,255,.6)); box-shadow: inset 0 0 0 1px rgba(0,0,0,.5); overflow: hidden; }
 .duelbar b { position: absolute; inset: 0 47% 0 0; background: linear-gradient(180deg, #FFE9A8, #E0A53A); }
-.duelbar b::after { content: ""; position: absolute; right: -3px; top: -2px; bottom: -2px; width: 6px; background: #fff; filter: blur(3px); }
 .duelbar span { position: absolute; top: 0; font-size: 10.5px; line-height: 14px; font-family: var(--f-num); font-weight: 700; }
-.duelbar .l { left: 7px; color: var(--ink); }
-.duelbar .r { right: 7px; color: #f3eaff; }
-.react { top: 132px; left: 0; right: 0; display: grid; justify-items: center; gap: 2px; pointer-events: none; }
-.react .t { font-family: var(--f-title); font-weight: 800; font-size: 30px; line-height: 1.1; letter-spacing: .02em;
-  background: linear-gradient(180deg, #FFF4C0 0%, #FFB347 45%, #FF5A2A 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 2px 0 #3a0e00) drop-shadow(0 0 10px rgba(255,120,50,.65)); transform: skewX(-6deg); }
-.react .s { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: #fff; display: flex; align-items: center; gap: 6px; }
-.react .s::before, .react .s::after { content: ""; width: 26px; height: 1px; background: linear-gradient(90deg, transparent, #FFB347); }
-.react .s::after { transform: scaleX(-1); }
-.edgewarn { top: 300px; right: 0; padding: 5px 6px 5px 9px; border-radius: 10px 0 0 10px; background: linear-gradient(90deg, rgba(255,77,109,.2), rgba(255,77,109,.6)); font-size: 9px; font-weight: 700; display: grid; justify-items: center; gap: 1px; color: #fff; }
-.lvbox { bottom: 20px; left: 10px; right: 128px; display: grid; grid-template-columns: 40px 1fr; gap: 8px; align-items: center; }
-.lvmed { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; line-height: 1;
-  background: radial-gradient(circle at 50% 35%, #2f3b86, #10163e); box-shadow: 0 0 0 2px #C98A2C, 0 0 0 4px #3a2308, 0 4px 10px rgba(0,0,0,.5); }
-.lvmed small { font-size: 7px; color: var(--brass); letter-spacing: .1em; display: block; text-align: center; font-weight: 700; }
-.lvmed .num { font-size: 17px; }
+.duelbar .l { left: 7px; color: var(--ink); } .duelbar .r { right: 7px; color: #f3eaff; }
+.react { top: 232px; left: 14px; display: grid; justify-items: start; gap: 2px; pointer-events: none; }
+.react .t { font-family: var(--f-title); font-weight: 800; font-size: 30px; line-height: 1.1; background: linear-gradient(180deg, #FFF4C0, #FFB347 45%, #FF5A2A); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 2px 0 #3a0e00) drop-shadow(0 0 10px rgba(255,120,50,.65)); transform: skewX(-6deg); }
+.react .s { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; color: #fff; text-shadow: 0 1px 3px #000; }
+.bossbar { top: 132px; left: 40px; right: 40px; display: grid; gap: 2px; }
+.bossbar .n { display: flex; justify-content: space-between; font-size: 9.5px; font-weight: 700; text-shadow: 0 1px 3px #000; }
+.bossbar .b { height: 6px; border-radius: 3px; background: rgba(0,0,0,.6); overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,77,109,.5); }
+.bossbar .b i { display: block; height: 100%; width: 38%; background: linear-gradient(90deg, #ff8a9e, #FF4D6D); }
+.lvbox { bottom: 20px; left: 10px; right: 178px; display: grid; grid-template-columns: 40px 1fr; gap: 8px; align-items: center; }
+.lvmed { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; line-height: 1; background: radial-gradient(circle at 50% 35%, #2f3b86, #10163e); box-shadow: 0 0 0 2px #C98A2C, 0 0 0 4px #3a2308, 0 4px 10px rgba(0,0,0,.5); }
+.lvmed small { font-size: 7px; color: var(--brass); letter-spacing: .1em; display: block; text-align: center; font-weight: 700; } .lvmed .num { font-size: 17px; }
 .xp { height: 10px; border-radius: 99px; background: rgba(4,6,20,.8); box-shadow: inset 0 0 0 1px rgba(255,221,160,.25); overflow: hidden; position: relative; }
 .xp b { position: absolute; inset: 0 28% 0 0; background: linear-gradient(180deg, #b7ffd2, #3fd07d 60%, #23a35a); }
-.xp::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(0,0,0,.35) 18px 19px); }
 .xplabel { font-size: 9px; color: var(--text-2); display: flex; justify-content: space-between; margin-bottom: 3px; }
-.clockslot { right: 8px; bottom: 10px; width: 118px; height: 118px; }
+.clockslot { right: 6px; bottom: 8px; width: 116px; height: 116px; }
+.skillbtn { right: 124px; bottom: 16px; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 35%, #3b4aa3, #121845); box-shadow: 0 0 0 2px #E8B54A, 0 0 0 4px #3a2308, 0 0 16px rgba(110,200,255,.5); }
+.skillbtn .ico { width: 24px; height: 24px; color: #cfeaff; }
+.skillbtn::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(rgba(5,7,26,.72) 0 28%, transparent 28%); }
+.skillbtn small { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); font-size: 8.5px; white-space: nowrap; color: var(--text-2); font-weight: 700; }
 
-/* 2. 룬 선택 */
-canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: scale(1.04); }
+/* ② 룬 선택 */
+.dimmed { filter: blur(3px) brightness(.36) saturate(.8); transform: scale(1.05); }
 .pickhead { top: 38px; left: 0; right: 0; display: grid; justify-items: center; gap: 2px; }
-.pickhead .t { font-family: var(--f-logo); font-weight: 800; font-size: 30px; letter-spacing: .08em; line-height: 1;
-  background: linear-gradient(180deg, #FFF3C9, #E8B54A 60%, #A86E1E); -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 0 14px rgba(232,181,74,.45)); }
-.pickhead .s { font-size: 10.5px; color: var(--text-2); display: flex; align-items: center; gap: 8px; }
-.pickhead .s::before, .pickhead .s::after { content: "◆"; font-size: 6px; color: var(--brass); }
+.pickhead .t { font-family: var(--f-logo); font-weight: 800; font-size: 30px; letter-spacing: .08em; line-height: 1; background: linear-gradient(180deg, #FFF3C9, #E8B54A 60%, #A86E1E); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 0 14px rgba(232,181,74,.45)); }
+.pickhead .s { font-size: 10.5px; color: var(--text-2); }
 .bigclock { top: 84px; left: 36px; width: 228px; height: 228px; }
-.preview { top: 318px; left: 22px; right: 22px; padding: 6px 10px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 10.5px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), inset 0 0 0 1px rgba(94,242,181,.55), 0 0 16px rgba(94,242,181,.2); }
-.preview b { color: var(--wind); font-family: var(--f-title); font-size: 12px; }
-.preview span { color: var(--text-2); }
+.preview { top: 318px; left: 22px; right: 22px; padding: 6px 10px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 10.5px; box-shadow: inset 0 0 0 1px rgba(94,242,181,.55), 0 0 16px rgba(94,242,181,.2); }
+.preview b { color: var(--wind); font-family: var(--f-title); font-size: 12px; } .preview span { color: var(--text-2); }
 .cards { bottom: 70px; left: 8px; right: 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; align-items: end; }
-.card { position: relative; border-radius: 12px; min-width: 0; padding: 0 0 8px; display: grid; justify-items: center; gap: 4px; text-align: center; overflow: hidden;
-  background: linear-gradient(180deg, #1b2356, #0d1233); box-shadow: inset 0 0 0 1px rgba(255,221,160,.2), 0 8px 18px rgba(0,0,0,.5); }
-.card .band { width: 100%; height: 44px; position: relative; }
-.card .medal { width: 50px; height: 50px; margin-top: -32px; position: relative; }
+.card { position: relative; border-radius: 12px; min-width: 0; padding: 0 0 8px; display: grid; justify-items: center; gap: 4px; text-align: center; overflow: hidden; background: linear-gradient(180deg, #1b2356, #0d1233); box-shadow: inset 0 0 0 1px rgba(255,221,160,.2), 0 8px 18px rgba(0,0,0,.5); }
+.card .band { width: 100%; height: 44px; }
+.card .medal { width: 50px; height: 50px; margin-top: -32px; }
 .card b { font-family: var(--f-title); font-size: 13px; line-height: 1.2; }
-.card .tag { font-size: 8.5px; letter-spacing: .12em; color: var(--text-3); font-weight: 700; }
+.card .tag { font-size: 8.5px; letter-spacing: .1em; font-weight: 700; }
 .card .d { font-size: 9.5px; color: var(--text-2); line-height: 1.35; padding-inline: 6px; min-height: 26px; }
-.card .lv { display: flex; gap: 3px; height: 14px; align-items: center; }
-.card .lv i { width: 6px; height: 6px; transform: rotate(45deg); background: rgba(255,255,255,.14); }
-.card .lv i.on { background: var(--brass); box-shadow: 0 0 4px var(--brass); }
-.card .new { font-size: 9px; font-weight: 800; color: var(--ink); background: linear-gradient(180deg, #FFE9A8, #E0A53A); padding: 1px 7px; border-radius: 4px; letter-spacing: .08em; height: 14px; line-height: 12px; }
+.card .lv { display: flex; gap: 3px; height: 14px; align-items: center; } .card .lv i { width: 6px; height: 6px; transform: rotate(45deg); background: rgba(255,255,255,.14); } .card .lv i.on { background: var(--brass); }
 .card.sel { transform: translateY(-10px); box-shadow: inset 0 0 0 1.5px var(--wind), 0 0 22px rgba(94,242,181,.4), 0 12px 22px rgba(0,0,0,.55); }
-.card .ribbon { position: absolute; top: 7px; right: -22px; transform: rotate(35deg); background: var(--wind); color: #042819; font-size: 8px; font-weight: 800; padding: 1px 24px; letter-spacing: .06em; z-index: 1; }
+.card .ribbon { position: absolute; top: 7px; right: -22px; transform: rotate(35deg); background: var(--wind); color: #042819; font-size: 8px; font-weight: 800; padding: 1px 24px; z-index: 1; }
 .pick-actions { bottom: 18px; left: 10px; right: 10px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .pick-actions > div { height: 40px; font-size: 12px; }
 .pick-actions small { font-size: 9px; color: var(--text-2); font-weight: 500; }
 
-/* 3. 로비 */
+/* ③ 로비 */
 .prof { top: 32px; left: 10px; display: flex; gap: 8px; align-items: center; }
-.avatar { width: 42px; height: 42px; border-radius: 50%; position: relative; display: grid; place-items: center;
-  background: radial-gradient(circle at 50% 30%, #3b4aa3, #121845); box-shadow: 0 0 0 2px #D9A23A, 0 0 0 4px #3a2308; }
-.avatar .ico { width: 22px; height: 22px; color: #F3F1EA; }
-.avatar .lvtag { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-size: 10px; line-height: 13px; padding: 0 5px; border-radius: 5px; background: #0a0e22; box-shadow: 0 0 0 1px #D9A23A; color: var(--brass-hi); }
-.prof .n { display: grid; line-height: 1.25; }
-.prof .n b { font-family: var(--f-title); font-size: 12px; }
-.prof .n > span { font-size: 12px; color: var(--brass-hi); display: flex; align-items: center; gap: 3px; }
-.prof .n .ico { width: 11px; height: 11px; }
-.topicons { top: 36px; right: 10px; display: flex; gap: 6px; }
-.topicons .sq { width: 32px; height: 32px; border-radius: 10px; }
-.topicons .sq .ico { width: 16px; height: 16px; }
+.avatar { width: 42px; height: 42px; border-radius: 50%; position: relative; overflow: visible; background: radial-gradient(circle at 50% 30%, #3b4aa3, #121845); box-shadow: 0 0 0 2px #D9A23A, 0 0 0 4px #3a2308; }
+.avatar .clip { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; }
+.avatar .clip img { width: 170%; margin-left: -35%; margin-top: -6%; }
+.avatar .lvtag { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-size: 10px; line-height: 13px; padding: 0 5px; border-radius: 5px; background: #0a0e22; box-shadow: 0 0 0 1px #D9A23A; color: var(--brass-hi); z-index: 1; }
+.prof .n { display: grid; line-height: 1.25; } .prof .n b { font-family: var(--f-title); font-size: 12px; } .prof .n > span { font-size: 12px; color: var(--brass-hi); display: flex; align-items: center; gap: 3px; } .prof .n .ico { width: 11px; height: 11px; }
+.topicons { top: 36px; right: 10px; display: flex; gap: 6px; } .topicons .sq { width: 32px; height: 32px; border-radius: 10px; }
 .resrow { top: 84px; left: 10px; right: 10px; display: flex; justify-content: space-between; gap: 4px; }
-.side { top: 126px; display: grid; gap: 10px; }
-.side.l { left: 10px; } .side.r { right: 10px; }
+.side { top: 124px; display: grid; gap: 12px; } .side.l { left: 10px; } .side.r { right: 10px; }
 .sidebtn { display: grid; justify-items: center; gap: 2px; font-size: 9px; color: var(--text); text-shadow: 0 1px 2px #000; position: relative; }
-.sidebtn .sq { width: 38px; height: 38px; border-radius: 12px; }
-.sidebtn .sq .ico { width: 19px; height: 19px; color: var(--brass-hi); }
-.chapter { top: 336px; left: 12px; right: 12px; padding: 8px 12px 10px; display: grid; gap: 7px; }
-.chapter .t { display: flex; justify-content: space-between; align-items: baseline; }
-.chapter .t b { font-family: var(--f-title); font-size: 13px; }
-.chapter .t > span { font-size: 10px; color: var(--text-2); }
+.sidebtn .sq { width: 40px; height: 40px; border-radius: 12px; } .sidebtn .sq .ico { width: 20px; height: 20px; color: var(--brass-hi); }
+.sidebtn .timer-tag { position: absolute; top: 30px; left: 50%; transform: translateX(-50%); font-size: 8.5px; padding: 0 4px; border-radius: 4px; background: var(--success); color: #062312; font-weight: 800; }
+.modebtn { display: grid; justify-items: center; gap: 2px; font-size: 9px; text-shadow: 0 1px 2px #000; position: relative; }
+.modebtn .m { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 50% 30%, #2f3b86, #10163e); box-shadow: 0 0 0 2px #C98A2C, 0 0 0 4px #3a2308, 0 4px 12px rgba(0,0,0,.5); }
+.modebtn .m .ico { width: 22px; height: 22px; color: var(--brass-hi); }
+.chapter { top: 452px; left: 12px; right: 12px; padding: 7px 12px; display: grid; gap: 6px; }
+.chapter .t { display: flex; justify-content: space-between; align-items: baseline; } .chapter .t b { font-family: var(--f-title); font-size: 12.5px; } .chapter .t > span { font-size: 10px; color: var(--text-2); }
 .path { display: flex; align-items: center; }
-.path i { width: 9px; height: 9px; border-radius: 50%; background: #1b2356; box-shadow: inset 0 0 0 1.5px var(--line); flex: none; }
+.path i { width: 8px; height: 8px; border-radius: 50%; background: #1b2356; box-shadow: inset 0 0 0 1.5px var(--line); flex: none; }
 .path i.c { background: radial-gradient(circle at 40% 35%, #FFE9A8, #C98A2C); box-shadow: none; }
-.path i.now { width: 16px; height: 16px; background: radial-gradient(circle at 40% 35%, #fff, #FFD36B 50%, #C98A2C); box-shadow: 0 0 0 2px #3a2308, 0 0 10px #FFD36B; }
-.path i.boss { width: 12px; height: 12px; border-radius: 3px; transform: rotate(45deg); background: #3a1224; box-shadow: inset 0 0 0 1.5px var(--danger), 0 0 8px rgba(255,77,109,.5); }
-.path em { flex: 1; height: 2px; background: var(--line); }
-.path em.c { background: linear-gradient(90deg, #C98A2C, #FFE9A8); }
-.startbtn { top: 414px; left: 12px; right: 12px; height: 60px; flex-direction: column; gap: 0; }
-.startbtn .a { font-size: 21px; letter-spacing: .06em; line-height: 1.1; }
-.startbtn .b { font-family: var(--f-body); font-size: 10px; font-weight: 700; opacity: .75; }
-.modes { top: 488px; left: 12px; right: 12px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.mode { padding: 7px 7px 6px; display: grid; grid-template-columns: 22px 1fr; column-gap: 6px; align-items: center; min-width: 0; }
-.mode .ico { width: 20px; height: 20px; color: var(--brass); grid-row: span 2; }
-.mode b { font-size: 10px; line-height: 1.2; white-space: nowrap; letter-spacing: -.02em; }
-.mode span { font-size: 9.5px; color: var(--text-2); line-height: 1.2; }
-.camp { top: 540px; left: 12px; right: 12px; padding: 6px 6px 6px 10px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), inset 0 0 0 1px rgba(82,224,142,.45), 0 0 14px rgba(82,224,142,.15); }
-.camp .brass { height: 26px; padding: 0 14px; font-size: 11px; }
-.camp .ico { width: 14px; height: 14px; color: var(--success); }
-.nav { bottom: 0; left: 0; right: 0; height: 68px; z-index: 3; display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; padding-bottom: 12px;
-  background: linear-gradient(180deg, rgba(10,14,34,.2), #0a0e22 30%); border-top: 1px solid rgba(255,221,160,.18); }
+.path i.now { width: 14px; height: 14px; background: radial-gradient(circle at 40% 35%, #fff, #FFD36B 50%, #C98A2C); box-shadow: 0 0 0 2px #3a2308, 0 0 10px #FFD36B; }
+.path i.boss { width: 11px; height: 11px; border-radius: 3px; transform: rotate(45deg); background: #3a1224; box-shadow: inset 0 0 0 1.5px var(--danger); }
+.path em { flex: 1; height: 2px; background: var(--line); } .path em.c { background: linear-gradient(90deg, #C98A2C, #FFE9A8); }
+.startbtn { top: 500px; left: 12px; right: 12px; height: 48px; flex-direction: column; gap: 0; }
+.startbtn .a { font-size: 20px; letter-spacing: .06em; line-height: 1.1; } .startbtn .b { font-family: var(--f-body); font-size: 9.5px; font-weight: 700; opacity: .75; }
+.nav { bottom: 0; left: 0; right: 0; height: 64px; z-index: 4; display: grid; grid-template-columns: repeat(5, 1fr); align-items: end; padding-bottom: 10px; background: linear-gradient(180deg, rgba(10,14,34,.3), #0a0e22 30%); border-top: 1px solid rgba(255,221,160,.2); }
 .nav > div { display: grid; justify-items: center; gap: 3px; font-size: 9.5px; color: var(--text-3); position: relative; }
 .nav > div .ico { width: 21px; height: 21px; color: var(--text-3); }
 .nav > div.on { color: var(--brass-hi); font-weight: 700; }
-.nav > div.on .medal { width: 50px; height: 50px; margin-top: -30px; border-radius: 50%; display: grid; place-items: center;
-  background: radial-gradient(circle at 50% 30%, #FFF0BF, #E8B54A 55%, #9a6419); box-shadow: 0 0 0 2px #3a2308, 0 0 0 4px rgba(232,181,74,.35), 0 0 22px rgba(232,181,74,.5); }
+.nav > div.on .medal { width: 48px; height: 48px; margin-top: -28px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 50% 30%, #FFF0BF, #E8B54A 55%, #9a6419); box-shadow: 0 0 0 2px #3a2308, 0 0 0 4px rgba(232,181,74,.35), 0 0 22px rgba(232,181,74,.5); }
 .nav > div.on .medal .ico { color: var(--ink); width: 24px; height: 24px; }
 
-/* 4. 소환 */
+/* ④ 소환 */
 .gtop { top: 34px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; }
-.gtitle { top: 76px; left: 0; right: 0; display: grid; justify-items: center; }
-.gtitle .ribbon { position: relative; padding: 5px 28px; font-family: var(--f-title); font-weight: 800; font-size: 16px; color: var(--ink);
-  background: linear-gradient(180deg, #FFF0BF, #E8B54A 60%, #B97722); clip-path: polygon(0 0, 100% 0, 94% 50%, 100% 100%, 0 100%, 6% 50%); }
-.pickup { top: 300px; left: 10px; padding: 7px 10px; display: grid; gap: 1px; width: 128px; }
-.pickup .k { font-size: 8.5px; font-weight: 800; letter-spacing: .14em; color: var(--r-legend); }
-.pickup b { font-family: var(--f-title); font-size: 12.5px; }
-.pickup .st { color: var(--r-legend); font-size: 10px; letter-spacing: 1px; }
-.pity { top: 404px; left: 14px; right: 14px; padding: 10px 12px; display: grid; gap: 6px; }
-.pity .line { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5px; }
-.pity .line .num { font-size: 14px; }
-.pity .bar { height: 7px; border-radius: 99px; background: rgba(4,6,20,.85); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); overflow: hidden; }
-.pity .bar b { display: block; height: 100%; border-radius: 99px; }
-.pity .foot { display: flex; justify-content: space-between; gap: 6px; font-size: 9px; color: var(--text-2); padding-top: 4px; border-top: 1px solid rgba(255,221,160,.12); }
-.pity .foot u { text-decoration: none; color: var(--brass-hi); display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
+.tabs { top: 76px; left: 34px; right: 34px; display: grid; grid-template-columns: repeat(3, 1fr); padding: 3px; gap: 3px; }
+.tabs span { text-align: center; font-size: 11.5px; font-weight: 700; padding: 5px 0; border-radius: 9px; color: var(--text-2); }
+.tabs span.on { background: linear-gradient(180deg, #FFF0BF, #D99A32); color: var(--ink); font-family: var(--f-title); }
+.feature { top: 128px; left: 30px; width: 240px; height: 200px; display: grid; place-items: center; }
+.feature img { width: 100%; filter: drop-shadow(0 0 22px rgba(110,200,255,.55)) drop-shadow(0 10px 10px rgba(0,0,0,.5)); }
+.pickup { top: 318px; left: 12px; right: 12px; padding: 7px 11px; display: grid; grid-template-columns: 1fr auto; align-items: center; }
+.pickup .k { font-size: 8.5px; font-weight: 800; letter-spacing: .14em; color: var(--g-l); } .pickup b { font-family: var(--f-title); font-size: 13px; display: block; } .pickup .d { font-size: 9.5px; color: var(--text-2); }
+.pickup .st { color: var(--g-l); font-size: 11px; letter-spacing: 1px; }
+.pity { top: 382px; left: 14px; right: 14px; padding: 10px 12px; display: grid; gap: 6px; }
+.pity .line { display: flex; justify-content: space-between; align-items: baseline; font-size: 10.5px; } .pity .line .num { font-size: 14px; }
+.pity .bar { height: 7px; border-radius: 99px; background: rgba(4,6,20,.85); overflow: hidden; } .pity .bar b { display: block; height: 100%; border-radius: 99px; }
+.pity .foot { display: flex; justify-content: space-between; gap: 6px; font-size: 8.5px; color: var(--text-2); padding-top: 4px; border-top: 1px solid rgba(255,221,160,.12); }
+.pity .foot u { text-decoration: none; color: var(--brass-hi); white-space: nowrap; }
 .pulls { bottom: 50px; left: 12px; right: 12px; display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; }
-.pulls > div { height: 62px; flex-direction: column; gap: 2px; }
-.pulls .a { font-size: 15px; }
-.pulls .c { display: flex; align-items: center; gap: 3px; font-family: var(--f-num); font-size: 13px; font-weight: 700; }
-.pulls .c svg { width: 14px; height: 14px; }
-.pulls .flag { position: absolute; top: -9px; right: 8px; font-family: var(--f-body); font-size: 8.5px; font-weight: 800; color: #fff; background: linear-gradient(180deg, #c77dff, #7b3fe0); padding: 2px 7px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,.4); text-shadow: none; }
-.free { bottom: 18px; left: 0; right: 0; text-align: center; font-size: 10.5px; color: var(--text-2); display: flex; justify-content: center; align-items: center; gap: 5px; }
-.free b { color: var(--success); display: inline-flex; align-items: center; gap: 3px; }
-.free .ico { width: 12px; height: 12px; }
+.pulls > div { height: 62px; flex-direction: column; gap: 2px; } .pulls .a { font-size: 15px; }
+.pulls .c { display: flex; align-items: center; gap: 3px; font-family: var(--f-num); font-size: 13px; font-weight: 700; } .pulls .c svg { width: 14px; height: 14px; }
+.pulls .flag { position: absolute; top: -9px; right: 8px; font-family: var(--f-body); font-size: 8.5px; font-weight: 800; color: #fff; background: linear-gradient(180deg, #7cc0ff, #2f6fd0); padding: 2px 7px; border-radius: 6px; text-shadow: none; }
+.free { bottom: 18px; left: 0; right: 0; text-align: center; font-size: 10.5px; color: var(--text-2); display: flex; justify-content: center; align-items: center; gap: 5px; } .free b { color: var(--success); display: inline-flex; align-items: center; gap: 3px; } .free .ico { width: 12px; height: 12px; }
 
-/* 5. 결과 */
+/* ⑤ 결과 */
 .rhead { top: 40px; left: 0; right: 0; display: grid; justify-items: center; gap: 4px; }
 .rhead .k { font-family: var(--f-logo); font-weight: 600; font-size: 11px; letter-spacing: .5em; color: var(--brass); padding-left: .5em; }
-.rhead .t { font-family: var(--f-logo); font-weight: 800; font-size: 46px; line-height: 1; letter-spacing: .06em;
-  background: linear-gradient(180deg, #FFFBE8, #FFD979 45%, #D59730 75%, #9a6419); -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 3px 0 #3a2308) drop-shadow(0 0 18px rgba(255,210,110,.5)); }
-.rhead .s { font-size: 10.5px; color: var(--text); text-shadow: 0 1px 4px #000, 0 0 8px #000; display: flex; align-items: center; gap: 6px; }
-.rhead .rec { font-size: 8.5px; font-weight: 800; letter-spacing: .1em; padding: 1px 6px; border-radius: 4px; background: var(--danger); color: #fff; }
+.rhead .t { font-family: var(--f-logo); font-weight: 800; font-size: 46px; line-height: 1; letter-spacing: .06em; background: linear-gradient(180deg, #FFFBE8, #FFD979 45%, #D59730 75%, #9a6419); -webkit-background-clip: text; background-clip: text; color: transparent; filter: drop-shadow(0 3px 0 #3a2308) drop-shadow(0 0 18px rgba(255,210,110,.5)); }
+.rhead .s { font-size: 10.5px; color: var(--text); text-shadow: 0 1px 4px #000; display: flex; align-items: center; gap: 6px; }
+.rhead .rec { font-size: 8.5px; font-weight: 800; padding: 1px 6px; border-radius: 4px; background: var(--danger); color: #fff; }
 .rstats { top: 142px; left: 14px; right: 14px; display: grid; grid-template-columns: repeat(3, 1fr); padding: 8px 0; }
-.rstats div { text-align: center; display: grid; }
-.rstats div + div { border-left: 1px solid rgba(255,221,160,.14); }
-.rstats span { font-size: 9px; color: var(--text-2); letter-spacing: .06em; }
-.rstats .num { font-size: 20px; line-height: 1.1; }
-.overtake { top: 206px; left: 14px; right: 14px; padding: 8px 10px; display: grid; grid-template-columns: 26px 1fr; gap: 3px 8px; align-items: center;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), inset 0 0 0 1px rgba(166,107,255,.5); }
-.overtake .face { grid-row: span 2; }
-.overtake .row { display: flex; justify-content: space-between; font-size: 10.5px; }
-.stacks { display: flex; gap: 2px; }
-.stacks i { flex: 1; height: 6px; border-radius: 1px; background: linear-gradient(180deg, #d2b8ff, #8a57f0); box-shadow: 0 0 5px rgba(166,107,255,.6); }
-.stacks i.off { background: rgba(166,107,255,.18); box-shadow: none; }
+.rstats div { text-align: center; display: grid; } .rstats div + div { border-left: 1px solid rgba(255,221,160,.14); } .rstats span { font-size: 9px; color: var(--text-2); } .rstats .num { font-size: 20px; line-height: 1.1; }
+.overtake { top: 206px; left: 14px; right: 14px; padding: 8px 10px; display: grid; grid-template-columns: 26px 1fr; gap: 3px 8px; align-items: center; box-shadow: inset 0 0 0 1px rgba(166,107,255,.5); }
+.overtake .face { grid-row: span 2; } .overtake .row { display: flex; justify-content: space-between; font-size: 10.5px; }
+.stacks { display: flex; gap: 2px; } .stacks i { flex: 1; height: 6px; border-radius: 1px; background: linear-gradient(180deg, #d2b8ff, #8a57f0); } .stacks i.off { background: rgba(166,107,255,.18); }
 .rewards { top: 268px; left: 14px; right: 14px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
-.item { aspect-ratio: 1; max-width: 100%; border-radius: 11px; position: relative; display: grid; place-items: center; overflow: hidden; }
-.item svg { width: 70%; height: 70%; }
-.item .num { position: absolute; bottom: 1px; right: 5px; font-size: 13px; text-shadow: 0 1px 0 #000, 0 0 4px #000; }
-.item.gold { background: radial-gradient(circle at 50% 35%, #4a3a1a, #1d1608); box-shadow: inset 0 0 0 1.5px #b88a35; }
-.item.epic { background: radial-gradient(circle at 50% 30%, #6b3aa8, #25124a); box-shadow: inset 0 0 0 1.5px var(--r-epic), 0 0 12px rgba(182,92,255,.45); }
-.item.rare { background: radial-gradient(circle at 50% 30%, #245a9e, #0e2446); box-shadow: inset 0 0 0 1.5px var(--r-rare); }
-.item.shard { background: radial-gradient(circle at 50% 30%, #3d2a78, #150e33); box-shadow: inset 0 0 0 1.5px #7a58c9; }
-.rclockcap { top: 338px; left: 0; right: 0; text-align: center; font-size: 9px; color: var(--text-3); letter-spacing: .14em; }
-.rclock { top: 352px; left: 74px; width: 152px; height: 152px; }
+.rewards .gf { aspect-ratio: 1; }
+.rclockcap { top: 340px; left: 0; right: 0; text-align: center; font-size: 9px; color: var(--text-3); letter-spacing: .14em; }
+.rclock { top: 354px; left: 74px; width: 152px; height: 152px; }
 .ractions { bottom: 16px; left: 12px; right: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.ractions > div { height: 38px; font-size: 11.5px; }
-.ractions .brass { grid-column: 1 / -1; height: 50px; font-size: 16px; }
-.ractions .ico { width: 14px; height: 14px; }
+.ractions > div { height: 38px; font-size: 11.5px; } .ractions .brass { grid-column: 1 / -1; height: 50px; font-size: 16px; } .ractions .ico { width: 14px; height: 14px; }
+
+/* ⑥ 기사(장비) */
+.scrtitle { top: 34px; left: 12px; right: 12px; display: flex; justify-content: space-between; align-items: center; }
+.scrtitle b { font-family: var(--f-title); font-size: 17px; } .scrtitle .pw { font-size: 11px; color: var(--brass-hi); display: flex; gap: 4px; align-items: center; }
+.hero { top: 88px; left: 50px; width: 200px; height: 300px; }
+.hero img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); height: 270px; filter: drop-shadow(0 12px 14px rgba(0,0,0,.6)); }
+.hero .pet { height: 70px; left: 88%; bottom: 10px; }
+.slots { top: 96px; display: grid; gap: 9px; } .slots.l { left: 10px; } .slots.r { right: 10px; }
+.slot { width: 52px; display: grid; justify-items: center; gap: 2px; font-size: 8.5px; color: var(--text-2); }
+.slot .gf { width: 52px; height: 52px; }
+.slot .gf.empty { background: rgba(6,9,26,.6); box-shadow: inset 0 0 0 1px rgba(255,221,160,.25); }
+.slot .gf .ico { width: 24px; height: 24px; color: var(--brass-hi); }
+.tagboard { top: 394px; left: 12px; right: 12px; padding: 9px 11px; display: grid; gap: 7px; }
+.tagboard .h { display: flex; justify-content: space-between; font-size: 10.5px; } .tagboard .h b { font-family: var(--f-title); }
+.tagrow { display: grid; grid-template-columns: 58px 1fr 34px; gap: 6px; align-items: center; font-size: 10px; }
+.tagrow .dots { display: flex; gap: 3px; } .tagrow .dots i { width: 9px; height: 9px; transform: rotate(45deg); background: rgba(255,255,255,.12); border-radius: 1px; }
+.tagrow .dots i.on { background: currentColor; box-shadow: 0 0 6px currentColor; } .tagrow .dots i.mark { outline: 1px solid rgba(255,255,255,.5); outline-offset: 1px; }
+.tagrow .st { font-size: 9px; font-weight: 800; text-align: right; }
+.statrow { top: 526px; left: 12px; right: 12px; display: grid; grid-template-columns: repeat(4, 1fr); padding: 7px 0; }
+.statrow div { text-align: center; display: grid; } .statrow div + div { border-left: 1px solid rgba(255,221,160,.14); } .statrow span { font-size: 8.5px; color: var(--text-2); } .statrow .num { font-size: 15px; }
+
+/* ⑦ 요일 던전 */
+.dday { top: 34px; left: 12px; right: 12px; display: grid; gap: 2px; }
+.dday b { font-family: var(--f-title); font-size: 18px; } .dday span { font-size: 10.5px; color: var(--text-2); }
+.dcards { top: 92px; left: 12px; right: 12px; display: grid; gap: 10px; }
+.dcard { position: relative; height: 142px; border-radius: 14px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,221,160,.3), 0 8px 18px rgba(0,0,0,.5); }
+.dcard > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dcard::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(5,7,26,.92) 0%, rgba(5,7,26,.55) 55%, rgba(5,7,26,.05) 100%); }
+.dcard .c { position: absolute; left: 12px; top: 12px; bottom: 12px; z-index: 1; display: grid; align-content: space-between; width: 60%; }
+.dcard .g { font-size: 9px; font-weight: 800; letter-spacing: .12em; }
+.dcard b { font-family: var(--f-title); font-size: 17px; display: block; line-height: 1.2; }
+.dcard .d { font-size: 9.5px; color: var(--text-2); line-height: 1.4; }
+.dcard .go { justify-self: start; height: 28px; padding: 0 14px; font-size: 11.5px; }
+.dcard .day { position: absolute; right: 10px; top: 10px; z-index: 1; font-size: 9.5px; font-weight: 800; padding: 2px 8px; border-radius: 99px; background: rgba(5,7,26,.8); box-shadow: inset 0 0 0 1px rgba(255,221,160,.35); }
+.dcard.lock > img { filter: grayscale(.85) brightness(.55); }
+.dcard.lock .go { opacity: .5; }
+.dnote { bottom: 76px; left: 12px; right: 12px; text-align: center; font-size: 10px; color: var(--text-2); }
+
+/* ⑧ 스토리 */
+.era { top: 40px; left: 0; right: 0; display: grid; justify-items: center; gap: 2px; text-align: center; }
+.era small { font-family: var(--f-logo); letter-spacing: .4em; font-size: 10px; color: var(--brass); padding-left: .4em; }
+.era b { font-family: var(--f-title); font-size: 18px; text-shadow: 0 2px 8px #000; }
+.era span { font-size: 10px; color: var(--text-2); }
+.nora { left: -18px; bottom: 150px; height: 380px; filter: drop-shadow(0 10px 18px rgba(0,0,0,.6)); z-index: 2; }
+.shadowk { right: -30px; bottom: 170px; height: 230px; opacity: .55; filter: grayscale(1) brightness(.35) sepia(1) hue-rotate(220deg) saturate(3) drop-shadow(0 0 16px rgba(166,107,255,.7)); z-index: 2; transform: scaleX(-1); }
+.dialog { bottom: 26px; left: 10px; right: 10px; padding: 18px 14px 12px; min-height: 130px; }
+.dialog .who { position: absolute; top: -12px; left: 14px; padding: 3px 14px; font-size: 12px; height: auto; border-radius: 8px; }
+.dialog p { margin: 0; font-size: 13px; line-height: 1.6; }
+.dialog p em { font-style: normal; color: var(--brass-hi); }
+.dialog .ctl { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 10px; color: var(--text-2); }
+.dialog .ctl span { display: flex; gap: 8px; }
+.dialog .ctl u { text-decoration: none; padding: 2px 8px; border-radius: 6px; box-shadow: inset 0 0 0 1px rgba(255,221,160,.3); }
+.choice { bottom: 176px; right: 14px; display: grid; gap: 6px; width: 170px; z-index: 3; }
+.choice div { font-size: 11px; padding: 7px 10px; }
+
+/* 갤러리 */
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+.gcard { display: grid; gap: 6px; min-width: 0; }
+.gcard .gf { aspect-ratio: 1; }
+.gcard .gf img { width: 88%; height: 88%; }
+.gcard b { font-family: var(--f-title); font-size: 14px; }
+.gcard span { font-size: 12px; color: var(--text-2); line-height: 1.4; }
+.gcard.wide { grid-column: span 2; }
+.gcard.wide .gf { aspect-ratio: 2 / 1; }
+.urunes { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 14px; }
+.ur { display: grid; justify-items: center; gap: 4px; text-align: center; min-width: 0; }
+.ur .ic { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; box-shadow: 0 0 0 2px rgba(232,244,255,.6), 0 0 18px rgba(232,244,255,.3); background: #0b1020; overflow: hidden; }
+.ur .ic img, .ur .ic svg { width: 100%; height: 100%; }
+.ur b { font-family: var(--f-title); font-size: 13px; }
+.ur .slotno { font-size: 10px; font-weight: 800; color: var(--g-uniq); letter-spacing: .08em; }
+.ur span { font-size: 11px; color: var(--text-2); line-height: 1.35; }
 
 /* 공유물 */
 .share-row { display: flex; flex-wrap: wrap; gap: 30px; align-items: flex-start; }
-.sharecard { width: 360px; max-width: 100%; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,221,160,.25), 0 24px 50px rgba(0,0,0,.55); }
-.sharecard canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.sharecard .frame { position: absolute; inset: 10px; border: 1px solid rgba(255,221,160,.35); border-radius: 6px; pointer-events: none; }
+.sharecard { width: 360px; max-width: 100%; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; position: relative; background: center / cover no-repeat; box-shadow: 0 0 0 1px rgba(255,221,160,.25), 0 24px 50px rgba(0,0,0,.55); }
+.sharecard::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, rgba(5,7,26,.1), rgba(5,7,26,.85) 75%); }
+.sharecard .frame { position: absolute; inset: 10px; border: 1px solid rgba(255,221,160,.35); border-radius: 6px; }
 .sc-head { position: absolute; top: 22px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: flex-start; }
-.sc-logo { display: flex; gap: 8px; align-items: center; }
-.sc-logo svg { width: 34px; height: 34px; }
+.sc-logo { display: flex; gap: 8px; align-items: center; } .sc-logo svg { width: 34px; height: 34px; }
 .sc-logo b { font-family: var(--f-logo); font-weight: 800; font-size: 16px; letter-spacing: .06em; line-height: 1; display: block; color: var(--brass-hi); }
 .sc-logo small { font-size: 9px; letter-spacing: .24em; color: var(--text-2); }
-.sc-stage { text-align: right; font-size: 10px; color: var(--text-2); line-height: 1.2; }
-.sc-stage .num { font-size: 26px; color: var(--text); display: block; line-height: 1; }
-.sc-clock { position: absolute; top: 76px; left: 50%; width: 236px; height: 236px; margin-left: -118px; }
+.sc-stage { text-align: right; font-size: 10px; color: var(--text-2); } .sc-stage .num { font-size: 26px; color: var(--text); display: block; line-height: 1; }
+.sc-clock { position: absolute; top: 80px; left: 22px; width: 210px; height: 210px; }
+.sc-knight { position: absolute; right: 8px; top: 110px; height: 220px; filter: drop-shadow(0 10px 14px rgba(0,0,0,.7)); }
 .sc-combo { position: absolute; top: 322px; left: 24px; right: 24px; display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; }
-.tagx { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: rgba(6,9,26,.75); box-shadow: inset 0 0 0 1px currentColor; }
-.sc-code { position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%); padding: 6px 16px; border-radius: 8px; background: rgba(6,9,26,.85); box-shadow: inset 0 0 0 1px rgba(255,221,160,.4);
-  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 13px; letter-spacing: .1em; color: var(--brass-hi); white-space: nowrap; }
+.tagx { font-size: 10px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: rgba(6,9,26,.8); box-shadow: inset 0 0 0 1px currentColor; }
+.sc-code { position: absolute; bottom: 42px; left: 50%; transform: translateX(-50%); padding: 6px 16px; border-radius: 8px; background: rgba(6,9,26,.88); box-shadow: inset 0 0 0 1px rgba(255,221,160,.4); font-family: ui-monospace, Menlo, monospace; font-size: 13px; letter-spacing: .1em; color: var(--brass-hi); white-space: nowrap; }
 .sc-cta { position: absolute; bottom: 20px; left: 24px; right: 24px; text-align: center; font-size: 9.5px; color: var(--text-2); }
-.reel { width: 220px; max-width: 100%; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,221,160,.25), 0 24px 50px rgba(0,0,0,.55); }
-.reel canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
-.reel .cap { position: absolute; top: 18px; left: 12px; right: 12px; font-family: var(--f-title); font-weight: 800; font-size: 17px; line-height: 1.25; text-shadow: 0 2px 8px #000, 0 0 2px #000; }
-.reel .cap em { font-style: normal; color: var(--brass-hi); }
-.reel .wm { position: absolute; bottom: 12px; left: 12px; right: 12px; border-radius: 10px; padding: 7px 9px; display: flex; gap: 8px; align-items: center; background: rgba(6,9,26,.78); box-shadow: inset 0 0 0 1px rgba(255,221,160,.3); }
-.reel .wm svg { width: 26px; height: 26px; flex: none; }
-.reel .wm b { font-family: var(--f-logo); font-size: 12px; color: var(--brass-hi); display: block; line-height: 1.1; }
-.reel .wm span { font-size: 9px; color: var(--text-2); }
-.share-notes { flex: 1 1 300px; min-width: 0; display: grid; gap: 10px; align-content: start; }
+.share-notes { flex: 1 1 300px; min-width: 0; }
 .share-notes dl { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 8px 16px; font-size: 14px; }
-.share-notes dt { color: var(--brass); font-weight: 700; }
-.share-notes dd { margin: 0; color: var(--text); }
+.share-notes dt { color: var(--brass); font-weight: 700; } .share-notes dd { margin: 0; }
 
-/* 스타일 가이드 */
+/* 가이드 */
 .guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 28px; }
 .guide h3 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--brass); margin: 0 0 12px; font-weight: 700; }
 .sw { display: grid; grid-template-columns: 38px 1fr auto; gap: 10px; align-items: center; padding-block: 6px; border-bottom: 1px solid rgba(255,221,160,.08); font-size: 13px; }
-.sw i { width: 38px; height: 24px; border-radius: 7px; display: block; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
-.sw code { color: var(--text-2); font-size: 11.5px; }
-.gemrow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.gemrow div { display: grid; justify-items: center; gap: 4px; font-size: 12px; text-align: center; }
-.gemrow svg { width: 52px; height: 52px; }
-.gemrow code { font-size: 10.5px; color: var(--text-2); }
-.comp { display: grid; gap: 12px; }
-.comp .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.sw i { width: 38px; height: 24px; border-radius: 7px; display: block; box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); } .sw code { color: var(--text-2); font-size: 11.5px; }
+.gradeRow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.gradeRow div { display: grid; gap: 4px; justify-items: center; font-size: 11.5px; text-align: center; }
+.gradeRow .gf { width: 100%; aspect-ratio: 1; }
+.comp { display: grid; gap: 12px; } .comp .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .comp .row > .brass, .comp .row > .steel { height: 42px; padding: 0 20px; font-size: 14px; }
-.typo { display: grid; gap: 12px; }
-.typo div { display: grid; }
-.typo code { color: var(--text-2); font-size: 11.5px; }
-.appicon { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
-.appicon .ic { width: 96px; height: 96px; border-radius: 22px; box-shadow: 0 10px 24px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08); flex: none; }
-.appicon .ic.sm { width: 56px; height: 56px; border-radius: 50%; }
-.appicon p { margin: 0; font-size: 13px; color: var(--text-2); flex: 1 1 160px; min-width: 0; }
-.iconset { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
-.iconset div { display: grid; justify-items: center; gap: 4px; font-size: 10.5px; color: var(--text-2); }
-.iconset .ico { width: 26px; height: 26px; color: var(--text); }
+.links { display: grid; gap: 6px; font-size: 14px; } .links a { color: var(--brass-hi); }
 .foot { color: var(--text-3); font-size: 13px; margin: 0; }
 :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
-@media (max-width: 420px) { figure.shot, .phone { width: 100%; } }
+@media (max-width: 420px) { figure.shot, .phone { width: 100%; } .gcard.wide { grid-column: span 1; } }
 </style>
 
 <div class="wrap">
   <header class="top">
     <svg class="mark" data-logo viewBox="0 0 100 100" aria-label="Chrono Knight 로고"></svg>
     <div class="ht">
-      <div class="eyebrow">화면 디자인 시안 · v2</div>
+      <div class="eyebrow">화면 디자인 시안 · v3</div>
       <h1>CHRONO KNIGHT</h1>
-      <p class="lede">황동 시계 장치와 밤하늘의 네온 원소를 결합한 "크로노 판타지" 스타일입니다. 누를 수 있는 요소는 황동, 정보는 남색 유리, 원소와 등급은 보석으로 표현합니다. 배경·캐릭터·적·이펙트는 실제 게임과 같이 코드로 그렸습니다.</p>
+      <p class="lede">캐릭터·몬스터·펫·오브·배경을 AI 이미지 생성(Higgsfield)으로 제작하고, 로컬 누끼 처리 후 UI에 합성한 버전입니다. 황동 시계 장치와 밤하늘 원소 네온을 결합한 "크로노 판타지" 스타일로 통일했습니다.</p>
     </div>
   </header>
 
@@ -341,53 +344,56 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
     <div class="phones">
 
       <figure class="shot">
-        <div class="phone">
-          <canvas class="bg" id="cvBattle" width="600" height="1300" aria-label="전투 장면: 시계 문양 석판 위의 기사, 수정 괴물 무리, 화염폭풍 반응"></canvas>
+        <div class="phone" style="background-image:url(art/bg_arena.webp)">
+          <div class="layer" data-battle></div>
+          <canvas class="fx" id="fxBattle" width="600" height="1300" aria-hidden="true"></canvas>
           <div class="abs hud">
-            <div class="sq glass" aria-label="일시정지"><svg class="ico" data-i="pause" viewBox="0 0 24 24"></svg></div>
-            <div class="timer glass"><span class="num">1:24</span><div class="pips"><i class="done"></i><i class="done"></i><i class="now"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="wl">WAVE 3</span></div>
-            <div class="sq glass kills"><span class="num">142</span><span>KILL</span></div>
+            <div class="sq glass"><svg class="ico" data-i="pause" viewBox="0 0 24 24"></svg></div>
+            <div class="timer glass"><span class="num">4:18</span><div class="pips"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i></div><span class="wl">BOSS WAVE</span></div>
+            <div class="sq glass kills"><span class="num">1,142</span><span>KILL</span></div>
           </div>
           <div class="abs duel">
-            <div class="face me"><svg class="ico" data-i="helm" viewBox="0 0 24 24"></svg></div>
-            <div class="duelbar"><b></b><span class="l">142</span><span class="r">126</span></div>
-            <div class="face sh"><svg class="ico" data-i="ghost" viewBox="0 0 24 24"></svg></div>
+            <div class="face me"><img src="art/knight.webp" alt=""></div>
+            <div class="duelbar"><b></b><span class="l">1,142</span><span class="r">1,026</span></div>
+            <div class="face sh"><img src="art/knight.webp" alt=""></div>
           </div>
-          <div class="abs react"><div class="t">화염폭풍!</div><div class="s">화 ▸ 풍 연쇄</div></div>
-          <div class="abs edgewarn">▶<span>보스</span><span class="num">12s</span></div>
+          <div class="abs react"><div class="t">화염폭풍!</div><div class="s">화 ▸ 풍 연쇄 · ×2</div></div>
+          <div class="abs bossbar"><div class="n"><span>시계 파괴자</span><span class="num">38%</span></div><div class="b"><i></i></div></div>
           <div class="abs lvbox">
-            <div class="lvmed"><div><small>LV</small><span class="num">7</span></div></div>
-            <div><div class="xplabel"><span>다음 룬까지</span><span class="num">72%</span></div><div class="xp"><b></b></div></div>
+            <div class="lvmed"><div><small>LV</small><span class="num">17</span></div></div>
+            <div><div class="xplabel"><span>다음 룬</span><span class="num">72%</span></div><div class="xp"><b></b></div></div>
           </div>
+          <div class="abs skillbtn"><svg class="ico" data-i="hourglass" viewBox="0 0 24 24"></svg><small>시간 정지</small></div>
           <div class="abs clockslot" data-clock="battle"></div>
         </div>
-        <figcaption><b>① 전투 HUD</b><span>정보는 상단 유리 패널에 모으고, 조작 영역인 중앙·하단은 비웁니다. 우하단 룬 시계에서 방금 발동한 칸이 빛나고, 화면 가장자리 경고로 보스 접근을 알립니다.</span></figcaption>
+        <figcaption><b>① 전투 · 보스 웨이브</b><span>시계 문자판 석판 위에서 기사와 펫(부엉이), 그림자 라이벌이 싸웁니다. 우하단은 룬 시계와 액티브 스킬 버튼(쿨다운 원형 표시).</span></figcaption>
       </figure>
 
       <figure class="shot">
-        <div class="phone">
-          <canvas class="bg dimmed" id="cvBattle2" width="600" height="1300" aria-hidden="true"></canvas>
+        <div class="phone" style="background-image:url(art/bg_arena.webp)">
+          <div class="layer dimmed" data-battle></div>
           <div class="abs pickhead"><div class="t">LEVEL UP</div><div class="s">Lv.7 → 8 · 룬을 골라 시계에 놓으세요</div></div>
           <div class="abs bigclock" data-clock="pick"></div>
           <div class="abs preview glass"><b>4시 ▸ 화염폭풍</b><span>범위 +50% · 화상 부여</span></div>
           <div class="abs cards">
-            <div class="card sel"><div class="ribbon">반응</div><div class="band" data-band="wind"></div><svg class="medal" data-gem="wind" viewBox="0 0 60 60"></svg><span class="tag">공격 · 풍</span><b>바람 칼날</b><span class="d">부채꼴로 칼날 3개를 날립니다</span><span class="new">NEW</span></div>
-            <div class="card"><div class="band" data-band="frost"></div><svg class="medal" data-gem="frost" viewBox="0 0 60 60"></svg><span class="tag">공격 · 빙</span><b>얼음창</b><span class="d">적을 관통하고 1초 빙결</span><span class="lv"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
-            <div class="card"><div class="band" data-band="light"></div><svg class="medal" data-gem="light" viewBox="0 0 60 60"></svg><span class="tag">공격 · 광</span><b>성광</b><span class="d">주변 폭발, 12시 칸에서 2배</span><span class="new">NEW</span></div>
+            <div class="card sel"><div class="ribbon">반응</div><div class="band" data-band="wind"></div><svg class="medal" data-gem="wind" viewBox="0 0 60 60"></svg><span class="tag" style="color:var(--g-l)">레전드 · 풍</span><b>바람 칼날</b><span class="d">부채꼴로 칼날 3개를 날립니다</span><span class="lv"><i class="on"></i><i></i><i></i><i></i><i></i></span></div>
+            <div class="card"><div class="band" data-band="frost"></div><svg class="medal" data-gem="frost" viewBox="0 0 60 60"></svg><span class="tag" style="color:var(--g-r)">레어 · 빙</span><b>얼음창</b><span class="d">적을 관통하고 1초 빙결</span><span class="lv"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></div>
+            <div class="card"><div class="band" data-band="light"></div><svg class="medal" data-gem="light" viewBox="0 0 60 60"></svg><span class="tag" style="color:var(--g-u)">유니크 · 광</span><b>성광</b><span class="d">주변 폭발, 12시 칸에서 2배</span><span class="lv"><i class="on"></i><i></i><i></i><i></i><i></i></span></div>
           </div>
           <div class="abs pick-actions">
             <div class="steel">자동 배치</div>
             <div class="steel"><svg class="ico" data-i="ad" viewBox="0 0 24 24"></svg>리롤 <small>광고</small></div>
           </div>
         </div>
-        <figcaption><b>② 레벨업 · 룬 배치</b><span>전투 화면을 흐리게 깔아 흐름이 끊기지 않게 합니다. 카드를 끌어 4시 칸 위에 올리면 반응 미리보기가 뜹니다.</span></figcaption>
+        <figcaption><b>② 레벨업 · 룬 배치</b><span>12시 칸에는 유일룬 「정오의 왕관」이 고정 장착되어 있습니다(백금 테두리). 카드 상단에 보유 등급을 표시합니다.</span></figcaption>
       </figure>
 
       <figure class="shot">
-        <div class="phone">
-          <canvas class="bg" id="cvLobby" width="600" height="1300" aria-label="밤하늘 아래 시계탑과 황동 받침대 위의 기사"></canvas>
+        <div class="phone" style="background-image:url(art/bg_lobby.webp)">
+          <img class="abs spr" src="art/knight.webp" alt="" style="left:150px;top:446px;height:180px;z-index:2">
+          <img class="abs spr" src="art/pet_owl.webp" alt="" style="left:216px;top:436px;height:60px;z-index:2">
           <div class="abs prof">
-            <div class="avatar"><svg class="ico" data-i="helm" viewBox="0 0 24 24"></svg><span class="lvtag num">42</span></div>
+            <div class="avatar"><div class="clip"><img src="art/knight.webp" alt=""></div><span class="lvtag num">42</span></div>
             <div class="n"><b>시계탑의 기사</b><span><svg class="ico" data-i="swords" viewBox="0 0 24 24"></svg><span class="num">18,420</span></span></div>
           </div>
           <div class="abs topicons">
@@ -401,23 +407,19 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
           </div>
           <div class="abs side l">
             <div class="sidebtn"><div class="sq glass"><svg class="ico" data-i="calendar" viewBox="0 0 24 24"></svg></div>출석<i class="dot-badge"></i></div>
-            <div class="sidebtn"><div class="sq glass"><svg class="ico" data-i="scroll" viewBox="0 0 24 24"></svg></div>퀘스트</div>
+            <div class="sidebtn"><div class="sq glass"><svg class="ico" data-i="scroll" viewBox="0 0 24 24"></svg></div>미션 2/3</div>
+            <div class="sidebtn"><div class="sq glass"><svg class="ico" data-i="tent" viewBox="0 0 24 24"></svg></div><span class="timer-tag num">6:12</span>야영지</div>
           </div>
           <div class="abs side r">
-            <div class="sidebtn"><div class="sq glass"><svg class="ico" data-i="crown" viewBox="0 0 24 24"></svg></div>시즌 패스</div>
-            <div class="sidebtn"><div class="sq glass"><svg class="ico" data-i="gift" viewBox="0 0 24 24"></svg></div>이벤트<i class="dot-badge"></i></div>
+            <div class="modebtn"><div class="m"><svg class="ico" data-i="hourglass" viewBox="0 0 24 24"></svg></div>요일 던전<i class="dot-badge"></i></div>
+            <div class="modebtn"><div class="m"><svg class="ico" data-i="tower" viewBox="0 0 24 24"></svg></div>무한의 탑</div>
+            <div class="modebtn"><div class="m"><svg class="ico" data-i="mirror" viewBox="0 0 24 24"></svg></div>거울의 시련</div>
           </div>
-          <div class="abs chapter glass">
-            <div class="t"><b>챕터 3 · 부서진 시계 광장</b><span><span class="num" style="color:var(--brass-hi);font-size:13px">3-7</span> / 10</span></div>
+          <div class="abs chapter glass ornate">
+            <div class="t"><b>시대 1 · 3장 부서진 시계 광장</b><span><span class="num" style="color:var(--brass-hi);font-size:13px">3-7</span></span></div>
             <div class="path"><i class="c"></i><em class="c"></em><i class="c"></i><em class="c"></em><i class="c"></i><em class="c"></em><i class="c"></i><em class="c"></em><i class="c"></i><em class="c"></em><i class="c"></i><em class="c"></em><i class="now"></i><em></em><i></i><em></em><i></i><em></em><i class="boss"></i></div>
           </div>
           <div class="abs brass startbtn"><span class="a">전투 시작</span><span class="b">권장 전투력 17,800</span></div>
-          <div class="abs modes">
-            <div class="mode glass"><svg class="ico" data-i="hourglass" viewBox="0 0 24 24"></svg><b>일일 던전</b><span>2/2 남음</span></div>
-            <div class="mode glass"><svg class="ico" data-i="tower" viewBox="0 0 24 24"></svg><b>무한의 탑</b><span>최고 42층</span></div>
-            <div class="mode glass"><svg class="ico" data-i="mirror" viewBox="0 0 24 24"></svg><b>거울의 시련</b><span>3/5 단계</span></div>
-          </div>
-          <div class="abs camp glass"><span style="display:flex;align-items:center;gap:6px"><svg class="ico" data-i="tent" viewBox="0 0 24 24"></svg>야영지 <b class="num">6:12</b> · 골드 <b class="num">31.2K</b></span><span class="brass">받기</span></div>
           <div class="abs nav">
             <div><svg class="ico" data-i="chest" viewBox="0 0 24 24"></svg>상점</div>
             <div><svg class="ico" data-i="helm" viewBox="0 0 24 24"></svg>기사</div>
@@ -426,105 +428,175 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
             <div><svg class="ico" data-i="star" viewBox="0 0 24 24"></svg>이벤트</div>
           </div>
         </div>
-        <figcaption><b>③ 로비 (전투 탭)</b><span>배경 한가운데에 기사를 세워 "내 캐릭터"에 몰입하게 합니다. 자주 누르는 버튼은 엄지가 닿는 하단 1/3에, 알림 점은 행동이 필요한 곳에만 둡니다.</span></figcaption>
+        <figcaption><b>③ 로비</b><span>떠 있는 시계탑 받침대 위에 기사와 활성 펫이 섭니다. 왼쪽은 일상(출석·미션·야영지), 오른쪽은 모드 입구, 하단은 스토리 진행.</span></figcaption>
       </figure>
 
       <figure class="shot">
-        <div class="phone">
-          <canvas class="bg" id="cvGacha" width="600" height="1300" aria-label="빛이 새어 나오는 시계탑 문과 12시를 가리키는 바늘"></canvas>
+        <div class="phone" style="background-image:url(art/bg_gacha.webp)">
           <div class="abs gtop">
             <div class="sq glass" style="width:32px;height:32px"><svg class="ico" data-i="back" viewBox="0 0 24 24"></svg></div>
             <span class="pill"><svg class="gem" data-res="crystal" viewBox="0 0 24 24"></svg><span class="num">1,250</span><span class="plus">+</span></span>
           </div>
-          <div class="abs gtitle"><div class="ribbon">별의 시계탑 소환</div></div>
-          <div class="abs pickup glass"><span class="k">PICK UP</span><b>정오의 대검</b><span class="st">★★★★</span><span style="font-size:9px;color:var(--text-2)">전설 무기 · 정오 칸 ×2.5</span></div>
+          <div class="abs tabs glass"><span>오브</span><span>룬</span><span class="on">펫</span></div>
+          <div class="abs feature"><img src="art/pet_whale.webp" alt="레전드 펫 크로노베일"></div>
+          <div class="abs pickup glass ornate"><div><span class="k">PICK UP · 레전드</span><b>크로노베일, 시간을 먹는 고래</b><span class="d">액티브: 전장 2초 정지 · 정지 중 피해 ×2</span></div><span class="st">★5</span></div>
           <div class="abs pity glass">
-            <div class="line"><span>전설 확정까지</span><span><b class="num" style="color:var(--r-legend)">23</b> 회</span></div>
-            <div class="bar"><b style="width:54%;background:linear-gradient(90deg,#8a4fe0,#FFB23F)"></b></div>
-            <div class="line"><span>마일리지 · 100점에 전설 선택</span><span class="num">64 / 100</span></div>
+            <div class="line"><span>레전드 확정까지</span><span><b class="num" style="color:var(--g-l)">31</b> 회</span></div>
+            <div class="bar"><b style="width:61%;background:linear-gradient(90deg,#8a4fe0,#FFB23F)"></b></div>
+            <div class="line"><span>마일리지 · 120점에 레전드 선택</span><span class="num">77 / 120</span></div>
             <div class="bar"><b style="width:64%;background:linear-gradient(90deg,#C98A2C,#FFE9A8)"></b></div>
-            <div class="foot"><span>전설 2.5% · 영웅 12.5% · 희귀 30% · 일반 55%</span><u><svg class="ico" data-i="info" viewBox="0 0 24 24" style="width:11px;height:11px"></svg>확률</u></div>
+            <div class="foot"><span>레전드 1.2% · 유니크 5% · 레어 18% · 매직 30.8% · 노멀 45%</span><u>확률</u></div>
           </div>
           <div class="abs pulls">
-            <div class="steel"><span class="a" style="font-family:var(--f-title)">1회</span><span class="c"><svg data-res="crystal" viewBox="0 0 24 24"></svg>300</span></div>
-            <div class="brass"><span class="flag">영웅 이상 확정</span><span class="a">10회 소환</span><span class="c"><svg data-res="crystal" viewBox="0 0 24 24"></svg>2,700</span></div>
+            <div class="steel"><span class="a" style="font-family:var(--f-title)">1회</span><span class="c"><svg data-res="crystal" viewBox="0 0 24 24"></svg>150</span></div>
+            <div class="brass"><span class="flag">레어 이상 확정</span><span class="a">10회 소환</span><span class="c"><svg data-res="crystal" viewBox="0 0 24 24"></svg>1,350</span></div>
           </div>
           <div class="abs free">오늘의 무료 소환 <b><svg class="ico" data-i="ad" viewBox="0 0 24 24"></svg>광고 보고 1회</b></div>
         </div>
-        <figcaption><b>④ 장비 소환</b><span>확률, 천장, 마일리지를 버튼보다 위에 둡니다. 바늘이 멈추는 시각이 등급을 암시합니다(3시 희귀 · 6시 영웅 · 12시 전설).</span></figcaption>
+        <figcaption><b>④ 소환 · 펫 배너</b><span>오브·룬·펫 탭 전환. 문틈 빛 앞에 픽업 레전드를 띄우고, 천장·마일리지·확률을 버튼 위에 항상 노출합니다.</span></figcaption>
       </figure>
 
       <figure class="shot">
         <div class="phone">
-          <canvas class="bg" id="cvResult" width="600" height="1300" aria-hidden="true"></canvas>
-          <div class="abs rhead"><span class="k">STAGE</span><span class="t">CLEAR</span><span class="s">3-7 부서진 시계 광장 <span class="rec">NEW RECORD</span></span></div>
+          <canvas class="fx" id="cvResult" width="600" height="1300" aria-hidden="true" style="z-index:0"></canvas>
+          <div class="abs rhead"><span class="k">STAGE</span><span class="t">CLEAR</span><span class="s">3-10 시계 파괴자 격파 <span class="rec">NEW RECORD</span></span></div>
           <div class="abs rstats glass">
-            <div><span>시간</span><b class="num">4:52</b></div>
-            <div><span>처치</span><b class="num">1,284</b></div>
-            <div><span>원소 반응</span><b class="num">97</b></div>
+            <div><span>시간</span><b class="num">4:52</b></div><div><span>처치</span><b class="num">1,284</b></div><div><span>원소 반응</span><b class="num">97</b></div>
           </div>
           <div class="abs overtake glass">
-            <div class="face sh"><svg class="ico" data-i="ghost" viewBox="0 0 24 24"></svg></div>
+            <div class="face sh"><img src="art/knight.webp" alt=""></div>
             <div class="row"><span>그림자 추월</span><b class="num" style="color:#cbb2ff">8 / 10</b></div>
-            <div><div class="stacks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></div><span style="font-size:9.5px;color:var(--text-2)">골드 +24% 적용</span></div>
+            <div><div class="stacks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></div></div>
           </div>
           <div class="abs rewards">
-            <div class="item gold"><svg data-res="gold" viewBox="0 0 24 24"></svg><b class="num">4,210</b></div>
-            <div class="item epic"><svg data-item="sword" viewBox="0 0 40 40"></svg><b class="num">1</b></div>
-            <div class="item rare"><svg data-item="helm" viewBox="0 0 40 40"></svg><b class="num">1</b></div>
-            <div class="item shard"><svg data-res="shard" viewBox="0 0 24 24"></svg><b class="num">12</b></div>
+            <div class="gf l"><img src="art/orb_sun.webp" alt="태양 오브"><b class="cnt num">1</b></div>
+            <div class="gf u"><img src="art/pet_moonfox.webp" alt="달 여우"><b class="cnt num">1</b></div>
+            <div class="gf r"><img src="art/orb_storm.webp" alt="폭풍 오브"><b class="cnt num">2</b></div>
+            <div class="gf n"><svg data-res="gold" viewBox="0 0 24 24" style="width:60%;height:60%"></svg><b class="cnt num">4.2K</b></div>
           </div>
           <div class="abs rclockcap">이번 판의 룬 시계</div>
           <div class="abs rclock" data-clock="result"></div>
           <div class="abs ractions">
             <div class="steel"><svg class="ico" data-i="share" viewBox="0 0 24 24"></svg>빌드 카드</div>
             <div class="steel"><svg class="ico" data-i="film" viewBox="0 0 24 24"></svg>릴스 만들기</div>
-            <div class="brass">다음 스테이지 3-8</div>
+            <div class="brass">다음 장 · 4-1</div>
           </div>
         </div>
-        <figcaption><b>⑤ 결과 · 공유</b><span>기록, 그림자 추월, 보상, 이번 판의 시계를 차례로 보여 주고, 공유 버튼을 다음 스테이지 버튼 바로 위에 둡니다.</span></figcaption>
+        <figcaption><b>⑤ 결과 · 공유</b><span>보상은 등급 프레임(노멀 회색 → 레전드 주황)에 실제 아이템 아트로 표시합니다.</span></figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone" style="background:radial-gradient(circle at 50% 35%, #26307a 0%, #0c1133 55%, #05071a 100%)">
+          <canvas class="fx" id="fxHero" width="600" height="1300" aria-hidden="true" style="z-index:0"></canvas>
+          <div class="abs scrtitle"><b>기사</b><span class="pw"><svg class="ico" data-i="swords" viewBox="0 0 24 24" style="width:12px;height:12px"></svg><span class="num" style="font-size:15px">18,420</span> · 화상 / 정오 / 그림자</span></div>
+          <div class="abs hero"><img src="art/knight.webp" alt="시계탑의 기사"><img class="pet" src="art/pet_owl.webp" alt="크로노 부엉이"></div>
+          <div class="abs slots l">
+            <div class="slot"><div class="gf l"><img src="art/orb_sun.webp" alt=""></div>오브</div>
+            <div class="slot"><div class="gf u"><img src="art/pet_owl.webp" alt=""></div>펫</div>
+            <div class="slot"><div class="gf x"><img src="art/urune_U12.webp" alt="" style="width:100%;height:100%"></div>유일룬</div>
+            <div class="slot"><div class="gf r"><svg class="ico" data-i="hourglass" viewBox="0 0 24 24"></svg></div>액티브</div>
+          </div>
+          <div class="abs slots r">
+            <div class="slot"><div class="gf m"><svg class="ico" data-i="clock" viewBox="0 0 24 24"></svg></div>패시브 1</div>
+            <div class="slot"><div class="gf m"><svg class="ico" data-i="ghost" viewBox="0 0 24 24"></svg></div>패시브 2</div>
+            <div class="slot"><div class="gf l"><svg class="ico" data-i="crown" viewBox="0 0 24 24"></svg></div>각인</div>
+            <div class="slot"><div class="gf r"><svg class="ico" data-i="star" viewBox="0 0 24 24"></svg></div>각인</div>
+          </div>
+          <div class="abs tagboard glass ornate">
+            <div class="h"><b>태그 공명</b><span style="color:var(--text-2)">3 / 5 / 7개에서 규칙 변화</span></div>
+            <div class="tagrow" style="color:#FFE9A8"><span>#정오</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on mark"></i><i class="on"></i><i class="on mark"></i><i></i><i class="mark"></i></span><span class="st">5단계</span></div>
+            <div class="tagrow" style="color:var(--fire)"><span>#화상</span><span class="dots"><i class="on"></i><i class="on"></i><i class="on mark"></i><i></i><i class="mark"></i><i></i><i class="mark"></i></span><span class="st">3단계</span></div>
+            <div class="tagrow" style="color:var(--void)"><span>#그림자</span><span class="dots"><i class="on"></i><i class="on"></i><i class="mark"></i><i></i><i class="mark"></i><i></i><i class="mark"></i></span><span class="st" style="color:var(--text-3)">1개 부족</span></div>
+            <div class="tagrow" style="color:var(--frost)"><span>#빙결</span><span class="dots"><i class="on"></i><i></i><i class="mark"></i><i></i><i class="mark"></i><i></i><i class="mark"></i></span><span class="st" style="color:var(--text-3)">—</span></div>
+          </div>
+          <div class="abs statrow glass">
+            <div><span>공격</span><b class="num">2,480</b></div><div><span>체력</span><b class="num">18.2K</b></div><div><span>방어</span><b class="num">640</b></div><div><span>치명</span><b class="num">24%</b></div>
+          </div>
+          <div class="abs nav">
+            <div><svg class="ico" data-i="chest" viewBox="0 0 24 24"></svg>상점</div>
+            <div class="on"><div class="medal"><svg class="ico" data-i="helm" viewBox="0 0 24 24"></svg></div>기사</div>
+            <div><svg class="ico" data-i="swords" viewBox="0 0 24 24"></svg>전투</div>
+            <div><svg class="ico" data-i="clock" viewBox="0 0 24 24"></svg>룬</div>
+            <div><svg class="ico" data-i="star" viewBox="0 0 24 24"></svg>이벤트</div>
+          </div>
+        </div>
+        <figcaption><b>⑥ 기사 · 빌드</b><span>오브·펫·유일룬·액티브(왼쪽), 패시브·각인(오른쪽). 하단 태그 공명판에서 3/5/7 단계 달성 현황을 보여 줍니다.</span></figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone" style="background:linear-gradient(180deg,#121942,#05071a)">
+          <div class="abs dday"><b>요일 던전</b><span>오늘은 <b style="font-size:inherit;color:var(--brass-hi)">목요일</b> · 일요일엔 모두 열리고 보상 1.5배</span></div>
+          <div class="abs dcards">
+            <div class="dcard"><img src="art/mini_runner.webp" alt=""><span class="day" style="color:var(--success)">오늘 · 2/2</span><div class="c"><div><span class="g" style="color:var(--success)">횡스크롤 액션</span><b>시계탑 질주</b><span class="d">탭 점프 · 스와이프 공격. 12시 보너스 타임에 골드 ×2</span></div><div class="brass go">입장</div></div></div>
+            <div class="dcard lock"><img src="art/mini_duel.webp" alt=""><span class="day">금요일</span><div class="c"><div><span class="g" style="color:var(--g-r)">1:1 대전 액션</span><b>초침 결투장</b><span class="d">가드 타이밍 패링 → 룬 발동. 3판 2선승</span></div><div class="steel go">금요일 개방</div></div></div>
+            <div class="dcard lock"><img src="art/mini_tactics.webp" alt=""><span class="day">토요일</span><div class="c"><div><span class="g" style="color:var(--g-u)">턴제 전략 퍼즐</span><b>시계판 전술</b><span class="d">5턴 동안 룬을 배치해 심장을 지켜라</span></div><div class="steel go">토요일 개방</div></div></div>
+          </div>
+          <div class="abs dnote">3성 달성 시 소탕 가능 · 광고 시청으로 1회 추가</div>
+          <div class="abs nav">
+            <div><svg class="ico" data-i="chest" viewBox="0 0 24 24"></svg>상점</div>
+            <div><svg class="ico" data-i="helm" viewBox="0 0 24 24"></svg>기사</div>
+            <div class="on"><div class="medal"><svg class="ico" data-i="swords" viewBox="0 0 24 24"></svg></div>전투</div>
+            <div><svg class="ico" data-i="clock" viewBox="0 0 24 24"></svg>룬</div>
+            <div><svg class="ico" data-i="star" viewBox="0 0 24 24"></svg>이벤트</div>
+          </div>
+        </div>
+        <figcaption><b>⑦ 요일 던전 · 미니게임 3종</b><span>같은 기사·오브·펫으로 장르만 바꿔 즐깁니다. 잠긴 요일은 흑백으로 보여 주어 "내일 할 거리"를 예고합니다.</span></figcaption>
+      </figure>
+
+      <figure class="shot">
+        <div class="phone" style="background-image:linear-gradient(rgba(5,7,26,.55),rgba(5,7,26,.8)),url(art/bg_lobby.webp)">
+          <div class="abs era"><small>ERA I · CHAPTER III</small><b>부서진 시계 광장</b><span>3-7 · 전투 전</span></div>
+          <img class="abs shadowk" src="art/knight.webp" alt="">
+          <img class="abs nora" src="art/npc_nora.webp" alt="시계공 노라">
+          <div class="abs choice"><div class="steel">그림자를 쫓는다</div><div class="steel">광장 시계부터 고친다</div></div>
+          <div class="abs dialog glass ornate">
+            <div class="brass who">시계공 노라</div>
+            <p>바늘이 또 멈췄어! 이번엔 <em>광장 시계</em>야.<br>…그리고 방금 네 그림자, 웃은 것 같지 않았어?</p>
+            <div class="ctl"><span>이전 줄거리 · 3줄 요약</span><span><u>자동</u><u>스킵</u></span></div>
+          </div>
+        </div>
+        <figcaption><b>⑧ 스토리</b><span>한 스테이지 최대 6줄, 언제든 스킵. 시대당 2번의 선택지가 다음 시대의 동료·보너스 규칙을 바꿉니다. 그림자는 시대마다 조금씩 말을 겁니다.</span></figcaption>
       </figure>
     </div>
   </section>
 
   <section>
+    <h2>캐릭터 · 몬스터 · 펫 · 오브</h2>
+    <p class="sec-note">모두 Higgsfield(z_image)로 생성하고 rembg로 배경을 제거한 게임용 스프라이트입니다. 실제 게임에서는 이 원화를 기준으로 스프라이트 시트(대기·이동·공격 프레임)를 추가 생성합니다.</p>
+    <div class="gallery" data-gallery></div>
+  </section>
+
+  <section>
+    <h2>유일룬 · 12종</h2>
+    <p class="sec-note">종류별 1개만 소유할 수 있고, 지정된 시각의 칸에만 장착됩니다. 레전드보다 약 16배 얻기 어렵습니다(룬 배너 0.03%, 1,000회 천장, 무한의 탑 200층).</p>
+    <div class="urunes" data-urunes></div>
+  </section>
+
+  <section>
     <h2>인스타그램 공유물</h2>
-    <p class="sec-note">게임이 자동으로 만드는 홍보물입니다. 1인 운영에서도 영상 편집 없이 매주 올릴 수 있도록, 유저와 운영자가 같은 기능을 씁니다.</p>
     <div class="share-row">
       <figure class="shot" style="width:360px">
-        <div class="sharecard">
-          <canvas id="cvShare" width="720" height="900" aria-hidden="true"></canvas>
+        <div class="sharecard" style="background-image:url(art/bg_arena.webp)">
           <div class="frame"></div>
           <div class="sc-head">
             <div class="sc-logo"><svg data-logo viewBox="0 0 100 100"></svg><div><b>CHRONO KNIGHT</b><small>MY BUILD</small></div></div>
             <div class="sc-stage"><span class="num">42F</span>무한의 탑</div>
           </div>
+          <img class="sc-knight" src="art/knight.webp" alt="">
           <div class="sc-clock" data-clock="share"></div>
           <div class="sc-combo">
-            <span class="tagx" style="color:var(--fire)">화염폭풍 ×2</span>
-            <span class="tagx" style="color:var(--frost)">초전도</span>
-            <span class="tagx" style="color:var(--void)">일식</span>
-            <span class="tagx" style="color:var(--brass-hi)">정오 · 블랙홀 Lv.5</span>
+            <span class="tagx" style="color:var(--fire)">화염폭풍 ×2</span><span class="tagx" style="color:var(--frost)">초전도</span><span class="tagx" style="color:var(--void)">일식</span><span class="tagx" style="color:var(--brass-hi)">#정오 5단계</span>
           </div>
           <div class="sc-code">CK1-F5W3V2I4L1D5</div>
           <div class="sc-cta">빌드 코드를 게임에 입력하면 이 배치를 불러옵니다 · Google Play "크로노 나이트"</div>
         </div>
-        <figcaption><b>빌드 카드 · 1080×1350 (피드 4:5)</b><span>룬 시계, 대표 반응, 빌드 코드. 댓글로 코드를 주고받게 만듭니다.</span></figcaption>
-      </figure>
-      <figure class="shot" style="width:220px">
-        <div class="reel">
-          <canvas id="cvReel" width="440" height="782" aria-hidden="true"></canvas>
-          <div class="cap">이 배치로<br><em>보스 3초 컷</em> 가능?</div>
-          <div class="wm"><svg data-logo viewBox="0 0 100 100"></svg><div><b>CHRONO KNIGHT</b><span>Google Play에서 검색</span></div></div>
-        </div>
-        <figcaption><b>하이라이트 릴스 · 1080×1920</b><span>판 종료 후 마지막 반응 연쇄 8~15초를 자동으로 다시 렌더링합니다.</span></figcaption>
+        <figcaption><b>빌드 카드 · 1080×1350 (피드 4:5)</b><span>기사 원화 + 룬 시계 + 태그 공명 + 빌드 코드.</span></figcaption>
       </figure>
       <div class="share-notes">
         <dl>
-          <dt>첫 1초</dt><dd>원소 반응이 터지는 장면부터 시작</dd>
-          <dt>상단 문구</dt><dd>질문형 한 줄로 댓글 유도, 핵심 단어만 황동색</dd>
-          <dt>하단 워터마크</dt><dd>로고 + 스토어 검색 안내 (링크 불필요)</dd>
-          <dt>재사용</dt><dd>같은 영상을 유튜브 쇼츠·틱톡에 그대로 업로드</dd>
+          <dt>릴스</dt><dd>판 종료 후 반응 연쇄 8~15초를 자동 재렌더링(9:16)</dd>
+          <dt>오늘의 퍼즐</dt><dd>시계판 전술 정답 인증 이미지 → 댓글 참여</dd>
+          <dt>숨은 시너지</dt><dd>"발견자" 배지가 찍힌 공유 카드 → 커뮤니티 탐구 유도</dd>
           <dt>부스트 기준</dt><dd>자연 반응 상위 영상만, 월 6만 원 이내</dd>
         </dl>
       </div>
@@ -535,78 +607,35 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
     <h2>UI 스타일 가이드</h2>
     <div class="guide">
       <div>
+        <h3>등급 프레임</h3>
+        <div class="gradeRow">
+          <div><div class="gf n"><img src="art/orb_gear.webp" alt=""></div>노멀</div>
+          <div><div class="gf m"><img src="art/orb_storm.webp" alt=""></div>매직</div>
+          <div><div class="gf r"><img src="art/orb_moon.webp" alt=""></div>레어</div>
+          <div><div class="gf u"><img src="art/orb_abyss.webp" alt=""></div>유니크</div>
+          <div><div class="gf l"><img src="art/orb_sun.webp" alt=""></div>레전드</div>
+          <div><div class="gf h"><img src="art/pet_whale.webp" alt=""></div>히든</div>
+          <div><div class="gf x"><img src="art/urune_U12.webp" alt="" style="width:100%;height:100%"></div>유일</div>
+        </div>
+      </div>
+      <div>
         <h3>재질 · 컴포넌트</h3>
         <div class="comp">
           <div class="row"><div class="brass">전투 시작</div><div class="steel">자동 배치</div></div>
-          <div class="row"><span class="pill"><svg class="gem" data-res="gold" viewBox="0 0 24 24"></svg><span class="num">124.8K</span><span class="plus">+</span></span><span class="pill"><svg class="gem" data-res="crystal" viewBox="0 0 24 24"></svg><span class="num">1,250</span><span class="plus">+</span></span></div>
-          <div class="glass" style="padding:10px 12px;font-size:13px;color:var(--text-2)">남색 유리 패널은 정보 전용입니다. 위쪽 1px 하이라이트와 황동 헤어라인으로 경계를 만듭니다.</div>
-        </div>
-        <h3 style="margin-top:22px">색</h3>
-        <div class="sw"><i style="background:var(--night-1)"></i>night.1 · 배경<code>#0A0E22</code></div>
-        <div class="sw"><i style="background:linear-gradient(180deg,#28326E,#0E1332)"></i>glass · 패널<code>#28326E → #0E1332</code></div>
-        <div class="sw"><i style="background:linear-gradient(180deg,#FFF0BF,#F4C862 38%,#D99A32 70%,#B97722)"></i>brass · 버튼·강조<code>#FFF0BF → #B97722</code></div>
-        <div class="sw"><i style="background:var(--text)"></i>text.1<code>#F3F1EA</code></div>
-        <div class="sw"><i style="background:var(--text-2)"></i>text.2<code>#A8B0D4</code></div>
-        <div class="sw"><i style="background:var(--danger)"></i>danger · 알림 점<code>#FF4D6D</code></div>
-        <div class="sw"><i style="background:var(--success)"></i>success · 수령·회복<code>#52E08E</code></div>
-      </div>
-      <div>
-        <h3>원소 보석 (색 + 문양)</h3>
-        <div class="gemrow">
-          <div><svg data-gem="fire" viewBox="0 0 60 60"></svg>화<code>#FF6B35</code></div>
-          <div><svg data-gem="frost" viewBox="0 0 60 60"></svg>빙<code>#6EC8FF</code></div>
-          <div><svg data-gem="volt" viewBox="0 0 60 60"></svg>뇌<code>#FFE14D</code></div>
-          <div><svg data-gem="wind" viewBox="0 0 60 60"></svg>풍<code>#5EF2B5</code></div>
-          <div><svg data-gem="light" viewBox="0 0 60 60"></svg>광<code>#FFF1B8</code></div>
-          <div><svg data-gem="void" viewBox="0 0 60 60"></svg>암<code>#A66BFF</code></div>
-        </div>
-        <h3 style="margin-top:22px">등급</h3>
-        <div class="sw"><i style="background:var(--r-common)"></i>일반<code>#9AA3B5</code></div>
-        <div class="sw"><i style="background:var(--r-rare)"></i>희귀<code>#4DA3FF</code></div>
-        <div class="sw"><i style="background:var(--r-epic)"></i>영웅<code>#B65CFF</code></div>
-        <div class="sw"><i style="background:var(--r-legend)"></i>전설<code>#FFB23F</code></div>
-        <div class="sw"><i style="background:linear-gradient(90deg,#FF4D8D,#FFB23F,#5EF2B5,#6EC8FF,#A66BFF)"></i>신화<code>무지개 테두리 회전</code></div>
-      </div>
-      <div>
-        <h3>글꼴</h3>
-        <div class="typo">
-          <div><span style="font-family:var(--f-logo);font-weight:800;font-size:30px;letter-spacing:.06em;color:var(--brass-hi);line-height:1.1">STAGE CLEAR</span><code>logo · Cinzel 800 (영문 로고·연출 문구)</code></div>
-          <div><span style="font-family:var(--f-title);font-weight:800;font-size:20px">부서진 시계 광장</span><code>title · Hahmlet 800 (한글 제목·반응 이름)</code></div>
-          <div><span style="font-family:var(--f-num);font-weight:700;font-size:26px;line-height:1.1">1:24 · 18,420 · 2,480</span><code>number · Barlow Condensed 700 (HUD 숫자, 고정폭)</code></div>
-          <div><span>바늘이 지나갈 때 룬이 발동합니다.</span><code>body · Pretendard (시안은 Noto Sans KR로 대체)</code></div>
-        </div>
-        <h3 style="margin-top:22px">앱 아이콘</h3>
-        <div class="appicon">
-          <canvas class="ic" id="cvIcon" width="192" height="192" aria-label="앱 아이콘: 시계 문자판과 검 모양 바늘"></canvas>
-          <canvas class="ic sm" id="cvIcon2" width="112" height="112" aria-hidden="true"></canvas>
-          <p>시계 문자판 + 검 모양 바늘. 작은 크기에서도 읽히도록 요소를 두 개로 제한했습니다.</p>
+          <div class="glass ornate" style="padding:12px 14px;font-size:13px;color:var(--text-2)">황동 장식 모서리는 스토리 대사, 챕터, 픽업, 태그 공명처럼 "지금 중요한 정보" 패널에만 씁니다.</div>
         </div>
       </div>
       <div>
-        <h3>아이콘 세트 (24px · 1.8 선)</h3>
-        <div class="iconset">
-          <div><svg class="ico" data-i="chest" viewBox="0 0 24 24"></svg>상점</div>
-          <div><svg class="ico" data-i="helm" viewBox="0 0 24 24"></svg>기사</div>
-          <div><svg class="ico" data-i="swords" viewBox="0 0 24 24"></svg>전투</div>
-          <div><svg class="ico" data-i="clock" viewBox="0 0 24 24"></svg>룬</div>
-          <div><svg class="ico" data-i="star" viewBox="0 0 24 24"></svg>이벤트</div>
-          <div><svg class="ico" data-i="gear" viewBox="0 0 24 24"></svg>설정</div>
-          <div><svg class="ico" data-i="mail" viewBox="0 0 24 24"></svg>우편</div>
-          <div><svg class="ico" data-i="calendar" viewBox="0 0 24 24"></svg>출석</div>
-          <div><svg class="ico" data-i="scroll" viewBox="0 0 24 24"></svg>퀘스트</div>
-          <div><svg class="ico" data-i="crown" viewBox="0 0 24 24"></svg>패스</div>
-          <div><svg class="ico" data-i="hourglass" viewBox="0 0 24 24"></svg>던전</div>
-          <div><svg class="ico" data-i="tower" viewBox="0 0 24 24"></svg>탑</div>
-          <div><svg class="ico" data-i="mirror" viewBox="0 0 24 24"></svg>시련</div>
-          <div><svg class="ico" data-i="tent" viewBox="0 0 24 24"></svg>야영지</div>
-          <div><svg class="ico" data-i="ghost" viewBox="0 0 24 24"></svg>그림자</div>
-          <div><svg class="ico" data-i="ad" viewBox="0 0 24 24"></svg>광고</div>
-          <div><svg class="ico" data-i="share" viewBox="0 0 24 24"></svg>공유</div>
-          <div><svg class="ico" data-i="film" viewBox="0 0 24 24"></svg>릴스</div>
+        <h3>함께 만든 산출물</h3>
+        <div class="links">
+          <a href="https://www.figma.com/board/XAPBKX8HR1LHIAHHtWLXD8">FigJam · 성장·합성·히든 흐름도</a>
+          <span style="color:var(--text-2);font-size:13px">docs/08-items-skills.md · 09-hidden-codex.md · 10-content-expansion.md</span>
         </div>
+        <h3 style="margin-top:18px">앱 아이콘</h3>
+        <canvas id="cvIcon" width="192" height="192" style="width:96px;height:96px;border-radius:22px" aria-label="앱 아이콘"></canvas>
       </div>
     </div>
-    <p class="foot">모든 도형·배경·이펙트는 실제 구현과 같은 방식(코드 드로잉 → 아틀라스 베이크)으로 만들었습니다. 최종 게임은 본문 글꼴로 Pretendard를 앱에 내장합니다.</p>
+    <p class="foot">원화: Higgsfield z_image 생성(상업 이용 가능 여부는 출시 전 플랜 약관으로 재확인) · 배경 제거: rembg(isnet) · 흐름도: Figma FigJam.</p>
   </section>
 </div>
 
@@ -617,7 +646,6 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
   var EL = { fire: "#FF6B35", frost: "#6EC8FF", volt: "#FFE14D", wind: "#5EF2B5", light: "#FFF1B8", void: "#A66BFF" };
   var EL_DEEP = { fire: "#7a1d05", frost: "#0c3d6b", volt: "#6b5200", wind: "#0b5a3d", light: "#7a5a12", void: "#2e1263" };
   var uid = 0; function id(p) { uid += 1; return p + uid; }
-
   var I = {
     pause: '<rect x="7" y="5" width="3.2" height="14" rx="1" fill="currentColor" stroke="none"/><rect x="13.8" y="5" width="3.2" height="14" rx="1" fill="currentColor" stroke="none"/>',
     helm: '<path d="M5.5 14a6.5 6.5 0 0 1 13 0v5.5h-13z"/><path d="M5.5 13.5h13"/><path d="M12 13.5v6"/><path d="M8 16.5h2.5M13.5 16.5H16"/><path d="M12 7.5c1-3 3.5-4.5 7-4.5-1 2.6-3.2 4-5.5 4.7"/>',
@@ -728,8 +756,8 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
   document.querySelectorAll("svg[data-logo]").forEach(function (s) { s.innerHTML = logoSVG(); });
 
   var builds = {
-    battle: { slots: [null, null, { el: "fire", lv: 3 }, { el: "wind", lv: 2 }, null, null, { el: "frost", lv: 2 }, { el: "volt", lv: 1 }, null, null, null, { el: "light", lv: 1 }], hand: 3.55, links: [3], fired: 3 },
-    pick: { slots: [null, null, { el: "fire", lv: 3 }, null, null, null, { el: "frost", lv: 2 }, { el: "volt", lv: 1 }, null, null, null, { el: "light", lv: 1 }], hand: 0.4, target: 3, ghost: "wind", links: [3, 7], showLv: true },
+    battle: { slots: [null, null, { el: "fire", lv: 3 }, { el: "wind", lv: 2 }, null, null, { el: "frost", lv: 2 }, { el: "volt", lv: 1 }, null, null, null, null], hand: 3.55, links: [3], fired: 3, unique: { slot: 11, img: "art/urune_U12.webp" } },
+    pick: { slots: [null, null, { el: "fire", lv: 3 }, null, null, null, { el: "frost", lv: 2 }, { el: "volt", lv: 1 }, null, null, null, null], hand: 0.4, target: 3, ghost: "wind", links: [3, 7], showLv: true, unique: { slot: 11, img: "art/urune_U12.webp" } },
     result: { slots: [{ el: "void", lv: 1 }, null, { el: "fire", lv: 4 }, { el: "wind", lv: 3 }, null, null, { el: "frost", lv: 3 }, { el: "volt", lv: 2 }, { el: "wind", lv: 1 }, null, { el: "light", lv: 2 }, { el: "void", lv: 3 }], hand: 11.2, links: [3, 7, 8, 11], showLv: true },
     share: { slots: [{ el: "void", lv: 2 }, { el: "fire", lv: 5 }, { el: "wind", lv: 3 }, { el: "fire", lv: 2 }, { el: "wind", lv: 2 }, null, { el: "frost", lv: 4 }, { el: "volt", lv: 2 }, { el: "wind", lv: 1 }, { el: "light", lv: 1 }, { el: "light", lv: 3 }, { el: "void", lv: 5 }], hand: 1.6, links: [2, 3, 4, 7, 8, 11], showLv: true }
   };
@@ -770,6 +798,7 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
         o += '<circle cx="' + x + '" cy="' + y + '" r="3" fill="#2a3470"/>';
       }
     }
+    if (b.unique) { var up = slotPos(b.unique.slot, 62); o += '<circle cx="' + up[0] + '" cy="' + up[1] + '" r="17.5" fill="#0b1020" stroke="#E8F4FF" stroke-width="2"/><image href="' + b.unique.img + '" x="' + (up[0] - 16) + '" y="' + (up[1] - 16) + '" width="32" height="32"/>'; }
     o += '<text x="100" y="67" font-family="Cinzel, serif" font-weight="800" font-size="9" fill="#E8B54A" text-anchor="middle" letter-spacing="1">XII</text>';
     var ha = b.hand / 12 * TAU - TAU / 4, hx = 100 + Math.cos(ha) * 54, hy = 100 + Math.sin(ha) * 54, tx = 100 - Math.cos(ha) * 14, ty = 100 - Math.sin(ha) * 14, nx = -Math.sin(ha) * 3.4, ny = Math.cos(ha) * 3.4;
     o += '<path d="M' + tx + ' ' + ty + ' L' + (100 + nx) + ' ' + (100 + ny) + ' L' + hx + ' ' + hy + ' L' + (100 - nx) + ' ' + (100 - ny) + 'Z" fill="url(#' + gH + ')" stroke="#3a2308" stroke-width=".8"/>';
@@ -780,7 +809,7 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
   }
   document.querySelectorAll("[data-clock]").forEach(function (el) { el.innerHTML = clockSVG(builds[el.getAttribute("data-clock")]); });
 
-  /* ---------- 캔버스 ---------- */
+  
   function rng(seed) { return function () { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }; }
   function hexRgb(h) { var n = parseInt(h.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   function rgba(h, a) { var c = hexRgb(h); return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
@@ -803,105 +832,8 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
     ctx.restore();
   }
 
-  function arena(ctx, W, H, cx, cy, R, r) {
-    ctx.fillStyle = "#05071a"; ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = radial(ctx, cx, cy, 0, R, [[0, "#232b62"], [.55, "#161c47"], [.9, "#0e1335"], [1, "#070a1f"]]);
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill();
-    var rings = 9;
-    for (var k = 1; k <= rings; k++) {
-      var rr = R * k / rings, n = 8 + k * 6, off = (k % 2) * .5, rin = R * (k - 1) / rings;
-      ctx.strokeStyle = "rgba(0,0,0,.55)"; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(cx, cy, rr, 0, TAU); ctx.stroke();
-      ctx.strokeStyle = "rgba(140,160,255,.10)"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(cx, cy, rr + 2.5, 0, TAU); ctx.stroke();
-      for (var j = 0; j < n; j++) {
-        var a = (j + off) / n * TAU;
-        ctx.strokeStyle = "rgba(0,0,0,.45)"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(cx + Math.cos(a) * rin, cy + Math.sin(a) * rin); ctx.lineTo(cx + Math.cos(a) * rr, cy + Math.sin(a) * rr); ctx.stroke();
-        if (r() < .35) { var a2 = (j + off + .5) / n * TAU, mr = (rin + rr) / 2; ctx.fillStyle = "rgba(160,175,255," + (r() * .05) + ")"; ctx.beginPath(); ctx.arc(cx + Math.cos(a2) * mr, cy + Math.sin(a2) * mr, (rr - rin) * .45, 0, TAU); ctx.fill(); }
-      }
-    }
-    var nums = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-    ctx.save(); ctx.font = "800 64px Cinzel, serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    for (var h = 0; h < 12; h++) {
-      var ha = (h + 1) / 12 * TAU - TAU / 4, tx = cx + Math.cos(ha) * R * .72, ty = cy + Math.sin(ha) * R * .72;
-      ctx.save(); ctx.translate(tx, ty); ctx.rotate(ha + TAU / 4); ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.fillText(nums[h], 0, 3); ctx.fillStyle = "rgba(232,181,74,.22)"; ctx.fillText(nums[h], 0, 0); ctx.restore();
-    }
-    ctx.restore();
-    ctx.strokeStyle = "rgba(232,181,74,.35)"; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(cx, cy, R * .86, 0, TAU); ctx.stroke();
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.lineJoin = "round";
-    for (var c = 0; c < 5; c++) {
-      var sx = cx + (r() - .5) * W * 1.2, sy = cy + (r() - .5) * H, col = r() < .5 ? "#6EC8FF" : "#A66BFF", ang = r() * TAU, px = sx, py = sy;
-      ctx.beginPath(); ctx.moveTo(sx, sy);
-      for (var q = 0; q < 7; q++) { ang += (r() - .5) * 1.4; px += Math.cos(ang) * (25 + r() * 35); py += Math.sin(ang) * (25 + r() * 35); ctx.lineTo(px, py); }
-      ctx.strokeStyle = rgba(col, .18); ctx.lineWidth = 12; ctx.stroke(); ctx.strokeStyle = rgba(col, .75); ctx.lineWidth = 2; ctx.stroke();
-    }
-    for (var d = 0; d < 70; d++) glowDot(ctx, r() * W, r() * H, 3 + r() * 6, "#9fb2ff", .25);
-    ctx.restore();
-  }
+  
   function vignette(ctx, W, H, a) { ctx.fillStyle = radial(ctx, W / 2, H * .5, Math.min(W, H) * .35, Math.max(W, H) * .75, [[0, "rgba(0,0,0,0)"], [1, "rgba(2,3,12," + a + ")"]]); ctx.fillRect(0, 0, W, H); }
-
-  function crystal(ctx, x, y, s, n, rot, col, spiky) {
-    ctx.save();
-    ctx.fillStyle = "rgba(0,0,0,.4)"; ctx.beginPath(); ctx.ellipse(x + s * .15, y + s * 1.05, s * .9, s * .28, 0, 0, TAU); ctx.fill();
-    var pts = [], m = spiky ? n * 2 : n;
-    for (var i = 0; i < m; i++) { var a = rot + i / m * TAU, rr = spiky && i % 2 ? s * .48 : s; pts.push([x + Math.cos(a) * rr, y + Math.sin(a) * rr]); }
-    function outline() { ctx.beginPath(); pts.forEach(function (p, i) { ctx[i ? "lineTo" : "moveTo"](p[0], p[1]); }); ctx.closePath(); }
-    ctx.shadowColor = col; ctx.shadowBlur = 18; outline(); ctx.fillStyle = shade(col, -.55); ctx.fill(); ctx.shadowBlur = 0;
-    for (var j = 0; j < m; j++) {
-      var p = pts[j], q = pts[(j + 1) % m], mx = (p[0] + q[0]) / 2 - x, my = (p[1] + q[1]) / 2 - y, len = Math.hypot(mx, my) || 1;
-      var lit = (mx / len) * -0.6 + (my / len) * -0.8;
-      ctx.beginPath(); ctx.moveTo(x, y - s * .08); ctx.lineTo(p[0], p[1]); ctx.lineTo(q[0], q[1]); ctx.closePath();
-      ctx.fillStyle = shade(col, lit > 0 ? lit * .45 - .05 : lit * .5 - .2); ctx.fill();
-    }
-    ctx.strokeStyle = shade(col, .55); ctx.lineWidth = 2.2; outline(); ctx.stroke();
-    ctx.globalCompositeOperation = "lighter"; glowDot(ctx, x, y, s * .55, col, .9); glowDot(ctx, x, y, s * .2, "#ffffff", .9);
-    ctx.restore();
-  }
-  var ENEMY = { spike: ["#FF4D6D", 3, false], block: ["#8E7CFF", 4, false], shard: ["#FF8FE0", 4, false], core: ["#52E0C4", 6, false], nova: ["#FFD24D", 5, true], bubble: ["#4DD6FF", 7, false] };
-  function enemy(ctx, kind, x, y, s, rot) { var e = ENEMY[kind]; crystal(ctx, x, y, s, e[1], rot, e[0], e[2]); }
-
-  function knight(ctx, x, y, sc, opt) {
-    opt = opt || {};
-    ctx.save(); ctx.translate(x, y); ctx.scale(sc, sc);
-    ctx.fillStyle = "rgba(0,0,0,.5)"; ctx.beginPath(); ctx.ellipse(0, 2, 34, 9, 0, 0, TAU); ctx.fill();
-    if (opt.aura) { ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = "rgba(255,210,110,.55)"; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.ellipse(0, 2, 42, 12, 0, 0, TAU); ctx.stroke(); glowDot(ctx, 0, -40, 70, "#E8B54A", .18); ctx.restore(); }
-    var cg = ctx.createLinearGradient(0, -64, 0, 0); cg.addColorStop(0, "#3b2c9c"); cg.addColorStop(1, "#120d3d");
-    function capeHem() { ctx.quadraticCurveTo(-26, 2, -18, -3); ctx.quadraticCurveTo(-8, 3, 0, -2); ctx.quadraticCurveTo(8, 3, 18, -3); ctx.quadraticCurveTo(26, 2, 36, -4); }
-    ctx.fillStyle = cg; ctx.beginPath(); ctx.moveTo(-20, -64); ctx.quadraticCurveTo(-34, -30, -36, -4); capeHem(); ctx.quadraticCurveTo(34, -30, 20, -64); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "rgba(232,181,74,.85)"; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(-36, -4); capeHem(); ctx.stroke();
-    ctx.strokeStyle = "rgba(0,0,0,.35)"; ctx.lineWidth = 1.5; [-22, -10, 10, 22].forEach(function (fx) { ctx.beginPath(); ctx.moveTo(fx * .5, -58); ctx.quadraticCurveTo(fx, -30, fx * 1.2, -4); ctx.stroke(); });
-    function steel(y0, y1) { var g = ctx.createLinearGradient(0, y0, 0, y1); g.addColorStop(0, "#f4f7ff"); g.addColorStop(.5, "#a9b4de"); g.addColorStop(1, "#4d5890"); return g; }
-    ctx.fillStyle = steel(-24, 0); rrect(ctx, -13, -24, 9, 24, 3); ctx.fill(); rrect(ctx, 4, -24, 9, 24, 3); ctx.fill();
-    ctx.fillStyle = "#2a2f5a"; ctx.fillRect(-14, -3, 11, 4); ctx.fillRect(3, -3, 11, 4);
-    var bg = ctx.createLinearGradient(-18, -66, 18, -22); bg.addColorStop(0, "#ffffff"); bg.addColorStop(.45, "#c3cbef"); bg.addColorStop(1, "#56619a");
-    ctx.fillStyle = bg; ctx.beginPath(); ctx.moveTo(-18, -66); ctx.lineTo(18, -66); ctx.quadraticCurveTo(19, -40, 13, -25); ctx.lineTo(0, -20); ctx.lineTo(-13, -25); ctx.quadraticCurveTo(-19, -40, -18, -66); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "#2a3160"; ctx.lineWidth = 1.2; ctx.stroke();
-    ctx.strokeStyle = "rgba(255,255,255,.8)"; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(0, -64); ctx.lineTo(0, -52); ctx.stroke();
-    var eg = ctx.createRadialGradient(-2, -46, 1, 0, -44, 9); eg.addColorStop(0, "#FFF6D6"); eg.addColorStop(.6, "#E8B54A"); eg.addColorStop(1, "#7a4a12");
-    ctx.save(); ctx.shadowColor = "#FFD36B"; ctx.shadowBlur = 12; ctx.fillStyle = eg; ctx.beginPath(); ctx.arc(0, -43, 8, 0, TAU); ctx.fill(); ctx.restore();
-    ctx.fillStyle = "#1a1030"; ctx.beginPath(); ctx.arc(0, -43, 5, 0, TAU); ctx.fill();
-    ctx.strokeStyle = "#FFE9A8"; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(0, -43); ctx.lineTo(0, -47); ctx.moveTo(0, -43); ctx.lineTo(2.8, -41.5); ctx.stroke();
-    var gg = ctx.createLinearGradient(0, -27, 0, -22); gg.addColorStop(0, "#FFE9A8"); gg.addColorStop(1, "#9a6419");
-    ctx.fillStyle = gg; ctx.fillRect(-14, -27, 28, 4.5);
-    [-1, 1].forEach(function (sd) {
-      var pg = ctx.createRadialGradient(sd * 20, -66, 1, sd * 21, -62, 13); pg.addColorStop(0, "#ffffff"); pg.addColorStop(.6, "#a9b4de"); pg.addColorStop(1, "#3f4a80");
-      ctx.fillStyle = pg; ctx.beginPath(); ctx.ellipse(sd * 21, -61, 12, 8.5, sd * .25, Math.PI, 0); ctx.closePath(); ctx.fill();
-      ctx.strokeStyle = "#E8B54A"; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.ellipse(sd * 21, -61, 12, 8.5, sd * .25, Math.PI, 0); ctx.stroke();
-    });
-    var hg = ctx.createLinearGradient(-16, -100, 16, -70); hg.addColorStop(0, "#ffffff"); hg.addColorStop(.5, "#c8d0f2"); hg.addColorStop(1, "#5a659e");
-    ctx.fillStyle = hg; ctx.beginPath(); ctx.moveTo(-15, -70); ctx.lineTo(-15, -86); ctx.quadraticCurveTo(-15, -102, 0, -102); ctx.quadraticCurveTo(15, -102, 15, -86); ctx.lineTo(15, -70); ctx.quadraticCurveTo(0, -64, -15, -70); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "#2a3160"; ctx.lineWidth = 1.2; ctx.stroke();
-    ctx.fillStyle = "#0b0e24"; rrect(ctx, -11, -88, 22, 5, 2); ctx.fill(); ctx.fillRect(-2, -88, 4, 14);
-    ctx.save(); ctx.shadowColor = "#FFD36B"; ctx.shadowBlur = 10; ctx.fillStyle = "#FFD36B"; ctx.fillRect(-9, -86.8, 5, 2.2); ctx.fillRect(4, -86.8, 5, 2.2); ctx.restore();
-    ctx.strokeStyle = "rgba(255,255,255,.9)"; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(-3, -90, 9, Math.PI * 1.1, Math.PI * 1.45); ctx.stroke();
-    var fg = ctx.createLinearGradient(0, -104, 26, -84); fg.addColorStop(0, "#FFE9A8"); fg.addColorStop(.5, "#FF8A3D"); fg.addColorStop(1, "#b0281a");
-    ctx.fillStyle = fg; ctx.beginPath(); ctx.moveTo(0, -101); ctx.quadraticCurveTo(12, -118, 30, -104); ctx.quadraticCurveTo(22, -104, 26, -92); ctx.quadraticCurveTo(14, -104, 2, -96); ctx.closePath(); ctx.fill();
-    ctx.save(); ctx.translate(20, -38); ctx.rotate(opt.swordRot == null ? -0.75 : opt.swordRot);
-    ctx.shadowColor = "#bfe6ff"; ctx.shadowBlur = 16;
-    var sg = ctx.createLinearGradient(0, -3, 0, 3); sg.addColorStop(0, "#ffffff"); sg.addColorStop(.5, "#dff3ff"); sg.addColorStop(1, "#7fb2e0");
-    ctx.fillStyle = sg; ctx.beginPath(); ctx.moveTo(8, -3.2); ctx.lineTo(58, -2.2); ctx.lineTo(66, 0); ctx.lineTo(58, 2.2); ctx.lineTo(8, 3.2); ctx.closePath(); ctx.fill();
-    ctx.shadowBlur = 0; ctx.fillStyle = gg; ctx.fillRect(4, -8, 4.5, 16); ctx.fillStyle = "#3b2a8a"; ctx.fillRect(-8, -2, 12, 4); ctx.fillStyle = "#E8B54A"; ctx.beginPath(); ctx.arc(-9, 0, 3, 0, TAU); ctx.fill();
-    ctx.restore();
-    ctx.restore();
-  }
 
   function slash(ctx, x, y, R, a0, a1, w, col) {
     ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.lineCap = "round";
@@ -952,100 +884,7 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
     ctx.fillStyle = g; ctx.fillText(txt, x, y); ctx.restore();
   }
 
-  function battleScene(cv, seed) {
-    var ctx = cv.getContext("2d"), W = cv.width, H = cv.height, r = rng(seed), kx = 300, ky = 760;
-    arena(ctx, W, H, 330, 640, 900, r);
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; glowDot(ctx, 150, 880, 80, "#A66BFF", .3); ctx.restore();
-    ctx.save(); ctx.globalAlpha = .5; ctx.filter = "grayscale(1) sepia(1) hue-rotate(215deg) saturate(3) brightness(.9)"; knight(ctx, 150, 930, 1.35, { swordRot: -1.1 }); ctx.restore();
-    var kinds = ["spike", "spike", "spike", "block", "shard", "nova", "bubble", "core"], list = [];
-    for (var i = 0; i < 70; i++) {
-      var a = r() * TAU, d = 200 + r() * 440, x = kx + Math.cos(a) * d, y = ky + Math.sin(a) * d * 1.2;
-      if (y < 230 || y > 1250 || (x > 380 && y > 1000)) continue;
-      list.push([kinds[(r() * kinds.length) | 0], x, y, 15 + r() * 9, r() * 6]);
-    }
-    list.sort(function (p, q) { return p[2] - q[2]; }).forEach(function (e) { enemy(ctx, e[0], e[1], e[2], e[3], e[4]); });
-    fireburst(ctx, 400, 560, 200, r); swirl(ctx, 400, 560, 190, "#5EF2B5", 9, r);
-    icelance(ctx, kx - 20, ky + 10, 70, ky + 190);
-    gems(ctx, kx, ky + 40, 22, 360, r);
-    knight(ctx, kx, ky + 50, 1.55, { aura: true, swordRot: -1.2 });
-    slash(ctx, kx + 10, ky - 40, 108, -2.3, -0.3, 16, "#FFF1B8");
-    ctx.fillStyle = "rgba(0,0,0,.65)"; rrect(ctx, kx - 48, ky + 70, 96, 11, 5); ctx.fill();
-    var hp = ctx.createLinearGradient(0, ky + 71, 0, ky + 80); hp.addColorStop(0, "#b7ffd2"); hp.addColorStop(1, "#23a35a"); ctx.fillStyle = hp; rrect(ctx, kx - 46, ky + 72, 64, 7, 3.5); ctx.fill();
-    ctx.strokeStyle = "rgba(0,0,0,.6)"; ctx.lineWidth = 1.5; for (var hx = 1; hx < 6; hx++) { ctx.beginPath(); ctx.moveTo(kx - 46 + hx * 15.3, ky + 72); ctx.lineTo(kx - 46 + hx * 15.3, ky + 79); ctx.stroke(); }
-    dmg(ctx, "2,480", 470, 600, 56, true); dmg(ctx, "612", 150, 560, 40, false); dmg(ctx, "1,905", 440, 900, 50, true); dmg(ctx, "388", 230, 430, 34, false);
-    vignette(ctx, W, H, .75);
-  }
-
-  function lobbyScene(cv) {
-    var ctx = cv.getContext("2d"), W = cv.width, H = cv.height, r = rng(5);
-    sky(ctx, W, H, r);
-    function isle(x, y, w, col) { ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(x - w, y); ctx.quadraticCurveTo(x, y - w * .25, x + w, y); ctx.lineTo(x + w * .3, y + w * .5); ctx.lineTo(x, y + w * .9); ctx.lineTo(x - w * .4, y + w * .45); ctx.closePath(); ctx.fill(); }
-    isle(80, 420, 70, "#141a4a"); isle(540, 360, 55, "#141a4a"); isle(520, 620, 40, "#10153d");
-    var tx = 300;
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; glowDot(ctx, tx, 300, 300, "#E8B54A", .18); ctx.restore();
-    var tg = ctx.createLinearGradient(tx - 90, 0, tx + 90, 0); tg.addColorStop(0, "#0c1030"); tg.addColorStop(.5, "#1c2460"); tg.addColorStop(1, "#0a0d28");
-    ctx.fillStyle = tg; ctx.beginPath(); ctx.moveTo(tx - 70, 900); ctx.lineTo(tx - 62, 330); ctx.lineTo(tx - 80, 310); ctx.lineTo(tx, 150); ctx.lineTo(tx + 80, 310); ctx.lineTo(tx + 62, 330); ctx.lineTo(tx + 70, 900); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "rgba(232,181,74,.35)"; ctx.lineWidth = 2; ctx.stroke();
-    ctx.save(); ctx.shadowColor = "#FFD36B"; ctx.shadowBlur = 40; ctx.fillStyle = radial(ctx, tx, 400, 0, 62, [[0, "#FFF3C9"], [.7, "#E8B54A"], [1, "#8a5a14"]]); ctx.beginPath(); ctx.arc(tx, 400, 62, 0, TAU); ctx.fill(); ctx.restore();
-    ctx.fillStyle = "#101437"; ctx.beginPath(); ctx.arc(tx, 400, 52, 0, TAU); ctx.fill();
-    for (var h = 0; h < 12; h++) { var a = h / 12 * TAU; ctx.fillStyle = "#FFE9A8"; ctx.beginPath(); ctx.arc(tx + Math.cos(a) * 44, 400 + Math.sin(a) * 44, h % 3 ? 2 : 3.5, 0, TAU); ctx.fill(); }
-    ctx.strokeStyle = "#FFE9A8"; ctx.lineWidth = 4; ctx.lineCap = "round"; ctx.beginPath(); ctx.moveTo(tx, 400); ctx.lineTo(tx, 364); ctx.moveTo(tx, 400); ctx.lineTo(tx + 24, 412); ctx.stroke();
-    for (var wy = 490; wy < 640; wy += 50) { ctx.fillStyle = "rgba(255,210,110,.75)"; ctx.fillRect(tx - 30, wy, 10, 22); ctx.fillRect(tx + 20, wy, 10, 22); }
-    function gear(x, y, R, teeth, rot, al) {
-      ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.strokeStyle = "rgba(232,181,74," + al + ")"; ctx.lineWidth = 3; ctx.beginPath();
-      for (var i = 0; i < teeth * 2; i++) { var an = i / (teeth * 2) * TAU, rr = i % 2 ? R : R * 1.18; ctx.lineTo(Math.cos(an) * rr, Math.sin(an) * rr); }
-      ctx.closePath(); ctx.stroke(); ctx.beginPath(); ctx.arc(0, 0, R * .35, 0, TAU); ctx.stroke(); ctx.restore();
-    }
-    gear(110, 560, 38, 10, .3, .3); gear(500, 520, 28, 8, .8, .3); gear(70, 740, 22, 7, .1, .22);
-    var py = 600;
-    ctx.fillStyle = radial(ctx, 300, py, 10, 260, [[0, "rgba(232,181,74,.35)"], [1, "rgba(232,181,74,0)"]]); ctx.beginPath(); ctx.ellipse(300, py, 260, 70, 0, 0, TAU); ctx.fill();
-    var pg = ctx.createLinearGradient(0, py - 10, 0, py + 40); pg.addColorStop(0, "#FFE9A8"); pg.addColorStop(.3, "#C98A2C"); pg.addColorStop(1, "#3a2308");
-    ctx.fillStyle = pg; ctx.beginPath(); ctx.ellipse(300, py + 12, 150, 34, 0, 0, TAU); ctx.fill();
-    ctx.fillStyle = "#171d4c"; ctx.beginPath(); ctx.ellipse(300, py, 146, 30, 0, 0, TAU); ctx.fill();
-    ctx.strokeStyle = "rgba(232,181,74,.6)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.ellipse(300, py, 120, 24, 0, 0, TAU); ctx.stroke();
-    for (var k = 0; k < 12; k++) { var ka = k / 12 * TAU; ctx.fillStyle = "#E8B54A"; ctx.beginPath(); ctx.arc(300 + Math.cos(ka) * 133, py + Math.sin(ka) * 27, 2.5, 0, TAU); ctx.fill(); }
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; var lg = ctx.createLinearGradient(0, 200, 0, py); lg.addColorStop(0, "rgba(255,220,140,0)"); lg.addColorStop(1, "rgba(255,220,140,.22)"); ctx.fillStyle = lg; ctx.beginPath(); ctx.moveTo(240, 200); ctx.lineTo(360, 200); ctx.lineTo(400, py); ctx.lineTo(200, py); ctx.closePath(); ctx.fill(); ctx.restore();
-    knight(ctx, 300, py + 4, 2.25, { aura: true, swordRot: -1.35 });
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; for (var e = 0; e < 40; e++) glowDot(ctx, 120 + r() * 360, 300 + r() * 340, 3 + r() * 5, "#FFC66B", .7); ctx.restore();
-    var fog = ctx.createLinearGradient(0, 650, 0, H); fog.addColorStop(0, "rgba(10,14,34,0)"); fog.addColorStop(.35, "rgba(10,14,34,.85)"); fog.addColorStop(1, "#0a0e22");
-    ctx.fillStyle = fog; ctx.fillRect(0, 650, W, H - 650);
-  }
-
-  function gachaScene(cv) {
-    var ctx = cv.getContext("2d"), W = cv.width, H = cv.height, r = rng(9), cx = 300, cy = 470;
-    sky(ctx, W, H, r, ["#6a3fd0", "#b0428a", "#FFB23F"]);
-    ctx.save(); ctx.globalCompositeOperation = "lighter";
-    for (var i = 0; i < 22; i++) {
-      var a = -Math.PI / 2 + (i - 11) * .13 + (r() - .5) * .05, L = 560 + r() * 200, g = ctx.createLinearGradient(cx, cy, cx + Math.cos(a) * L, cy + Math.sin(a) * L);
-      g.addColorStop(0, "rgba(255,210,120,.3)"); g.addColorStop(1, "rgba(255,210,120,0)");
-      ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a - .025) * L, cy + Math.sin(a - .025) * L); ctx.lineTo(cx + Math.cos(a + .025) * L, cy + Math.sin(a + .025) * L); ctx.closePath(); ctx.fill();
-    }
-    glowDot(ctx, cx, cy, 320, "#FFB23F", .35);
-    ctx.restore();
-    var top = 300, bot = 800, hw = 175;
-    var fg = ctx.createLinearGradient(cx - hw, 0, cx + hw, 0); fg.addColorStop(0, "#7a4a12"); fg.addColorStop(.25, "#FFE9A8"); fg.addColorStop(.5, "#C98A2C"); fg.addColorStop(.75, "#FFE9A8"); fg.addColorStop(1, "#7a4a12");
-    ctx.save(); ctx.shadowColor = "#FFB23F"; ctx.shadowBlur = 50; ctx.fillStyle = fg; ctx.beginPath(); ctx.moveTo(cx - hw - 16, bot); ctx.lineTo(cx - hw - 16, top + hw); ctx.arc(cx, top + hw, hw + 16, Math.PI, 0); ctx.lineTo(cx + hw + 16, bot); ctx.closePath(); ctx.fill(); ctx.restore();
-    var dg = ctx.createLinearGradient(0, top, 0, bot); dg.addColorStop(0, "#1e2766"); dg.addColorStop(1, "#0a0e2a");
-    ctx.fillStyle = dg; ctx.beginPath(); ctx.moveTo(cx - hw, bot); ctx.lineTo(cx - hw, top + hw); ctx.arc(cx, top + hw, hw, Math.PI, 0); ctx.lineTo(cx + hw, bot); ctx.closePath(); ctx.fill();
-    ctx.strokeStyle = "rgba(232,181,74,.45)"; ctx.lineWidth = 3;
-    for (var p = 0; p < 4; p++) { rrect(ctx, cx - hw + 26, 560 + p * 58, hw - 44, 44, 6); ctx.stroke(); rrect(ctx, cx + 18, 560 + p * 58, hw - 44, 44, 6); ctx.stroke(); }
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; var sg = ctx.createLinearGradient(cx - 14, 0, cx + 14, 0); sg.addColorStop(0, "rgba(255,230,160,0)"); sg.addColorStop(.5, "rgba(255,250,225,1)"); sg.addColorStop(1, "rgba(255,230,160,0)"); ctx.fillStyle = sg; ctx.fillRect(cx - 14, 530, 28, bot - 530); glowDot(ctx, cx, bot - 20, 160, "#FFD36B", .5); ctx.restore();
-    var fy = top + hw - 10;
-    ctx.save(); ctx.shadowColor = "#FFB23F"; ctx.shadowBlur = 30; ctx.fillStyle = radial(ctx, cx, fy, 0, 118, [[0, "#FFF3C9"], [.8, "#E8B54A"], [1, "#7a4a12"]]); ctx.beginPath(); ctx.arc(cx, fy, 118, 0, TAU); ctx.fill(); ctx.restore();
-    ctx.fillStyle = radial(ctx, cx, fy - 20, 10, 106, [[0, "#26307a"], [1, "#070a1c"]]); ctx.beginPath(); ctx.arc(cx, fy, 106, 0, TAU); ctx.fill();
-    ctx.font = "800 22px Cinzel, serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    var rn = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"];
-    for (var h = 0; h < 12; h++) { var ha = (h + 1) / 12 * TAU - TAU / 4; ctx.fillStyle = "rgba(255,233,168,.65)"; ctx.fillText(rn[h], cx + Math.cos(ha) * 84, fy + Math.sin(ha) * 84); }
-    [[3, "#4DA3FF"], [6, "#B65CFF"], [12, "#FFB23F"]].forEach(function (m) {
-      var a = m[0] / 12 * TAU - TAU / 4, mx = cx + Math.cos(a) * 60, my = fy + Math.sin(a) * 60;
-      ctx.save(); ctx.globalCompositeOperation = "lighter"; glowDot(ctx, mx, my, 26, m[1], .8); ctx.restore(); ctx.fillStyle = m[1]; ctx.beginPath(); ctx.arc(mx, my, 7, 0, TAU); ctx.fill();
-    });
-    ctx.save(); ctx.shadowColor = "#FFF1B8"; ctx.shadowBlur = 24; ctx.fillStyle = "#FFF6D6"; ctx.beginPath(); ctx.moveTo(cx - 7, fy); ctx.lineTo(cx, fy - 92); ctx.lineTo(cx + 7, fy); ctx.lineTo(cx, fy + 18); ctx.closePath(); ctx.fill(); ctx.restore();
-    ctx.fillStyle = "#E8B54A"; ctx.beginPath(); ctx.arc(cx, fy, 12, 0, TAU); ctx.fill();
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; for (var q = 0; q < 70; q++) glowDot(ctx, cx + (r() - .5) * 520, 200 + r() * 700, 2 + r() * 5, r() < .7 ? "#FFD36B" : "#c77dff", .8); ctx.restore();
-    var fog = ctx.createLinearGradient(0, 780, 0, H); fog.addColorStop(0, "rgba(8,10,30,0)"); fog.addColorStop(.3, "rgba(8,10,30,.9)"); fog.addColorStop(1, "#080a1e"); ctx.fillStyle = fog; ctx.fillRect(0, 780, W, H - 780);
-  }
-
+  
   function resultScene(cv) {
     var ctx = cv.getContext("2d"), W = cv.width, H = cv.height, r = rng(3);
     sky(ctx, W, H, r, ["#3a4ad0", "#6a3fd0", "#E8B54A"]);
@@ -1056,29 +895,6 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
     var cols = ["#FFE9A8", "#E8B54A", "#6EC8FF", "#A66BFF", "#5EF2B5"];
     for (var c = 0; c < 70; c++) { ctx.save(); ctx.translate(r() * W, r() * 620); ctx.rotate(r() * TAU); ctx.fillStyle = cols[(r() * cols.length) | 0]; ctx.globalAlpha = .5 + r() * .5; ctx.fillRect(-5, -2, 10, 4); ctx.restore(); }
     var fog = ctx.createLinearGradient(0, 600, 0, H); fog.addColorStop(0, "rgba(8,10,30,0)"); fog.addColorStop(.25, "rgba(8,10,30,.85)"); fog.addColorStop(1, "#080a1e"); ctx.fillStyle = fog; ctx.fillRect(0, 600, W, H - 600);
-  }
-
-  function shareScene(cv) {
-    var ctx = cv.getContext("2d"), W = cv.width, H = cv.height, r = rng(17);
-    arena(ctx, W, H, W / 2, 380, 760, r);
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; glowDot(ctx, W / 2, 380, 330, "#E8B54A", .22); glowDot(ctx, W / 2 - 180, 300, 160, "#FF6B35", .2); glowDot(ctx, W / 2 + 190, 470, 160, "#A66BFF", .22); ctx.restore();
-    vignette(ctx, W, H, .8);
-  }
-
-  function reelScene(cv) {
-    var ctx = cv.getContext("2d"), W = cv.width, H = cv.height, r = rng(21), list = [];
-    arena(ctx, W, H, 220, 470, 700, r);
-    for (var i = 0; i < 40; i++) { var a = r() * TAU, d = 130 + r() * 250; list.push([["spike", "block", "core", "shard", "nova"][(r() * 5) | 0], 220 + Math.cos(a) * d, 440 + Math.sin(a) * d * 1.3, 11 + r() * 6, r() * 6]); }
-    list.sort(function (p, q) { return p[2] - q[2]; }).forEach(function (e) { enemy(ctx, e[0], e[1], e[2], e[3], e[4]); });
-    var bx = 240, by = 330;
-    ctx.save(); ctx.globalCompositeOperation = "lighter"; glowDot(ctx, bx, by, 190, "#A66BFF", .55); ctx.restore();
-    swirl(ctx, bx, by, 150, "#A66BFF", 10, r);
-    ctx.fillStyle = radial(ctx, bx, by, 0, 56, [[0, "#000"], [.8, "#07020f"], [1, "rgba(7,2,15,0)"]]); ctx.beginPath(); ctx.arc(bx, by, 56, 0, TAU); ctx.fill();
-    ctx.save(); ctx.shadowColor = "#FFF1B8"; ctx.shadowBlur = 30; ctx.strokeStyle = "#FFF6D6"; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(bx, by, 44, 0, TAU); ctx.stroke(); ctx.restore();
-    knight(ctx, 200, 560, 1.15, { aura: true, swordRot: -1.3 });
-    ctx.save(); ctx.font = "800 44px Hahmlet, serif"; ctx.textAlign = "center"; ctx.lineJoin = "round"; ctx.lineWidth = 7; ctx.strokeStyle = "#1a0736"; ctx.strokeText("일식!", bx, by + 110);
-    var g = ctx.createLinearGradient(0, by + 75, 0, by + 115); g.addColorStop(0, "#F6EEFF"); g.addColorStop(1, "#B98CFF"); ctx.fillStyle = g; ctx.fillText("일식!", bx, by + 110); ctx.restore();
-    vignette(ctx, W, H, .7);
   }
 
   function appIcon(cv) {
@@ -1100,12 +916,113 @@ canvas.bg.dimmed { filter: blur(3px) brightness(.38) saturate(.8); transform: sc
     ctx.restore();
   }
 
+  
+    /* ---------- 황동 장식 모서리 ---------- */
+  var CORNER = '<svg viewBox="0 0 20 20" fill="none"><path d="M2 17V8Q2 2 8 2H17" stroke="#E8B54A" stroke-width="1.8" stroke-linecap="round"/><path d="M6 13Q6 6 13 6" stroke="#FFE9A8" stroke-opacity=".7" stroke-width="1" stroke-linecap="round"/><rect x="0.5" y="0.5" width="4" height="4" transform="rotate(45 2.5 2.5)" fill="#FFE9A8"/></svg>';
+  document.querySelectorAll(".ornate").forEach(function (el) {
+    ["tl", "tr", "bl", "br"].forEach(function (k) { var i = document.createElement("i"); i.className = "cn " + k; i.innerHTML = CORNER; el.appendChild(i); });
+  });
+
+  /* ---------- 전투 레이어 (스프라이트 배치) ---------- */
+  var BATTLE = [
+    ["boss_clockbreaker", 196, 330, 150, false, "boss"],
+    ["mon_nova", 64, 262, 40, false], ["mon_spike", 252, 262, 46, true],
+    ["mon_block", 262, 360, 62, true], ["mon_spike", 54, 330, 48, false],
+    ["mon_bubble", 50, 430, 40, false], ["mon_shard", 250, 470, 54, true],
+    ["mon_bubble", 276, 548, 34, true], ["mon_core", 38, 520, 50, false],
+    ["mon_spike", 108, 560, 40, true], ["mon_nova", 214, 590, 34, false]
+  ];
+  function battleLayer(el) {
+    var html = "", list = BATTLE.slice();
+    list.push(["knight", 150, 478, 100, false, "hero"], ["pet_owl", 196, 484, 40, false], ["knight", 92, 536, 82, true, "shadow"]);
+    list.sort(function (a, b) { return a[2] - b[2]; });
+    list.forEach(function (s) {
+      var w = s[3] * (s[5] === "boss" ? 1.1 : 0.9);
+      html += '<span class="ground" style="left:' + s[1] + 'px;top:' + (s[2] - 3) + 'px;width:' + w + 'px;height:' + (w * 0.28) + 'px"></span>';
+      var st = 'left:' + s[1] + 'px;top:' + s[2] + 'px;height:' + s[3] + 'px;';
+      if (s[5] === "shadow") st += 'opacity:.5;filter:grayscale(1) brightness(.5) sepia(1) hue-rotate(220deg) saturate(3) drop-shadow(0 0 10px rgba(166,107,255,.8));';
+      if (s[5] === "hero") st += 'filter:drop-shadow(0 0 10px rgba(255,210,110,.55)) drop-shadow(0 6px 6px rgba(0,0,0,.6));';
+      html += '<img class="spr' + (s[4] ? ' flip' : '') + '" src="art/' + s[0] + '.webp" alt="" style="' + st + '">';
+    });
+    el.innerHTML = html;
+  }
+  document.querySelectorAll("[data-battle]").forEach(battleLayer);
+
+  function fxBattle(cv) {
+    var ctx = cv.getContext("2d"), r = rng(7);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    // 보스를 감싸는 화염폭풍
+    fireburst(ctx, 130, 620, 150, r); swirl(ctx, 130, 620, 150, "#5EF2B5", 8, r);
+    // 기사 베기 + 얼음창
+    slash(ctx, 310, 880, 96, -2.4, -0.4, 16, "#FFF1B8");
+    icelance(ctx, 320, 900, 470, 900);
+    gems(ctx, 300, 1000, 20, 300, r);
+    // 기사 발밑 오라
+    ctx.save(); ctx.globalCompositeOperation = "lighter"; ctx.strokeStyle = "rgba(255,210,110,.6)"; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(300, 954, 60, 16, 0, 0, TAU); ctx.stroke(); ctx.restore();
+    // HP 바
+    ctx.fillStyle = "rgba(0,0,0,.65)"; rrect(ctx, 252, 966, 96, 11, 5); ctx.fill();
+    var hp = ctx.createLinearGradient(0, 967, 0, 976); hp.addColorStop(0, "#b7ffd2"); hp.addColorStop(1, "#23a35a"); ctx.fillStyle = hp; rrect(ctx, 254, 968, 64, 7, 3.5); ctx.fill();
+    dmg(ctx, "24,800", 430, 560, 60, true); dmg(ctx, "612", 110, 640, 38, false); dmg(ctx, "1,905", 470, 820, 46, true); dmg(ctx, "388", 170, 760, 32, false);
+  }
+  function fxHero(cv) {
+    var ctx = cv.getContext("2d"), r = rng(4);
+    ctx.save(); ctx.globalCompositeOperation = "lighter";
+    glowDot(ctx, 300, 520, 260, "#E8B54A", .18);
+    for (var k = 1; k <= 3; k++) { ctx.strokeStyle = "rgba(232,181,74," + (0.28 - k * 0.06) + ")"; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(300, 520, 110 + k * 55, 0, TAU); ctx.stroke(); }
+    var pts = [[120, 300], [210, 230], [330, 260], [470, 330], [500, 470], [110, 470], [160, 640], [460, 640]];
+    ctx.strokeStyle = "rgba(255,233,168,.35)"; ctx.lineWidth = 1.5; ctx.beginPath();
+    [[0, 1], [1, 2], [2, 3], [3, 4], [0, 5], [5, 6], [4, 7]].forEach(function (e) { ctx.moveTo(pts[e[0]][0], pts[e[0]][1]); ctx.lineTo(pts[e[1]][0], pts[e[1]][1]); });
+    ctx.stroke();
+    pts.forEach(function (p, i) { glowDot(ctx, p[0], p[1], 18, i % 3 ? "#FFE9A8" : "#FF6B35", .9); });
+    for (var s = 0; s < 60; s++) glowDot(ctx, r() * 600, r() * 900, 2 + r() * 3, "#9fb2ff", .5);
+    ctx.restore();
+  }
+
+  /* ---------- 갤러리 ---------- */
+  var GAL = [
+    ["knight", "l", "시계탑의 기사", "주인공. 가슴의 룬 시계 문장, 금빛 T 슬릿, 깃털과 남색 망토.", true],
+    ["boss_clockbreaker", "h", "시계 파괴자", "시대 1 보스. 부서진 시계 가슴, 수정 망치와 바늘 칼날.", true],
+    ["mon_spike", "n", "스파이크 글리치", "▲ 돌진형 · 루비 수정"], ["mon_block", "n", "블록 글리치", "■ 탱커형 · 자수정 골렘"],
+    ["mon_bubble", "n", "버블 글리치", "● 분열형 · 청록 젤리"], ["mon_shard", "n", "샤드 글리치", "◆ 원거리형 · 분홍 포탑"],
+    ["mon_core", "n", "코어 글리치", "⬡ 지원형 · 보호막 토템"], ["mon_nova", "n", "노바 글리치", "✦ 자폭형 · 황금 별"],
+    ["pet_owl", "u", "크로노 부엉이", "유니크 펫 · 12시 칸 효과 +25%"], ["pet_moonfox", "u", "달 여우 루나", "유니크 펫 · 월광 분신 소환"],
+    ["pet_gearwyrm", "u", "기어윔", "유니크 펫 · 톱니 브레스"], ["pet_whale", "l", "크로노베일", "레전드 펫 · 전장 2초 정지"],
+    ["orb_sun", "l", "정오의 태양 헬리오스", "레전드 오브 · 태양 계열"], ["orb_moon", "r", "반달 호위", "레어 오브 · 달 계열"],
+    ["orb_storm", "r", "천둥 왕관", "레어 오브 · 폭풍 계열"], ["orb_abyss", "u", "사건의 지평선", "유니크 오브 · 심연 계열"],
+    ["orb_gear", "m", "번개 병", "매직 오브 · 폭풍 계열"], ["npc_nora", "r", "시계공 노라", "스토리 안내자 · 개그 담당"]
+  ];
+  var g = document.querySelector("[data-gallery]");
+  if (g) g.innerHTML = GAL.map(function (x) {
+    return '<div class="gcard' + (x[4] ? " wide" : "") + '"><div class="gf ' + x[1] + '"><img src="art/' + x[0] + '.webp" alt="' + x[2] + '"></div><b>' + x[2] + '</b><span>' + x[3] + '</span></div>';
+  }).join("");
+
+  /* ---------- 유일룬 ---------- */
+  var UR = [
+    ["U01", "1시", "윤초", "바퀴마다 1초, 세상이 멈춘 사이 나만 움직인다"],
+    ["U02", "2시", "쌍둥이 초침", "두 번째 바늘. 두 바늘이 만나는 칸 ×3"],
+    ["U03", "3시", "시계태엽 심장", "HP가 낮을수록 바늘이 최대 2.5배 빨라짐"],
+    ["U04", "4시", "원소 프리즘", "양옆 룬의 원소를 순환시켜 모든 반응 탐색", "light"],
+    ["U05", "5시", "인과의 사슬", "이번 바퀴 반응 수만큼 다음 바퀴 피해 증가"],
+    ["U06", "6시", "자정의 문", "화면의 적 절반을 '다음 날'로 추방"],
+    ["U07", "7시", "영원의 모래", "시간장: 적 50% 느림, 기사 공속 +30%"],
+    ["U08", "8시", "역설의 룬", "아직 고르지 않은 룬을 미래에서 빌려 발동"],
+    ["U09", "9시", "9시의 거울", "3시 룬을 반대 원소로 거울 복제", "frost"],
+    ["U10", "10시", "천체 궤도", "3칸 위성 시계가 12~2시 룬을 한 번 더"],
+    ["U11", "11시", "종말의 전주", "다음 12시 효과 ×3, 대신 받는 피해 +20%"],
+    ["U12", "12시", "정오의 왕관", "12시에 모든 룬이 동시에 1회 추가 발동"]
+  ];
+  var u = document.querySelector("[data-urunes]");
+  if (u) u.innerHTML = UR.map(function (x) {
+    var ic = x[4] ? '<svg viewBox="0 0 60 60">' + gemSVG(x[4], 30, 30, 27) + '</svg>' : '<img src="art/urune_' + x[0] + '.webp" alt="">';
+    return '<div class="ur"><div class="ic">' + ic + '</div><span class="slotno">' + x[1] + ' 전용</span><b>' + x[2] + '</b><span>' + x[3] + '</span></div>';
+  }).join("");
+
   function paint() {
-    var map = { cvBattle: function (c) { battleScene(c, 11); }, cvBattle2: function (c) { battleScene(c, 11); }, cvLobby: lobbyScene, cvGacha: gachaScene, cvResult: resultScene, cvShare: shareScene, cvReel: reelScene, cvIcon: appIcon, cvIcon2: appIcon };
-    Object.keys(map).forEach(function (k) { var c = document.getElementById(k); if (!c) return; try { c.getContext("2d").clearRect(0, 0, c.width, c.height); map[k](c); } catch (e) { /* 개별 장면 실패 시 나머지는 계속 그림 */ } });
+    var m = { fxBattle: fxBattle, fxHero: fxHero, cvResult: resultScene, cvIcon: appIcon };
+    Object.keys(m).forEach(function (k) { var c = document.getElementById(k); if (!c) return; try { c.getContext("2d").clearRect(0, 0, c.width, c.height); m[k](c); } catch (e) { /* 개별 장면 실패 시 계속 */ } });
   }
   paint();
-  // 웹 글꼴이 늦게 도착하면 캔버스 글자를 다시 그린다
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(paint);
+
 })();
 </script>

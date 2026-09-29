@@ -190,15 +190,32 @@
 
 ---
 
-## 8. 화면 시안 (v2)
+## 8. 화면 시안 (v3 — AI 원화 적용)
 
-- 인터랙티브 시안: [design/mockups.html](design/mockups.html) (브라우저로 열기)
-- 전체 개요: ![시안 개요](design/overview.png)
+- 인터랙티브 시안: [design/mockups.html](design/mockups.html) (브라우저로 열기, `design/art/` 이미지 사용)
+- 전체 개요: ![시안 개요](design/overview.jpg)
 
-| 전투 HUD | 룬 선택·배치 | 로비 | 소환 | 결과 |
-|---|---|---|---|---|
-| ![](design/battle.png) | ![](design/rune-pick.png) | ![](design/lobby.png) | ![](design/gacha.png) | ![](design/result.png) |
+| 전투 | 룬 배치 | 로비 | 소환 |
+|---|---|---|---|
+| ![](design/shot_battle.png) | ![](design/shot_rune-pick.png) | ![](design/shot_lobby.png) | ![](design/shot_gacha.png) |
 
-| 빌드 카드 (인스타 피드 4:5) | 하이라이트 릴스 (9:16) |
-|---|---|
-| ![](design/share-card.png) | ![](design/reel.png) |
+| 결과 | 기사·빌드 | 요일 던전 | 스토리 |
+|---|---|---|---|
+| ![](design/shot_result.png) | ![](design/shot_knight-build.png) | ![](design/shot_daily-dungeon.png) | ![](design/shot_story.png) |
+
+- 캐릭터·몬스터·펫·오브 갤러리: ![](design/shot_gallery.png)
+- 유일룬 12종: ![](design/shot_unique-runes.png)
+- 성장·합성·히든 흐름도 (FigJam): https://www.figma.com/board/XAPBKX8HR1LHIAHHtWLXD8
+
+## 9. 아트 제작 파이프라인 (v3에서 변경)
+
+| 단계 | 도구 | 비고 |
+|---|---|---|
+| 원화 생성 | Higgsfield `z_image` (1장 0.15크레딧) | 공통 스타일 프롬프트: "stylized semi-realistic 3D render, hand-painted textures, rim light, high-end mobile RPG quality, plain flat dark navy background" |
+| 배경 제거 | 로컬 `rembg` (isnet-general-use) | 무료. Higgsfield 배경 제거는 1크레딧이라 사용하지 않음 |
+| 최적화 | Pillow → WebP (스프라이트 512px, 배경 720×1280) | 원본 PNG는 `design/art/_raw/`(git 제외) |
+| 흐름도 | Figma FigJam `generate_diagram` | |
+| 게임 적용 | 원화 → 방향별 스프라이트 시트(대기·이동·공격 4~6프레임)를 같은 프롬프트 + 참조 이미지로 추가 생성 | 게임 내에서는 기하학 이펙트(코드)와 합성 |
+
+- **라이선스 체크(출시 전 필수)**: 생성 플랫폼의 상업 이용 조건(무료 플랜 포함 여부)을 확인하고, 필요 시 유료 플랜에서 최종 에셋을 재생성한다. 결과를 `LICENSES.md` 에 기록.
+- **일관성 유지**: 캐릭터별 "기준 원화"를 참조 이미지로 고정하고, 스킨·표정 변형은 참조 기반 편집으로 만든다.

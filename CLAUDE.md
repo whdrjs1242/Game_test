@@ -10,6 +10,8 @@
 - 아키텍처: `docs/04-technical-design.md`
 - 보안·법규: `docs/05-security-compliance.md`
 - 마일스톤·완료 조건: `docs/06-roadmap.md`
+- 아이템·스킬 데이터: `docs/08-items-skills.md` / 히든(스포일러): `docs/09-hidden-codex.md` / 콘텐츠: `docs/10-content-expansion.md`
+- 디자인 시안·원화: `docs/design/` (원본 PNG `docs/design/art/_raw/` 는 git 제외)
 
 ## 명령어 (프로젝트 생성 후)
 - 전체 검사: `./gradlew check`
@@ -29,6 +31,7 @@
 - 키스토어, 서비스 계정 JSON, 운영 광고 ID, 비밀번호 커밋 금지 (`local.properties` / GitHub Secrets).
 - 결제 지급은 반드시 서명 검증 → Ledger 중복 확인 → 지급 → 세이브 커밋 → consume/acknowledge 순서.
 - 소환은 결과 결정 → 세이브 커밋 → 연출 순서.
+- 히든 레시피·조건은 평문으로 번들하지 않는다(해시 매칭, `docs/05-security-compliance.md` §12).
 - 새 권한 추가 금지 (필요 시 `docs/05-security-compliance.md` §8 먼저 갱신).
 
 ## 작업 방식
